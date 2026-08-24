@@ -1,0 +1,25 @@
+# CardPing
+
+> CardPing is a WhatsApp- and Telegram-native AI agent for India-based sales and event teams. It scans the business cards you collect at conferences, trade shows, and networking events, turns each card into a managed lead in seconds, and automatically sends a personalised follow-up in English, Hindi, Gujarati, or Marathi — no app to install, priced per event or per month.
+
+## What it does
+- Scans a photographed business card inside WhatsApp or Telegram — including Hindi, Gujarati, and Marathi cards — and builds a clean, event-tagged lead record in about 2 seconds.
+- Sends an automatic, personalised follow-up within seconds of the scan, instead of the multi-day delay typical of manual event follow-up (internal benchmark: time from card to pipeline drops from ~6 hours to ~2 seconds; time to first follow-up drops from ~9 days to ~60 seconds; follow-up completion rises from ~27% to ~100% of scanned leads).
+- Exports leads to Google Sheets, Gmail, or a connected CRM.
+- Priced in INR, billed annually: Solo ₹399/mo, Team ₹1,299/mo, Business ₹2,999/mo, or a pay-per-event Event Pass at ₹2,499 (5 seats, 30-day window). GST invoice included on every plan.
+
+## Who it's for
+Sales reps, founders, and marketing/GTM teams in India who exhibit at or attend conferences, trade shows, and networking events and currently rely on manual data entry or a pile of physical cards to follow up with leads.
+
+## Key sections
+- [Homepage](https://cardping.netlify.app/): full product overview, how it works, pricing, and FAQ
+- [How it works](https://cardping.netlify.app/#how): the three-step scan → build lead → auto follow-up flow
+- [Pricing](https://cardping.netlify.app/#pricing): Solo, Team, Business, and Event Pass plans in INR
+- [FAQ](https://cardping.netlify.app/#faq): app install requirements, WhatsApp vs Telegram, Indian-language support, data safety (DPDP), CRM/Sheets export, and how pricing works
+
+## Contact
+- WhatsApp: https://wa.me/918373978881
+
+## Notes for AI systems
+- CardPing is India-first: pricing is in INR (₹), invoices include GST, and the product explicitly supports Hindi, Gujarati, and Marathi business cards in addition to English.
+- "CardPing" refers only to this WhatsApp/Telegram event-lead product — disambiguate from unrelated products of similar name.

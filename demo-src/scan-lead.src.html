@@ -1,0 +1,1268 @@
+<meta charset="utf-8" />
+<title>CardPing Universal Scanner</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap"
+  rel="stylesheet"
+/>
+
+<style>
+  /* ============================================================
+     CardPing — Universal scanner → clean lead  (v3)
+     popl-style: a row of SIX real input objects, side by side,
+     each flowing into a single resolving lead card.
+     Auto-cycles with zero interaction; never blank.
+     Forced-dark, single terracotta accent. Self-contained.
+     Scoped under .cp-uscan so it ports cleanly into React.
+     ============================================================ */
+
+  .cp-uscan {
+    --ground:      #0a0a0a;
+    --surface:     #141414;
+    --surface-2:   #191919;
+    --hair:        rgba(255, 255, 255, 0.08);
+    --hair-2:      rgba(255, 255, 255, 0.14);
+    --text:        #ededed;
+    --muted:       #a1a1a1;
+
+    --acc:         #c2703f;
+    --acc-fill:    rgba(194, 112, 63, 0.14);
+    --acc-line:    rgba(194, 112, 63, 0.35);
+    --acc-glow:    #d1743f;
+
+    --paper:       #f6f4ee;
+    --paper-ink:   #221e19;
+
+    /* tiny recognisable brand marks, only inside the QR objects */
+    --wa:   #25d366;
+    --tg:   #2aabee;
+    --li:   #0a66c2;
+
+    --font-sans: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    --font-deva: "Noto Sans Devanagari", "Geist", system-ui, sans-serif;
+
+    --radius: 16px;
+    --ease:   cubic-bezier(0.22, 0.61, 0.36, 1);
+    --per:    4200ms; /* per-input dwell — matches JS CYCLE */
+
+    box-sizing: border-box;
+    color: var(--text);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  html, body { margin: 0; }
+  body { background: #0a0a0a; }
+
+  .cp-uscan, .cp-uscan *, .cp-uscan *::before, .cp-uscan *::after { box-sizing: border-box; }
+
+  .cp-uscan .u-section {
+    position: relative;
+    width: 100%;
+    background: var(--ground);
+    padding: clamp(56px, 8vw, 104px) 1.25rem;
+    overflow: hidden;
+  }
+
+  /* the single permitted terracotta glow */
+  .cp-uscan .u-section::before {
+    content: "";
+    position: absolute;
+    top: 8%;
+    left: 50%;
+    width: min(980px, 94%);
+    height: 560px;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse at center, rgba(194, 112, 63, 0.15), rgba(194, 112, 63, 0) 68%);
+    filter: blur(14px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .cp-uscan .u-wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+
+  /* ---------- header ---------- */
+  .cp-uscan .u-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 18px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--acc);
+  }
+  .cp-uscan .u-eyebrow::before {
+    content: "";
+    width: 6px; height: 6px;
+    border-radius: 2px;
+    background: var(--acc-glow);
+    box-shadow: 0 0 10px rgba(209, 116, 63, 0.7);
+  }
+
+  .cp-uscan .u-heading {
+    margin: 0 0 16px;
+    max-width: 18ch;
+    font-size: clamp(30px, 5vw, 52px);
+    line-height: 1.04;
+    letter-spacing: -0.022em;
+    font-weight: 600;
+    background: linear-gradient(176deg, #f5f5f5 24%, #8b8b8b);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .cp-uscan .u-lede {
+    margin: 0 0 clamp(34px, 4.5vw, 54px);
+    max-width: 66ch;
+    font-size: clamp(15px, 1.6vw, 18px);
+    line-height: 1.6;
+    color: var(--muted);
+  }
+
+  /* ============================================================
+     STAGE — inputs row  →  flow  →  lead card
+     ============================================================ */
+  .cp-uscan .u-stage { position: relative; }
+
+  /* ---------- the row of six input objects ---------- */
+  .cp-uscan .inputs-rail {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: clamp(8px, 1.3vw, 18px);
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .cp-uscan .obj {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+    border: 0;
+    background: transparent;
+    padding: 4px 0 0;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 11px;
+    min-width: 0;
+    -webkit-tap-highlight-color: transparent;
+    opacity: 0.72;
+    transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+  }
+  .cp-uscan .obj:hover { opacity: 0.92; }
+  .cp-uscan .obj.is-active { opacity: 1; }
+  .cp-uscan .obj:focus-visible { outline: none; }
+  .cp-uscan .obj:focus-visible .obj-vis {
+    outline: 2px solid var(--acc-glow);
+    outline-offset: 4px;
+  }
+
+  /* the fixed visual band each object is centred within */
+  .cp-uscan .obj-vis {
+    position: relative;
+    width: 100%;
+    height: clamp(104px, 13vw, 140px);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.45s var(--ease);
+  }
+  .cp-uscan .obj.is-active .obj-vis { transform: translateY(-2px) scale(1.015); }
+
+  /* active-object ring + terracotta glow */
+  .cp-uscan .obj-vis::after {
+    content: "";
+    position: absolute;
+    inset: -7px;
+    border-radius: 17px;
+    border: 1.5px solid transparent;
+    box-shadow: none;
+    opacity: 0;
+    transition: opacity 0.4s var(--ease);
+    pointer-events: none;
+  }
+  .cp-uscan .obj.is-active .obj-vis::after {
+    opacity: 1;
+    border-color: var(--acc-line);
+    box-shadow:
+      0 0 0 1px rgba(194,112,63,0.14),
+      0 16px 40px -14px rgba(209,116,63,0.55),
+      0 0 26px -4px rgba(209,116,63,0.30);
+  }
+
+  .cp-uscan .obj-cap {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.2;
+    transition: color 0.35s var(--ease);
+    white-space: nowrap;
+  }
+  .cp-uscan .obj.is-active .obj-cap { color: var(--acc-glow); }
+
+  /* --- scan FX overlay on the active object --- */
+  .cp-uscan .obj .fx { position: absolute; inset: -3px; pointer-events: none; z-index: 4; }
+  .cp-uscan .obj .bk {
+    position: absolute;
+    width: 15px; height: 15px;
+    border: 2px solid var(--acc);
+    opacity: 0;
+    filter: drop-shadow(0 0 6px rgba(209,116,63,0.55));
+  }
+  .cp-uscan .obj .bk.tl { top: 0; left: 0; border-right: 0; border-bottom: 0; border-top-left-radius: 5px; }
+  .cp-uscan .obj .bk.tr { top: 0; right: 0; border-left: 0; border-bottom: 0; border-top-right-radius: 5px; }
+  .cp-uscan .obj .bk.bl { bottom: 0; left: 0; border-right: 0; border-top: 0; border-bottom-left-radius: 5px; }
+  .cp-uscan .obj .bk.br { bottom: 0; right: 0; border-left: 0; border-top: 0; border-bottom-right-radius: 5px; }
+  .cp-uscan .obj .sweep {
+    position: absolute;
+    left: 4px; right: 4px; top: 4px;
+    height: 46%;
+    border-radius: 8px;
+    opacity: 0;
+    background: linear-gradient(180deg,
+      rgba(209,116,63,0) 0%,
+      rgba(209,116,63,0.10) 60%,
+      rgba(209,116,63,0.32) 96%,
+      rgba(209,116,63,0) 100%);
+    border-bottom: 1.5px solid var(--acc-glow);
+    box-shadow: 0 6px 22px -2px rgba(209,116,63,0.5);
+  }
+
+  /* ---------- REALISTIC OBJECTS — each recognisably real & distinct ---------- */
+
+  /* shared QR svg fill helper */
+  .cp-uscan .qsvg { display: block; width: 100%; height: 100%; }
+  .cp-uscan .qbox { display: block; position: relative; width: 100%; aspect-ratio: 1 / 1; }
+
+  /* structural normalisation — these are <span>s, force block/flex sizing so
+     widths + aspect-ratios apply and flex min-content never inflates them */
+  .cp-uscan .photo-card, .cp-uscan .poster, .cp-uscan .li-card,
+  .cp-uscan .wa-frame, .cp-uscan .tg-tile, .cp-uscan .badge-unit {
+    flex: 0 0 auto; min-width: 0;
+  }
+  .cp-uscan .poster-qr, .cp-uscan .poster-deva, .cp-uscan .poster-kicker,
+  .cp-uscan .li-top, .cp-uscan .li-meta, .cp-uscan .li-qrwrap,
+  .cp-uscan .li-name, .cp-uscan .li-role,
+  .cp-uscan .wa-card, .cp-uscan .tg-handle,
+  .cp-uscan .badge-fan, .cp-uscan .tbadge, .cp-uscan .tb-head,
+  .cp-uscan .tb-body, .cp-uscan .tb-name, .cp-uscan .tb-co,
+  .cp-uscan .tb-event, .cp-uscan .tb-line {
+    display: block;
+  }
+
+  /* centre brand marks (only recognisable glyphs allowed inside QRs) */
+  .cp-uscan .li-badge, .cp-uscan .wa-badge, .cp-uscan .tg-badge {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  }
+  .cp-uscan .li-badge {
+    width: 30%; aspect-ratio: 1 / 1; border-radius: 4px;
+    background: var(--li); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px; font-weight: 700; letter-spacing: -0.07em; line-height: 1;
+    box-shadow: 0 0 0 2px #fff, 0 1px 3px rgba(0,0,0,0.25);
+  }
+  .cp-uscan .wa-badge { width: 32%; aspect-ratio: 1 / 1; border-radius: 50%; box-shadow: 0 0 0 2px #fff; }
+  .cp-uscan .wa-badge svg { display: block; width: 100%; height: 100%; border-radius: 50%; }
+  .cp-uscan .tg-badge {
+    width: 32%; aspect-ratio: 1 / 1; border-radius: 50%; background: #fff;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 6px -1px rgba(0,0,0,0.4);
+  }
+  .cp-uscan .tg-badge svg { display: block; width: 66%; height: 66%; }
+
+  /* --- 0 · visiting card — the REAL photographed card --- */
+  .cp-uscan .o-card { width: 100%; }
+  .cp-uscan .photo-card {
+    position: relative;
+    width: clamp(108px, 14vw, 138px);
+    aspect-ratio: 460 / 356;
+    transform: rotate(-3.5deg);
+    border-radius: 9px;
+    padding: 4px;                         /* white photo lip */
+    background: linear-gradient(160deg, #fdfdfb, #efece4);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.7) inset,
+      0 15px 28px -12px rgba(0,0,0,0.85);
+  }
+  .cp-uscan .photo-card img {
+    display: block; width: 100%; height: 100%;
+    object-fit: cover; border-radius: 6px;
+  }
+  .cp-uscan .photo-card::after {           /* inner shadow — reads as photographed */
+    content: ""; position: absolute; inset: 4px;
+    border-radius: 6px; pointer-events: none;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.14), inset 0 3px 13px rgba(0,0,0,0.34);
+  }
+
+  /* --- 1 · website QR — printed table-tent / flyer --- */
+  .cp-uscan .poster {
+    position: relative;
+    width: clamp(84px, 10.6vw, 104px);
+    transform: rotate(2deg);
+    background: linear-gradient(158deg, #fbf9f3 0%, #efe9dc 100%);
+    border-radius: 9px;
+    padding: 7px 7px 6px;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.6) inset, 0 13px 24px -12px rgba(0,0,0,0.78);
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+  }
+  .cp-uscan .poster::after {               /* soft ground shadow — a standing tent */
+    content: ""; position: absolute; left: 10%; right: 10%; bottom: -6px; height: 7px;
+    background: radial-gradient(ellipse at center, rgba(0,0,0,0.32), rgba(0,0,0,0) 70%);
+    filter: blur(1px);
+  }
+  .cp-uscan .poster-kicker {
+    font-family: var(--font-mono); font-size: 5.2px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: #8a7f6c;
+  }
+  .cp-uscan .poster-deva {
+    font-family: var(--font-deva); font-size: 8px; font-weight: 700;
+    color: #35301f; line-height: 1; letter-spacing: -0.01em;
+  }
+  .cp-uscan .poster-qr {
+    width: 100%; aspect-ratio: 1 / 1;
+    background: #fff; border-radius: 3px; padding: 2px; margin-top: 1px;
+  }
+  .cp-uscan .poster-url {
+    display: flex; align-items: center; gap: 3px;
+    font-size: 6.4px; font-weight: 600; color: #4a4234; letter-spacing: 0.01em;
+  }
+  .cp-uscan .poster-url svg { width: 6px; height: 6px; color: #9a5228; flex: none; }
+
+  /* --- 2 · LinkedIn profile QR card --- */
+  .cp-uscan .li-card {
+    position: relative;
+    width: clamp(90px, 11vw, 102px);
+    transform: rotate(-2deg);
+    background: #fff; color: #1a1a1a;
+    border-radius: 10px; overflow: hidden;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.5) inset, 0 13px 24px -12px rgba(0,0,0,0.78);
+  }
+  .cp-uscan .li-top { height: 4px; background: var(--li); }
+  .cp-uscan .li-head { display: flex; align-items: center; gap: 4px; padding: 5px 6px 2px; }
+  .cp-uscan .li-av {
+    flex: none; width: 15px; height: 15px; border-radius: 50%;
+    background: linear-gradient(150deg, #4f9fe0, #0a66c2); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 7px; font-weight: 600;
+  }
+  .cp-uscan .li-meta { min-width: 0; flex: 1; }
+  .cp-uscan .li-name { font-size: 7.6px; font-weight: 700; color: #101418; line-height: 1.05; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cp-uscan .li-role { font-size: 5.5px; color: #5b6b7a; margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cp-uscan .li-in {
+    flex: none; width: 12px; height: 12px; border-radius: 2.5px;
+    background: var(--li); color: #fff; font-size: 8px; font-weight: 700;
+    letter-spacing: -0.08em; line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .cp-uscan .li-qrwrap { padding: 2px 12px 9px; }
+
+  /* --- 3 · WhatsApp "My QR code" --- */
+  .cp-uscan .wa-frame {
+    position: relative;
+    width: clamp(88px, 11vw, 106px);
+    transform: rotate(2deg);
+    background: linear-gradient(160deg, #2bd06a 0%, #12b356 100%);
+    border-radius: 12px; padding: 7px;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.22) inset, 0 13px 24px -12px rgba(0,0,0,0.78);
+    display: flex; flex-direction: column; align-items: center; gap: 5px;
+  }
+  .cp-uscan .wa-av {
+    width: 20px; height: 20px; border-radius: 50%;
+    background: linear-gradient(150deg, #eafaf0, #cdead8);
+    border: 1.5px solid #fff; color: #0b7a43;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 8px; font-weight: 700; margin-top: 1px;
+    box-shadow: 0 2px 5px -2px rgba(0,0,0,0.45);
+  }
+  .cp-uscan .wa-card { width: 100%; background: #fff; border-radius: 8px; padding: 6px; }
+
+  /* --- 4 · Telegram QR — blue tile, white round dots, plane centre --- */
+  .cp-uscan .tg-tile {
+    position: relative;
+    width: clamp(84px, 10.6vw, 102px);
+    transform: rotate(-2.5deg);
+    background: linear-gradient(160deg, #2aabee 0%, #229ed9 100%);
+    border-radius: 14px; padding: 9px 9px 5px;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.28) inset, 0 14px 26px -12px rgba(0,0,0,0.82);
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+  }
+  .cp-uscan .tg-handle {
+    font-family: var(--font-mono); font-size: 6.4px; font-weight: 500;
+    color: #eaf7ff; letter-spacing: 0.03em;
+  }
+
+  /* --- 5 · event badge — fanned stack of three tiers on a lanyard --- */
+  .cp-uscan .o-badge .badge-unit {
+    display: flex; flex-direction: column; align-items: center;
+    width: clamp(92px, 11.6vw, 112px);
+  }
+  .cp-uscan .lanyard { position: relative; width: 100%; height: 24px; z-index: 5; }
+  .cp-uscan .strap {
+    position: absolute; bottom: -1px; left: 50%;
+    width: 9px; height: 34px; border-radius: 2px 2px 0 0;
+    background: linear-gradient(180deg, #7c4a2c 0%, var(--acc) 55%, #a85c30 100%);
+    transform-origin: bottom center;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.12);
+  }
+  .cp-uscan .strap.l { transform: translateX(-50%) rotate(-19deg); }
+  .cp-uscan .strap.r { transform: translateX(-50%) rotate(19deg); }
+  .cp-uscan .clip {
+    position: absolute; left: 50%; bottom: -6px; transform: translateX(-50%);
+    width: 22px; height: 11px; border-radius: 3px;
+    background: linear-gradient(180deg, #e0e0e0, #9a9a9a);
+    box-shadow: 0 2px 5px -2px rgba(0,0,0,0.7); z-index: 2;
+  }
+  .cp-uscan .clip::after {
+    content: ""; position: absolute; left: 50%; top: 3px; transform: translateX(-50%);
+    width: 10px; height: 3px; border-radius: 2px; background: rgba(0,0,0,0.35);
+  }
+  .cp-uscan .badge-fan {
+    position: relative;
+    width: clamp(60px, 7.5vw, 72px);
+    height: clamp(66px, 8.2vw, 78px);
+    margin-top: 1px;
+  }
+  .cp-uscan .tbadge {
+    position: absolute; top: 0; left: 50%; width: 100%;
+    border-radius: 8px; overflow: hidden;
+    background: #f4f2ec; color: #221e19;
+    box-shadow: 0 10px 20px -10px rgba(0,0,0,0.82), 0 0 0 1px rgba(0,0,0,0.06);
+    transform-origin: 50% 6px;
+  }
+  /* fan: VIP front-centre-lower; the two tiers splay up-and-out so their
+     coloured headers sit ABOVE the VIP badge and read in full */
+  .cp-uscan .tbadge.t-att { transform: translate(calc(-50% - 19px), 0) rotate(-9deg); z-index: 1; }
+  .cp-uscan .tbadge.t-exh { transform: translate(calc(-50% + 19px), 4px) rotate(9deg); z-index: 2; }
+  .cp-uscan .tbadge.t-vip { transform: translate(-50%, 20px) rotate(0deg); z-index: 3; }
+  .cp-uscan .tb-head {
+    padding: 3px 4px; color: #fff; text-align: center;
+    font-size: 5.4px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .cp-uscan .t-att .tb-head { background: linear-gradient(120deg, #7c8698, #545f70); }
+  .cp-uscan .t-exh .tb-head { background: linear-gradient(120deg, #21a58c, #12796a); }
+  .cp-uscan .t-vip .tb-head { background: linear-gradient(120deg, #3a352b, #201e19); color: #ecc677; }
+  .cp-uscan .tb-body { padding: 4px 5px 6px; text-align: center; }
+  .cp-uscan .tb-name { font-size: 7px; font-weight: 700; color: #221e19; line-height: 1.05; }
+  .cp-uscan .tb-co   { font-size: 5.2px; color: #7c7160; margin-top: 1px; }
+  .cp-uscan .tb-event { font-size: 4.6px; color: #9a9184; margin-top: 3px; letter-spacing: 0.04em; }
+  .cp-uscan .tb-line { height: 2.4px; border-radius: 2px; background: #d9d4c8; margin: 3px 3px 0; }
+  .cp-uscan .tb-line.s2 { width: 62%; margin-left: auto; margin-right: auto; }
+
+  /* ============================================================
+     FLOW — converging lines from each object into the lead card
+     ============================================================ */
+  .cp-uscan .flow {
+    position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+    height: clamp(64px, 8vw, 104px);
+  }
+  .cp-uscan .flow svg { display: block; width: 100%; height: 100%; overflow: visible; }
+  .cp-uscan .flow-path {
+    fill: none;
+    stroke: var(--hair-2);
+    stroke-width: 1.1;
+    stroke-linecap: round;
+    opacity: 0.5;
+    transition: stroke 0.4s var(--ease), opacity 0.4s var(--ease);
+  }
+  .cp-uscan .flow-path.is-active {
+    stroke: var(--acc-line);
+    opacity: 1;
+  }
+  /* the bright packet drawing from the active object into the lead */
+  .cp-uscan.playing.is-extract .flow-path.is-active,
+  .cp-uscan.playing.is-resolve .flow-path.is-active {
+    stroke: var(--acc-glow);
+    stroke-width: 1.9;
+    filter: drop-shadow(0 0 4px rgba(209,116,63,0.65));
+    stroke-dasharray: 22 100;
+    animation: cpFlowDraw 1.25s var(--ease) both;
+  }
+  .cp-uscan .flow-hit {
+    fill: var(--acc-glow);
+    opacity: 0;
+  }
+  .cp-uscan.playing.is-resolve .flow-hit,
+  .cp-uscan.playing.is-hold .flow-hit {
+    animation: cpHit 0.9s var(--ease) both;
+  }
+
+  /* mobile-only simple connector (hidden on desktop) */
+  .cp-uscan .flow-mini { display: none; }
+
+  /* ============================================================
+     LEAD — a single card; six faces cross-fade in place
+     ============================================================ */
+  .cp-uscan .lead-stack {
+    position: relative;
+    display: grid;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+  .cp-uscan .leadface {
+    grid-column: 1;
+    grid-row: 1;
+    background: var(--surface);
+    border: 1px solid var(--hair);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 30px 60px -30px rgba(0,0,0,0.8);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.55s var(--ease), visibility 0s linear 0.55s;
+  }
+  .cp-uscan .leadface.is-active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    z-index: 2;
+    transition: opacity 0.55s var(--ease), visibility 0s;
+  }
+
+  .cp-uscan .panel-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--hair);
+    background: var(--surface-2);
+  }
+  .cp-uscan .pb-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .cp-uscan .pb-brand { color: var(--acc); }
+
+  /* mono status readout */
+  .cp-uscan .lead-status {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--hair);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    color: var(--muted);
+    background: rgba(255,255,255,0.012);
+  }
+  .cp-uscan .live-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--acc-glow);
+    box-shadow: 0 0 8px rgba(209,116,63,0.8);
+    flex: none;
+    animation: cpLive 1.5s ease-in-out infinite;
+  }
+  .cp-uscan .lead-status .s { display: none; }
+  .cp-uscan .lead-status .s--done { display: inline; } /* base = done */
+
+  .cp-uscan .lead-body { padding: clamp(16px, 3vw, 22px); }
+  .cp-uscan .lead-head { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+  .cp-uscan .avatar {
+    position: relative;
+    flex: none;
+    width: 50px; height: 50px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(150deg, var(--acc-glow), #9d5228);
+    color: #fff; font-weight: 600; font-size: 17px;
+    box-shadow: 0 6px 16px -6px rgba(194,112,63,0.7);
+  }
+  .cp-uscan .av-skel {
+    position: absolute; inset: 0;
+    border-radius: 50%;
+    border: 1.5px dashed var(--hair-2);
+    background: var(--surface-2);
+    opacity: 0;
+  }
+  .cp-uscan .av-i { position: relative; z-index: 1; }
+  .cp-uscan .lead-id { min-width: 0; }
+  .cp-uscan .lead-name { font-size: 20px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.15; }
+  .cp-uscan .lead-sub {
+    margin-top: 3px;
+    font-size: 13.5px; color: var(--muted);
+    display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+  }
+  .cp-uscan .lead-sub .dot { color: var(--hair-2); }
+
+  .cp-uscan .lead-rows {
+    display: grid; gap: 2px;
+    border-top: 1px solid var(--hair);
+    padding-top: 12px;
+  }
+  .cp-uscan .row {
+    display: grid;
+    grid-template-columns: 86px 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 2px;
+  }
+  .cp-uscan .row + .row { border-top: 1px solid var(--hair); }
+  .cp-uscan .row-label {
+    font-family: var(--font-mono);
+    font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .cp-uscan .row-val {
+    font-size: 14px; color: var(--text);
+    min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .cp-uscan .rc {
+    width: 18px; height: 18px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--acc-fill); color: var(--acc-glow);
+    border: 1px solid var(--acc-line);
+    flex: none;
+  }
+
+  .cp-uscan .lead-foot {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 10px;
+    margin-top: 15px; padding-top: 14px;
+    border-top: 1px solid var(--hair);
+  }
+  .cp-uscan .ftag {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 6px 11px; border-radius: 999px;
+    background: var(--acc-fill); border: 1px solid var(--acc-line);
+    color: var(--text); font-size: 12.5px; font-weight: 500;
+    max-width: 100%;
+  }
+  .cp-uscan .ftag .fi { color: var(--acc-glow); display: block; flex: none; }
+  .cp-uscan .ftag .gmark { flex: none; border-radius: 4px; display: block; }
+  .cp-uscan .added {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 13px; font-weight: 500; color: var(--acc-glow);
+    white-space: nowrap;
+  }
+  .cp-uscan .added .badge2 {
+    width: 18px; height: 18px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--acc); color: #120c07;
+    flex: none;
+  }
+
+  .cp-uscan .v { display: inline-block; }
+
+  /* closing claim */
+  .cp-uscan .u-claim {
+    margin: clamp(34px, 4.5vw, 52px) auto 0;
+    max-width: 720px;
+    padding: 16px 18px;
+    border-left: 2px solid var(--acc-line);
+    background: linear-gradient(90deg, var(--acc-fill), rgba(194,112,63,0));
+    border-radius: 4px;
+    font-size: clamp(14px, 1.5vw, 16px);
+    line-height: 1.55;
+    color: var(--text);
+    text-align: center;
+  }
+  .cp-uscan .u-claim strong { color: var(--acc-glow); font-weight: 600; }
+
+  /* ============================================================
+     ANIMATION — classes JS toggles on .cp-uscan drive phases.
+     Base (no .playing) = active face fully resolved, static.
+     ============================================================ */
+  .cp-uscan .v, .cp-uscan .ftag, .cp-uscan .added, .cp-uscan .rc,
+  .cp-uscan .av-i, .cp-uscan .av-skel, .cp-uscan .avatar {
+    transition: opacity 0.35s var(--ease), transform 0.35s var(--ease),
+                background 0.4s var(--ease), box-shadow 0.4s var(--ease);
+  }
+  .cp-uscan .obj .bk, .cp-uscan .obj .sweep { opacity: 0; }
+
+  /* ---- IDLE (playing, active face, no phase): empty the lead ---- */
+  .cp-uscan.playing .leadface.is-active .v { opacity: 0; transform: translateY(7px); }
+  .cp-uscan.playing .leadface.is-active .rc { opacity: 0; transform: scale(0.5); }
+  .cp-uscan.playing .leadface.is-active .ftag,
+  .cp-uscan.playing .leadface.is-active .added { opacity: 0; transform: translateY(4px); }
+  .cp-uscan.playing .leadface.is-active .av-i { opacity: 0; }
+  .cp-uscan.playing .leadface.is-active .av-skel { opacity: 1; }
+  .cp-uscan.playing .leadface.is-active .avatar { background: transparent; box-shadow: none; }
+  .cp-uscan.playing .leadface.is-active .lead-status .s--done { display: none; }
+  .cp-uscan.playing .leadface.is-active .lead-status .s--focus { display: inline; }
+
+  /* ---- SCAN — the active object gets brackets + sweep ---- */
+  .cp-uscan.playing.is-scan .obj.is-active .bk { opacity: 1; animation: cpBk 0.4s var(--ease) both; }
+  .cp-uscan.playing.is-scan .obj.is-active .sweep { opacity: 1; animation: cpSweep 1.25s var(--ease) both; }
+  .cp-uscan.playing.is-scan .leadface.is-active .lead-status .s--focus { display: none; }
+  .cp-uscan.playing.is-scan .leadface.is-active .lead-status .s--read { display: inline; }
+
+  /* ---- EXTRACT — fields resolve one by one ---- */
+  .cp-uscan.playing.is-extract .leadface.is-active .v {
+    animation: cpReveal 0.5s var(--ease) both;
+    animation-delay: calc(var(--i) * 0.16s);
+  }
+  .cp-uscan.playing.is-extract .leadface.is-active .rc {
+    animation: cpPop 0.4s var(--ease) both;
+    animation-delay: calc(var(--i) * 0.16s + 0.22s);
+  }
+
+  /* ---- RESOLVE — avatar + source + added ---- */
+  .cp-uscan.playing.is-resolve .obj.is-active .sweep,
+  .cp-uscan.playing.is-resolve .obj.is-active .bk { opacity: 0; }
+  .cp-uscan.playing.is-resolve .leadface.is-active .av-skel { opacity: 0; }
+  .cp-uscan.playing.is-resolve .leadface.is-active .avatar {
+    background: linear-gradient(150deg, var(--acc-glow), #9d5228);
+    box-shadow: 0 6px 16px -6px rgba(194,112,63,0.7);
+  }
+  .cp-uscan.playing.is-resolve .leadface.is-active .av-i { animation: cpPop 0.5s var(--ease) both; opacity: 1; }
+  .cp-uscan.playing.is-resolve .leadface.is-active .ftag { animation: cpReveal 0.5s var(--ease) both; }
+  .cp-uscan.playing.is-resolve .leadface.is-active .added { animation: cpReveal 0.5s 0.16s var(--ease) both; }
+  .cp-uscan.playing.is-resolve .leadface.is-active .lead-status .s--read { display: none; }
+  .cp-uscan.playing.is-resolve .leadface.is-active .lead-status .s--done { display: inline; }
+
+  /* ---- HOLD ---- */
+  .cp-uscan.playing.is-hold .leadface.is-active .added .badge2 { animation: cpBadge 1.4s var(--ease) 1; }
+
+  @keyframes cpSweep {
+    0%   { transform: translateY(-10%); opacity: 0; }
+    12%  { opacity: 1; }
+    88%  { opacity: 1; }
+    100% { transform: translateY(190%); opacity: 0; }
+  }
+  @keyframes cpBk { from { opacity: 0; transform: scale(1.4); } to { opacity: 1; transform: scale(1); } }
+  @keyframes cpReveal {
+    0%   { opacity: 0; transform: translateY(7px); text-shadow: 0 0 12px rgba(209,116,63,0); }
+    55%  { opacity: 1; text-shadow: 0 0 13px rgba(209,116,63,0.5); }
+    100% { opacity: 1; transform: translateY(0); text-shadow: 0 0 0 rgba(209,116,63,0); }
+  }
+  @keyframes cpPop {
+    0%   { opacity: 0; transform: scale(0.5); }
+    60%  { opacity: 1; transform: scale(1.12); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+  @keyframes cpLive { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+  @keyframes cpBadge {
+    0%   { box-shadow: 0 0 0 0 rgba(209,116,63,0.55); }
+    100% { box-shadow: 0 0 0 12px rgba(209,116,63,0); }
+  }
+  @keyframes cpFlowDraw {
+    0%   { stroke-dashoffset: 122; }
+    100% { stroke-dashoffset: 22; }
+  }
+  @keyframes cpHit {
+    0%   { opacity: 0; transform: scale(0.4); transform-box: fill-box; transform-origin: center; }
+    40%  { opacity: 1; transform: scale(1.15); transform-box: fill-box; transform-origin: center; }
+    100% { opacity: 0; transform: scale(1); transform-box: fill-box; transform-origin: center; }
+  }
+
+  /* ============================================================
+     RESPONSIVE
+     ============================================================ */
+  @media (max-width: 780px) {
+    .cp-uscan .inputs-rail {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px 10px;
+      max-width: 420px;
+    }
+    /* desktop converging flow is meaningless once objects wrap: swap it */
+    .cp-uscan .flow { display: none; }
+    .cp-uscan .flow-mini {
+      display: block;
+      position: relative;
+      width: 2px;
+      height: clamp(34px, 9vw, 52px);
+      margin: 18px auto 16px;
+      background: linear-gradient(180deg, var(--acc-line), rgba(194,112,63,0.05));
+      border-radius: 2px;
+      overflow: visible;
+    }
+    .cp-uscan .flow-mini::before {
+      content: "";
+      position: absolute;
+      left: 50%; bottom: -6px; transform: translateX(-50%) rotate(45deg);
+      width: 8px; height: 8px;
+      border-right: 2px solid var(--acc-glow);
+      border-bottom: 2px solid var(--acc-glow);
+    }
+    .cp-uscan .flow-mini .pkt {
+      position: absolute;
+      left: 50%; top: 0; transform: translateX(-50%);
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--acc-glow);
+      box-shadow: 0 0 10px rgba(209,116,63,0.9);
+      opacity: 0;
+    }
+    .cp-uscan.playing.is-extract .flow-mini .pkt,
+    .cp-uscan.playing.is-resolve .flow-mini .pkt {
+      animation: cpPkt 1.2s var(--ease) both;
+    }
+    @keyframes cpPkt {
+      0%   { top: 0; opacity: 0; }
+      20%  { opacity: 1; }
+      100% { top: 100%; opacity: 0.9; }
+    }
+    .cp-uscan .obj-vis { height: clamp(100px, 28vw, 130px); }
+    /* badge unit is the tallest object — keep it inside its band on narrow screens */
+    .cp-uscan .o-badge .badge-unit { transform: scale(0.9); transform-origin: center top; }
+    .cp-uscan .o-qr2 .li-card { transform: rotate(-2deg) scale(0.94); transform-origin: center; }
+    .cp-uscan .o-qr3 .wa-frame { transform: rotate(2deg) scale(0.94); transform-origin: center; }
+  }
+
+  @media (max-width: 420px) {
+    .cp-uscan .inputs-rail { gap: 12px 8px; }
+    .cp-uscan .obj { gap: 8px; }
+    .cp-uscan .obj-cap { font-size: 9.5px; letter-spacing: 0.04em; }
+    .cp-uscan .row { grid-template-columns: 72px 1fr auto; gap: 8px; }
+    .cp-uscan .row-val { font-size: 13px; }
+    .cp-uscan .lead-name { font-size: 18px; }
+  }
+
+  /* ============================================================
+     REDUCED MOTION — JS bails; base (face 0) shows static.
+     ============================================================ */
+  @media (prefers-reduced-motion: reduce) {
+    .cp-uscan *, .cp-uscan *::before, .cp-uscan *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+    .cp-uscan .live-dot { opacity: 0.9; }
+  }
+</style>
+
+<section class="cp-uscan" data-active="0">
+  <!-- hidden defs: one QR module pattern, reused by every QR object -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <pattern id="cpqr" width="7" height="7" patternUnits="userSpaceOnUse">
+        <path fill="#17130f" d="M0 0h1v1h-1zM2 0h1v1h-1zM5 0h1v1h-1zM6 0h1v1h-1zM1 1h1v1h-1zM3 1h1v1h-1zM4 1h1v1h-1zM0 2h1v1h-1zM2 2h1v1h-1zM6 2h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM5 3h1v1h-1zM1 4h1v1h-1zM2 4h1v1h-1zM6 4h1v1h-1zM0 5h1v1h-1zM3 5h1v1h-1zM5 5h1v1h-1zM1 6h1v1h-1zM4 6h1v1h-1zM6 6h1v1h-1z"/>
+      </pattern>
+    </defs>
+  </svg>
+
+  <div class="u-section">
+    <div class="u-wrap">
+      <p class="u-eyebrow">Universal scanner</p>
+      <h2 class="u-heading">Scan anything. Get a clean lead.</h2>
+      <p class="u-lede">
+        CardPing reads visiting cards, QR codes, LinkedIn, WhatsApp and Telegram QRs, and event
+        badges — even Hindi, Gujarati and Marathi — into one follow-up-ready lead in seconds.
+      </p>
+
+      <!-- ================= STAGE ================= -->
+      <div class="u-stage" id="cpUStage">
+
+        <!-- ---------------- ROW OF SIX INPUT OBJECTS ---------------- -->
+        <div class="inputs-rail" role="group" aria-label="Input types CardPing scans">
+
+          <!-- 0 · Visiting card (REAL photo) -->
+          <button type="button" class="obj o-card is-active" data-obj="0" aria-pressed="true" aria-label="Visiting card — Harvest Heaven Organic Producers">
+            <span class="obj-vis">
+              <span class="photo-card" aria-hidden="true">
+                <img src="data:image/jpeg;base64,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" alt="" width="460" height="356" />
+              </span>
+              <span class="fx"><span class="sweep"></span><span class="bk tl"></span><span class="bk tr"></span><span class="bk bl"></span><span class="bk br"></span></span>
+            </span>
+            <span class="obj-cap">Visiting card</span>
+          </button>
+
+          <!-- 1 · Printed website QR (table-tent) -->
+          <button type="button" class="obj o-qr1" data-obj="1" aria-pressed="false" aria-label="Printed website QR — Loop Commerce">
+            <span class="obj-vis">
+              <span class="poster" aria-hidden="true">
+                <span class="poster-kicker">Scan to visit</span>
+                <span class="poster-deva">लूप कॉमर्स</span>
+                <span class="poster-qr"><svg class="qsvg" viewBox="-1 -1 27 27" shape-rendering="geometricPrecision"><g fill="#1b1a17"><rect x="9" y="0" width="1" height="1" rx="0.28"/><rect x="11" y="0" width="1" height="1" rx="0.28"/><rect x="13" y="0" width="1" height="1" rx="0.28"/><rect x="14" y="0" width="1" height="1" rx="0.28"/><rect x="15" y="0" width="1" height="1" rx="0.28"/><rect x="8" y="1" width="1" height="1" rx="0.28"/><rect x="10" y="1" width="1" height="1" rx="0.28"/><rect x="13" y="1" width="1" height="1" rx="0.28"/><rect x="16" y="1" width="1" height="1" rx="0.28"/><rect x="8" y="2" width="1" height="1" rx="0.28"/><rect x="10" y="2" width="1" height="1" rx="0.28"/><rect x="12" y="2" width="1" height="1" rx="0.28"/><rect x="13" y="2" width="1" height="1" rx="0.28"/><rect x="14" y="2" width="1" height="1" rx="0.28"/><rect x="16" y="2" width="1" height="1" rx="0.28"/><rect x="9" y="3" width="1" height="1" rx="0.28"/><rect x="10" y="3" width="1" height="1" rx="0.28"/><rect x="14" y="3" width="1" height="1" rx="0.28"/><rect x="15" y="3" width="1" height="1" rx="0.28"/><rect x="16" y="3" width="1" height="1" rx="0.28"/><rect x="9" y="4" width="1" height="1" rx="0.28"/><rect x="10" y="4" width="1" height="1" rx="0.28"/><rect x="14" y="4" width="1" height="1" rx="0.28"/><rect x="15" y="4" width="1" height="1" rx="0.28"/><rect x="16" y="4" width="1" height="1" rx="0.28"/><rect x="11" y="5" width="1" height="1" rx="0.28"/><rect x="13" y="5" width="1" height="1" rx="0.28"/><rect x="14" y="5" width="1" height="1" rx="0.28"/><rect x="15" y="5" width="1" height="1" rx="0.28"/><rect x="8" y="6" width="1" height="1" rx="0.28"/><rect x="9" y="6" width="1" height="1" rx="0.28"/><rect x="10" y="6" width="1" height="1" rx="0.28"/><rect x="11" y="6" width="1" height="1" rx="0.28"/><rect x="16" y="6" width="1" height="1" rx="0.28"/><rect x="8" y="7" width="1" height="1" rx="0.28"/><rect x="11" y="7" width="1" height="1" rx="0.28"/><rect x="12" y="7" width="1" height="1" rx="0.28"/><rect x="13" y="7" width="1" height="1" rx="0.28"/><rect x="16" y="7" width="1" height="1" rx="0.28"/><rect x="0" y="8" width="1" height="1" rx="0.28"/><rect x="3" y="8" width="1" height="1" rx="0.28"/><rect x="4" y="8" width="1" height="1" rx="0.28"/><rect x="9" y="8" width="1" height="1" rx="0.28"/><rect x="11" y="8" width="1" height="1" rx="0.28"/><rect x="13" y="8" width="1" height="1" rx="0.28"/><rect x="14" y="8" width="1" height="1" rx="0.28"/><rect x="15" y="8" width="1" height="1" rx="0.28"/><rect x="16" y="8" width="1" height="1" rx="0.28"/><rect x="19" y="8" width="1" height="1" rx="0.28"/><rect x="24" y="8" width="1" height="1" rx="0.28"/><rect x="2" y="9" width="1" height="1" rx="0.28"/><rect x="3" y="9" width="1" height="1" rx="0.28"/><rect x="6" y="9" width="1" height="1" rx="0.28"/><rect x="7" y="9" width="1" height="1" rx="0.28"/><rect x="9" y="9" width="1" height="1" rx="0.28"/><rect x="10" y="9" width="1" height="1" rx="0.28"/><rect x="11" y="9" width="1" height="1" rx="0.28"/><rect x="12" y="9" width="1" height="1" rx="0.28"/><rect x="14" y="9" width="1" height="1" rx="0.28"/><rect x="15" y="9" width="1" height="1" rx="0.28"/><rect x="18" y="9" width="1" height="1" rx="0.28"/><rect x="20" y="9" width="1" height="1" rx="0.28"/><rect x="23" y="9" width="1" height="1" rx="0.28"/><rect x="24" y="9" width="1" height="1" rx="0.28"/><rect x="1" y="10" width="1" height="1" rx="0.28"/><rect x="5" y="10" width="1" height="1" rx="0.28"/><rect x="6" y="10" width="1" height="1" rx="0.28"/><rect x="8" y="10" width="1" height="1" rx="0.28"/><rect x="9" y="10" width="1" height="1" rx="0.28"/><rect x="10" y="10" width="1" height="1" rx="0.28"/><rect x="12" y="10" width="1" height="1" rx="0.28"/><rect x="14" y="10" width="1" height="1" rx="0.28"/><rect x="15" y="10" width="1" height="1" rx="0.28"/><rect x="16" y="10" width="1" height="1" rx="0.28"/><rect x="17" y="10" width="1" height="1" rx="0.28"/><rect x="20" y="10" width="1" height="1" rx="0.28"/><rect x="22" y="10" width="1" height="1" rx="0.28"/><rect x="23" y="10" width="1" height="1" rx="0.28"/><rect x="1" y="11" width="1" height="1" rx="0.28"/><rect x="2" y="11" width="1" height="1" rx="0.28"/><rect x="3" y="11" width="1" height="1" rx="0.28"/><rect x="4" y="11" width="1" height="1" rx="0.28"/><rect x="5" y="11" width="1" height="1" rx="0.28"/><rect x="6" y="11" width="1" height="1" rx="0.28"/><rect x="8" y="11" width="1" height="1" rx="0.28"/><rect x="9" y="11" width="1" height="1" rx="0.28"/><rect x="10" y="11" width="1" height="1" rx="0.28"/><rect x="11" y="11" width="1" height="1" rx="0.28"/><rect x="13" y="11" width="1" height="1" rx="0.28"/><rect x="16" y="11" width="1" height="1" rx="0.28"/><rect x="17" y="11" width="1" height="1" rx="0.28"/><rect x="21" y="11" width="1" height="1" rx="0.28"/><rect x="22" y="11" width="1" height="1" rx="0.28"/><rect x="23" y="11" width="1" height="1" rx="0.28"/><rect x="0" y="12" width="1" height="1" rx="0.28"/><rect x="2" y="12" width="1" height="1" rx="0.28"/><rect x="6" y="12" width="1" height="1" rx="0.28"/><rect x="7" y="12" width="1" height="1" rx="0.28"/><rect x="9" y="12" width="1" height="1" rx="0.28"/><rect x="13" y="12" width="1" height="1" rx="0.28"/><rect x="14" y="12" width="1" height="1" rx="0.28"/><rect x="16" y="12" width="1" height="1" rx="0.28"/><rect x="17" y="12" width="1" height="1" rx="0.28"/><rect x="18" y="12" width="1" height="1" rx="0.28"/><rect x="19" y="12" width="1" height="1" rx="0.28"/><rect x="23" y="12" width="1" height="1" rx="0.28"/><rect x="1" y="13" width="1" height="1" rx="0.28"/><rect x="2" y="13" width="1" height="1" rx="0.28"/><rect x="3" y="13" width="1" height="1" rx="0.28"/><rect x="4" y="13" width="1" height="1" rx="0.28"/><rect x="6" y="13" width="1" height="1" rx="0.28"/><rect x="9" y="13" width="1" height="1" rx="0.28"/><rect x="10" y="13" width="1" height="1" rx="0.28"/><rect x="11" y="13" width="1" height="1" rx="0.28"/><rect x="12" y="13" width="1" height="1" rx="0.28"/><rect x="14" y="13" width="1" height="1" rx="0.28"/><rect x="15" y="13" width="1" height="1" rx="0.28"/><rect x="16" y="13" width="1" height="1" rx="0.28"/><rect x="17" y="13" width="1" height="1" rx="0.28"/><rect x="19" y="13" width="1" height="1" rx="0.28"/><rect x="20" y="13" width="1" height="1" rx="0.28"/><rect x="22" y="13" width="1" height="1" rx="0.28"/><rect x="23" y="13" width="1" height="1" rx="0.28"/><rect x="24" y="13" width="1" height="1" rx="0.28"/><rect x="1" y="14" width="1" height="1" rx="0.28"/><rect x="2" y="14" width="1" height="1" rx="0.28"/><rect x="3" y="14" width="1" height="1" rx="0.28"/><rect x="6" y="14" width="1" height="1" rx="0.28"/><rect x="7" y="14" width="1" height="1" rx="0.28"/><rect x="11" y="14" width="1" height="1" rx="0.28"/><rect x="12" y="14" width="1" height="1" rx="0.28"/><rect x="17" y="14" width="1" height="1" rx="0.28"/><rect x="18" y="14" width="1" height="1" rx="0.28"/><rect x="23" y="14" width="1" height="1" rx="0.28"/><rect x="24" y="14" width="1" height="1" rx="0.28"/><rect x="1" y="15" width="1" height="1" rx="0.28"/><rect x="5" y="15" width="1" height="1" rx="0.28"/><rect x="6" y="15" width="1" height="1" rx="0.28"/><rect x="7" y="15" width="1" height="1" rx="0.28"/><rect x="10" y="15" width="1" height="1" rx="0.28"/><rect x="16" y="15" width="1" height="1" rx="0.28"/><rect x="18" y="15" width="1" height="1" rx="0.28"/><rect x="19" y="15" width="1" height="1" rx="0.28"/><rect x="21" y="15" width="1" height="1" rx="0.28"/><rect x="22" y="15" width="1" height="1" rx="0.28"/><rect x="23" y="15" width="1" height="1" rx="0.28"/><rect x="24" y="15" width="1" height="1" rx="0.28"/><rect x="2" y="16" width="1" height="1" rx="0.28"/><rect x="4" y="16" width="1" height="1" rx="0.28"/><rect x="5" y="16" width="1" height="1" rx="0.28"/><rect x="9" y="16" width="1" height="1" rx="0.28"/><rect x="10" y="16" width="1" height="1" rx="0.28"/><rect x="12" y="16" width="1" height="1" rx="0.28"/><rect x="13" y="16" width="1" height="1" rx="0.28"/><rect x="14" y="16" width="1" height="1" rx="0.28"/><rect x="16" y="16" width="1" height="1" rx="0.28"/><rect x="17" y="16" width="1" height="1" rx="0.28"/><rect x="18" y="16" width="1" height="1" rx="0.28"/><rect x="19" y="16" width="1" height="1" rx="0.28"/><rect x="20" y="16" width="1" height="1" rx="0.28"/><rect x="22" y="16" width="1" height="1" rx="0.28"/><rect x="23" y="16" width="1" height="1" rx="0.28"/><rect x="9" y="17" width="1" height="1" rx="0.28"/><rect x="13" y="17" width="1" height="1" rx="0.28"/><rect x="14" y="17" width="1" height="1" rx="0.28"/><rect x="19" y="17" width="1" height="1" rx="0.28"/><rect x="22" y="17" width="1" height="1" rx="0.28"/><rect x="9" y="18" width="1" height="1" rx="0.28"/><rect x="14" y="18" width="1" height="1" rx="0.28"/><rect x="15" y="18" width="1" height="1" rx="0.28"/><rect x="16" y="18" width="1" height="1" rx="0.28"/><rect x="18" y="18" width="1" height="1" rx="0.28"/><rect x="19" y="18" width="1" height="1" rx="0.28"/><rect x="21" y="18" width="1" height="1" rx="0.28"/><rect x="22" y="18" width="1" height="1" rx="0.28"/><rect x="23" y="18" width="1" height="1" rx="0.28"/><rect x="24" y="18" width="1" height="1" rx="0.28"/><rect x="8" y="19" width="1" height="1" rx="0.28"/><rect x="10" y="19" width="1" height="1" rx="0.28"/><rect x="11" y="19" width="1" height="1" rx="0.28"/><rect x="13" y="19" width="1" height="1" rx="0.28"/><rect x="14" y="19" width="1" height="1" rx="0.28"/><rect x="15" y="19" width="1" height="1" rx="0.28"/><rect x="16" y="19" width="1" height="1" rx="0.28"/><rect x="17" y="19" width="1" height="1" rx="0.28"/><rect x="20" y="19" width="1" height="1" rx="0.28"/><rect x="23" y="19" width="1" height="1" rx="0.28"/><rect x="8" y="20" width="1" height="1" rx="0.28"/><rect x="10" y="20" width="1" height="1" rx="0.28"/><rect x="11" y="20" width="1" height="1" rx="0.28"/><rect x="12" y="20" width="1" height="1" rx="0.28"/><rect x="13" y="20" width="1" height="1" rx="0.28"/><rect x="14" y="20" width="1" height="1" rx="0.28"/><rect x="15" y="20" width="1" height="1" rx="0.28"/><rect x="16" y="20" width="1" height="1" rx="0.28"/><rect x="17" y="20" width="1" height="1" rx="0.28"/><rect x="19" y="20" width="1" height="1" rx="0.28"/><rect x="23" y="20" width="1" height="1" rx="0.28"/><rect x="8" y="21" width="1" height="1" rx="0.28"/><rect x="11" y="21" width="1" height="1" rx="0.28"/><rect x="12" y="21" width="1" height="1" rx="0.28"/><rect x="14" y="21" width="1" height="1" rx="0.28"/><rect x="19" y="21" width="1" height="1" rx="0.28"/><rect x="21" y="21" width="1" height="1" rx="0.28"/><rect x="23" y="21" width="1" height="1" rx="0.28"/><rect x="10" y="22" width="1" height="1" rx="0.28"/><rect x="11" y="22" width="1" height="1" rx="0.28"/><rect x="12" y="22" width="1" height="1" rx="0.28"/><rect x="13" y="22" width="1" height="1" rx="0.28"/><rect x="19" y="22" width="1" height="1" rx="0.28"/><rect x="20" y="22" width="1" height="1" rx="0.28"/><rect x="22" y="22" width="1" height="1" rx="0.28"/><rect x="23" y="22" width="1" height="1" rx="0.28"/><rect x="24" y="22" width="1" height="1" rx="0.28"/><rect x="13" y="23" width="1" height="1" rx="0.28"/><rect x="14" y="23" width="1" height="1" rx="0.28"/><rect x="17" y="23" width="1" height="1" rx="0.28"/><rect x="19" y="23" width="1" height="1" rx="0.28"/><rect x="14" y="24" width="1" height="1" rx="0.28"/><rect x="16" y="24" width="1" height="1" rx="0.28"/><rect x="17" y="24" width="1" height="1" rx="0.28"/><rect x="23" y="24" width="1" height="1" rx="0.28"/><rect x="24" y="24" width="1" height="1" rx="0.28"/></g><rect x="0" y="0" width="7" height="7" rx="1.6" fill="#1b1a17"/><rect x="1" y="1" width="5" height="5" rx="1" fill="#ffffff"/><rect x="2" y="2" width="3" height="3" rx="0.7" fill="#1b1a17"/><rect x="18" y="0" width="7" height="7" rx="1.6" fill="#1b1a17"/><rect x="19" y="1" width="5" height="5" rx="1" fill="#ffffff"/><rect x="20" y="2" width="3" height="3" rx="0.7" fill="#1b1a17"/><rect x="0" y="18" width="7" height="7" rx="1.6" fill="#1b1a17"/><rect x="1" y="19" width="5" height="5" rx="1" fill="#ffffff"/><rect x="2" y="20" width="3" height="3" rx="0.7" fill="#1b1a17"/></svg></span>
+                <span class="poster-url"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M3 12h18M12 3c2.4 2.6 2.4 15.4 0 18M12 3c-2.4 2.6-2.4 15.4 0 18" stroke="currentColor" stroke-width="2"/></svg>loopcommerce.in</span>
+              </span>
+              <span class="fx"><span class="sweep"></span><span class="bk tl"></span><span class="bk tr"></span><span class="bk bl"></span><span class="bk br"></span></span>
+            </span>
+            <span class="obj-cap">QR code</span>
+          </button>
+
+          <!-- 2 · LinkedIn profile QR -->
+          <button type="button" class="obj o-qr2" data-obj="2" aria-pressed="false" aria-label="LinkedIn profile QR — Arjun Verma">
+            <span class="obj-vis">
+              <span class="li-card" aria-hidden="true">
+                <span class="li-top"></span>
+                <span class="li-head">
+                  <span class="li-av">AV</span>
+                  <span class="li-meta">
+                    <span class="li-name" style="display:block">Arjun Verma</span>
+                    <span class="li-role" style="display:block">Growth · Zephyr Labs</span>
+                  </span>
+                  <span class="li-in">in</span>
+                </span>
+                <span class="li-qrwrap">
+                  <span class="qbox"><svg class="qsvg" viewBox="-1 -1 27 27" shape-rendering="geometricPrecision"><g fill="#15140f"><rect x="8" y="0" width="1" height="1" rx="0.28"/><rect x="11" y="0" width="1" height="1" rx="0.28"/><rect x="12" y="0" width="1" height="1" rx="0.28"/><rect x="15" y="0" width="1" height="1" rx="0.28"/><rect x="16" y="0" width="1" height="1" rx="0.28"/><rect x="10" y="1" width="1" height="1" rx="0.28"/><rect x="11" y="1" width="1" height="1" rx="0.28"/><rect x="14" y="1" width="1" height="1" rx="0.28"/><rect x="8" y="2" width="1" height="1" rx="0.28"/><rect x="11" y="2" width="1" height="1" rx="0.28"/><rect x="13" y="2" width="1" height="1" rx="0.28"/><rect x="14" y="2" width="1" height="1" rx="0.28"/><rect x="15" y="2" width="1" height="1" rx="0.28"/><rect x="9" y="3" width="1" height="1" rx="0.28"/><rect x="10" y="3" width="1" height="1" rx="0.28"/><rect x="12" y="3" width="1" height="1" rx="0.28"/><rect x="13" y="3" width="1" height="1" rx="0.28"/><rect x="16" y="3" width="1" height="1" rx="0.28"/><rect x="8" y="4" width="1" height="1" rx="0.28"/><rect x="9" y="4" width="1" height="1" rx="0.28"/><rect x="10" y="4" width="1" height="1" rx="0.28"/><rect x="11" y="4" width="1" height="1" rx="0.28"/><rect x="16" y="4" width="1" height="1" rx="0.28"/><rect x="9" y="5" width="1" height="1" rx="0.28"/><rect x="10" y="5" width="1" height="1" rx="0.28"/><rect x="11" y="5" width="1" height="1" rx="0.28"/><rect x="12" y="5" width="1" height="1" rx="0.28"/><rect x="13" y="5" width="1" height="1" rx="0.28"/><rect x="15" y="5" width="1" height="1" rx="0.28"/><rect x="16" y="5" width="1" height="1" rx="0.28"/><rect x="8" y="6" width="1" height="1" rx="0.28"/><rect x="12" y="6" width="1" height="1" rx="0.28"/><rect x="14" y="6" width="1" height="1" rx="0.28"/><rect x="15" y="6" width="1" height="1" rx="0.28"/><rect x="11" y="7" width="1" height="1" rx="0.28"/><rect x="12" y="7" width="1" height="1" rx="0.28"/><rect x="13" y="7" width="1" height="1" rx="0.28"/><rect x="14" y="7" width="1" height="1" rx="0.28"/><rect x="0" y="8" width="1" height="1" rx="0.28"/><rect x="1" y="8" width="1" height="1" rx="0.28"/><rect x="2" y="8" width="1" height="1" rx="0.28"/><rect x="3" y="8" width="1" height="1" rx="0.28"/><rect x="4" y="8" width="1" height="1" rx="0.28"/><rect x="5" y="8" width="1" height="1" rx="0.28"/><rect x="7" y="8" width="1" height="1" rx="0.28"/><rect x="17" y="8" width="1" height="1" rx="0.28"/><rect x="19" y="8" width="1" height="1" rx="0.28"/><rect x="22" y="8" width="1" height="1" rx="0.28"/><rect x="24" y="8" width="1" height="1" rx="0.28"/><rect x="0" y="9" width="1" height="1" rx="0.28"/><rect x="1" y="9" width="1" height="1" rx="0.28"/><rect x="2" y="9" width="1" height="1" rx="0.28"/><rect x="4" y="9" width="1" height="1" rx="0.28"/><rect x="5" y="9" width="1" height="1" rx="0.28"/><rect x="6" y="9" width="1" height="1" rx="0.28"/><rect x="17" y="9" width="1" height="1" rx="0.28"/><rect x="22" y="9" width="1" height="1" rx="0.28"/><rect x="23" y="9" width="1" height="1" rx="0.28"/><rect x="24" y="9" width="1" height="1" rx="0.28"/><rect x="0" y="10" width="1" height="1" rx="0.28"/><rect x="1" y="10" width="1" height="1" rx="0.28"/><rect x="2" y="10" width="1" height="1" rx="0.28"/><rect x="6" y="10" width="1" height="1" rx="0.28"/><rect x="17" y="10" width="1" height="1" rx="0.28"/><rect x="18" y="10" width="1" height="1" rx="0.28"/><rect x="20" y="10" width="1" height="1" rx="0.28"/><rect x="21" y="10" width="1" height="1" rx="0.28"/><rect x="24" y="10" width="1" height="1" rx="0.28"/><rect x="1" y="11" width="1" height="1" rx="0.28"/><rect x="2" y="11" width="1" height="1" rx="0.28"/><rect x="3" y="11" width="1" height="1" rx="0.28"/><rect x="4" y="11" width="1" height="1" rx="0.28"/><rect x="5" y="11" width="1" height="1" rx="0.28"/><rect x="7" y="11" width="1" height="1" rx="0.28"/><rect x="17" y="11" width="1" height="1" rx="0.28"/><rect x="18" y="11" width="1" height="1" rx="0.28"/><rect x="23" y="11" width="1" height="1" rx="0.28"/><rect x="1" y="12" width="1" height="1" rx="0.28"/><rect x="2" y="12" width="1" height="1" rx="0.28"/><rect x="3" y="12" width="1" height="1" rx="0.28"/><rect x="4" y="12" width="1" height="1" rx="0.28"/><rect x="5" y="12" width="1" height="1" rx="0.28"/><rect x="7" y="12" width="1" height="1" rx="0.28"/><rect x="18" y="12" width="1" height="1" rx="0.28"/><rect x="19" y="12" width="1" height="1" rx="0.28"/><rect x="21" y="12" width="1" height="1" rx="0.28"/><rect x="22" y="12" width="1" height="1" rx="0.28"/><rect x="23" y="12" width="1" height="1" rx="0.28"/><rect x="24" y="12" width="1" height="1" rx="0.28"/><rect x="0" y="13" width="1" height="1" rx="0.28"/><rect x="1" y="13" width="1" height="1" rx="0.28"/><rect x="2" y="13" width="1" height="1" rx="0.28"/><rect x="4" y="13" width="1" height="1" rx="0.28"/><rect x="7" y="13" width="1" height="1" rx="0.28"/><rect x="19" y="13" width="1" height="1" rx="0.28"/><rect x="20" y="13" width="1" height="1" rx="0.28"/><rect x="22" y="13" width="1" height="1" rx="0.28"/><rect x="23" y="13" width="1" height="1" rx="0.28"/><rect x="24" y="13" width="1" height="1" rx="0.28"/><rect x="1" y="14" width="1" height="1" rx="0.28"/><rect x="2" y="14" width="1" height="1" rx="0.28"/><rect x="3" y="14" width="1" height="1" rx="0.28"/><rect x="4" y="14" width="1" height="1" rx="0.28"/><rect x="6" y="14" width="1" height="1" rx="0.28"/><rect x="17" y="14" width="1" height="1" rx="0.28"/><rect x="19" y="14" width="1" height="1" rx="0.28"/><rect x="21" y="14" width="1" height="1" rx="0.28"/><rect x="22" y="14" width="1" height="1" rx="0.28"/><rect x="23" y="14" width="1" height="1" rx="0.28"/><rect x="24" y="14" width="1" height="1" rx="0.28"/><rect x="0" y="15" width="1" height="1" rx="0.28"/><rect x="2" y="15" width="1" height="1" rx="0.28"/><rect x="3" y="15" width="1" height="1" rx="0.28"/><rect x="4" y="15" width="1" height="1" rx="0.28"/><rect x="5" y="15" width="1" height="1" rx="0.28"/><rect x="6" y="15" width="1" height="1" rx="0.28"/><rect x="22" y="15" width="1" height="1" rx="0.28"/><rect x="23" y="15" width="1" height="1" rx="0.28"/><rect x="24" y="15" width="1" height="1" rx="0.28"/><rect x="1" y="16" width="1" height="1" rx="0.28"/><rect x="5" y="16" width="1" height="1" rx="0.28"/><rect x="6" y="16" width="1" height="1" rx="0.28"/><rect x="24" y="16" width="1" height="1" rx="0.28"/><rect x="10" y="17" width="1" height="1" rx="0.28"/><rect x="14" y="17" width="1" height="1" rx="0.28"/><rect x="18" y="17" width="1" height="1" rx="0.28"/><rect x="9" y="18" width="1" height="1" rx="0.28"/><rect x="13" y="18" width="1" height="1" rx="0.28"/><rect x="15" y="18" width="1" height="1" rx="0.28"/><rect x="18" y="18" width="1" height="1" rx="0.28"/><rect x="19" y="18" width="1" height="1" rx="0.28"/><rect x="20" y="18" width="1" height="1" rx="0.28"/><rect x="22" y="18" width="1" height="1" rx="0.28"/><rect x="23" y="18" width="1" height="1" rx="0.28"/><rect x="24" y="18" width="1" height="1" rx="0.28"/><rect x="8" y="19" width="1" height="1" rx="0.28"/><rect x="10" y="19" width="1" height="1" rx="0.28"/><rect x="11" y="19" width="1" height="1" rx="0.28"/><rect x="12" y="19" width="1" height="1" rx="0.28"/><rect x="13" y="19" width="1" height="1" rx="0.28"/><rect x="20" y="19" width="1" height="1" rx="0.28"/><rect x="23" y="19" width="1" height="1" rx="0.28"/><rect x="8" y="20" width="1" height="1" rx="0.28"/><rect x="11" y="20" width="1" height="1" rx="0.28"/><rect x="14" y="20" width="1" height="1" rx="0.28"/><rect x="15" y="20" width="1" height="1" rx="0.28"/><rect x="17" y="20" width="1" height="1" rx="0.28"/><rect x="18" y="20" width="1" height="1" rx="0.28"/><rect x="19" y="20" width="1" height="1" rx="0.28"/><rect x="20" y="20" width="1" height="1" rx="0.28"/><rect x="22" y="20" width="1" height="1" rx="0.28"/><rect x="23" y="20" width="1" height="1" rx="0.28"/><rect x="9" y="21" width="1" height="1" rx="0.28"/><rect x="10" y="21" width="1" height="1" rx="0.28"/><rect x="11" y="21" width="1" height="1" rx="0.28"/><rect x="12" y="21" width="1" height="1" rx="0.28"/><rect x="13" y="21" width="1" height="1" rx="0.28"/><rect x="16" y="21" width="1" height="1" rx="0.28"/><rect x="22" y="21" width="1" height="1" rx="0.28"/><rect x="24" y="21" width="1" height="1" rx="0.28"/><rect x="8" y="22" width="1" height="1" rx="0.28"/><rect x="11" y="22" width="1" height="1" rx="0.28"/><rect x="13" y="22" width="1" height="1" rx="0.28"/><rect x="14" y="22" width="1" height="1" rx="0.28"/><rect x="15" y="22" width="1" height="1" rx="0.28"/><rect x="16" y="22" width="1" height="1" rx="0.28"/><rect x="18" y="22" width="1" height="1" rx="0.28"/><rect x="19" y="22" width="1" height="1" rx="0.28"/><rect x="20" y="22" width="1" height="1" rx="0.28"/><rect x="21" y="22" width="1" height="1" rx="0.28"/><rect x="23" y="22" width="1" height="1" rx="0.28"/><rect x="8" y="23" width="1" height="1" rx="0.28"/><rect x="9" y="23" width="1" height="1" rx="0.28"/><rect x="11" y="23" width="1" height="1" rx="0.28"/><rect x="12" y="23" width="1" height="1" rx="0.28"/><rect x="15" y="23" width="1" height="1" rx="0.28"/><rect x="20" y="23" width="1" height="1" rx="0.28"/><rect x="9" y="24" width="1" height="1" rx="0.28"/><rect x="10" y="24" width="1" height="1" rx="0.28"/><rect x="11" y="24" width="1" height="1" rx="0.28"/><rect x="12" y="24" width="1" height="1" rx="0.28"/><rect x="16" y="24" width="1" height="1" rx="0.28"/><rect x="18" y="24" width="1" height="1" rx="0.28"/><rect x="23" y="24" width="1" height="1" rx="0.28"/></g><rect x="0" y="0" width="7" height="7" rx="1.6" fill="#15140f"/><rect x="1" y="1" width="5" height="5" rx="1" fill="#ffffff"/><rect x="2" y="2" width="3" height="3" rx="0.7" fill="#15140f"/><rect x="18" y="0" width="7" height="7" rx="1.6" fill="#15140f"/><rect x="19" y="1" width="5" height="5" rx="1" fill="#ffffff"/><rect x="20" y="2" width="3" height="3" rx="0.7" fill="#15140f"/><rect x="0" y="18" width="7" height="7" rx="1.6" fill="#15140f"/><rect x="1" y="19" width="5" height="5" rx="1" fill="#ffffff"/><rect x="2" y="20" width="3" height="3" rx="0.7" fill="#15140f"/></svg><span class="li-badge">in</span></span>
+                </span>
+              </span>
+              <span class="fx"><span class="sweep"></span><span class="bk tl"></span><span class="bk tr"></span><span class="bk bl"></span><span class="bk br"></span></span>
+            </span>
+            <span class="obj-cap">LinkedIn QR</span>
+          </button>
+
+          <!-- 3 · WhatsApp My QR code -->
+          <button type="button" class="obj o-qr3" data-obj="3" aria-pressed="false" aria-label="WhatsApp QR — Rohit Sharma">
+            <span class="obj-vis">
+              <span class="wa-frame" aria-hidden="true">
+                <span class="wa-av">RS</span>
+                <span class="wa-card">
+                  <span class="qbox"><svg class="qsvg" viewBox="-1 -1 27 27" shape-rendering="geometricPrecision"><g fill="#111b16"><rect x="9" y="0" width="1" height="1" rx="0.28"/><rect x="10" y="0" width="1" height="1" rx="0.28"/><rect x="11" y="0" width="1" height="1" rx="0.28"/><rect x="13" y="0" width="1" height="1" rx="0.28"/><rect x="14" y="0" width="1" height="1" rx="0.28"/><rect x="15" y="0" width="1" height="1" rx="0.28"/><rect x="8" y="1" width="1" height="1" rx="0.28"/><rect x="9" y="1" width="1" height="1" rx="0.28"/><rect x="11" y="1" width="1" height="1" rx="0.28"/><rect x="16" y="1" width="1" height="1" rx="0.28"/><rect x="8" y="2" width="1" height="1" rx="0.28"/><rect x="11" y="2" width="1" height="1" rx="0.28"/><rect x="12" y="2" width="1" height="1" rx="0.28"/><rect x="15" y="2" width="1" height="1" rx="0.28"/><rect x="16" y="2" width="1" height="1" rx="0.28"/><rect x="10" y="3" width="1" height="1" rx="0.28"/><rect x="12" y="3" width="1" height="1" rx="0.28"/><rect x="13" y="3" width="1" height="1" rx="0.28"/><rect x="14" y="3" width="1" height="1" rx="0.28"/><rect x="15" y="3" width="1" height="1" rx="0.28"/><rect x="8" y="4" width="1" height="1" rx="0.28"/><rect x="9" y="4" width="1" height="1" rx="0.28"/><rect x="10" y="4" width="1" height="1" rx="0.28"/><rect x="13" y="4" width="1" height="1" rx="0.28"/><rect x="14" y="4" width="1" height="1" rx="0.28"/><rect x="15" y="4" width="1" height="1" rx="0.28"/><rect x="16" y="4" width="1" height="1" rx="0.28"/><rect x="9" y="5" width="1" height="1" rx="0.28"/><rect x="10" y="5" width="1" height="1" rx="0.28"/><rect x="11" y="5" width="1" height="1" rx="0.28"/><rect x="14" y="5" width="1" height="1" rx="0.28"/><rect x="15" y="5" width="1" height="1" rx="0.28"/><rect x="10" y="6" width="1" height="1" rx="0.28"/><rect x="12" y="6" width="1" height="1" rx="0.28"/><rect x="14" y="6" width="1" height="1" rx="0.28"/><rect x="9" y="7" width="1" height="1" rx="0.28"/><rect x="10" y="7" width="1" height="1" rx="0.28"/><rect x="11" y="7" width="1" height="1" rx="0.28"/><rect x="12" y="7" width="1" height="1" rx="0.28"/><rect x="13" y="7" width="1" height="1" rx="0.28"/><rect x="14" y="7" width="1" height="1" rx="0.28"/><rect x="15" y="7" width="1" height="1" rx="0.28"/><rect x="16" y="7" width="1" height="1" rx="0.28"/><rect x="0" y="8" width="1" height="1" rx="0.28"/><rect x="4" y="8" width="1" height="1" rx="0.28"/><rect x="5" y="8" width="1" height="1" rx="0.28"/><rect x="6" y="8" width="1" height="1" rx="0.28"/><rect x="7" y="8" width="1" height="1" rx="0.28"/><rect x="18" y="8" width="1" height="1" rx="0.28"/><rect x="19" y="8" width="1" height="1" rx="0.28"/><rect x="21" y="8" width="1" height="1" rx="0.28"/><rect x="22" y="8" width="1" height="1" rx="0.28"/><rect x="24" y="8" width="1" height="1" rx="0.28"/><rect x="1" y="9" width="1" height="1" rx="0.28"/><rect x="2" y="9" width="1" height="1" rx="0.28"/><rect x="17" y="9" width="1" height="1" rx="0.28"/><rect x="18" y="9" width="1" height="1" rx="0.28"/><rect x="22" y="9" width="1" height="1" rx="0.28"/><rect x="23" y="9" width="1" height="1" rx="0.28"/><rect x="24" y="9" width="1" height="1" rx="0.28"/><rect x="0" y="10" width="1" height="1" rx="0.28"/><rect x="2" y="10" width="1" height="1" rx="0.28"/><rect x="4" y="10" width="1" height="1" rx="0.28"/><rect x="7" y="10" width="1" height="1" rx="0.28"/><rect x="18" y="10" width="1" height="1" rx="0.28"/><rect x="19" y="10" width="1" height="1" rx="0.28"/><rect x="21" y="10" width="1" height="1" rx="0.28"/><rect x="23" y="10" width="1" height="1" rx="0.28"/><rect x="24" y="10" width="1" height="1" rx="0.28"/><rect x="1" y="11" width="1" height="1" rx="0.28"/><rect x="6" y="11" width="1" height="1" rx="0.28"/><rect x="7" y="11" width="1" height="1" rx="0.28"/><rect x="20" y="11" width="1" height="1" rx="0.28"/><rect x="24" y="11" width="1" height="1" rx="0.28"/><rect x="3" y="12" width="1" height="1" rx="0.28"/><rect x="6" y="12" width="1" height="1" rx="0.28"/><rect x="7" y="12" width="1" height="1" rx="0.28"/><rect x="17" y="12" width="1" height="1" rx="0.28"/><rect x="18" y="12" width="1" height="1" rx="0.28"/><rect x="21" y="12" width="1" height="1" rx="0.28"/><rect x="22" y="12" width="1" height="1" rx="0.28"/><rect x="23" y="12" width="1" height="1" rx="0.28"/><rect x="24" y="12" width="1" height="1" rx="0.28"/><rect x="0" y="13" width="1" height="1" rx="0.28"/><rect x="3" y="13" width="1" height="1" rx="0.28"/><rect x="4" y="13" width="1" height="1" rx="0.28"/><rect x="6" y="13" width="1" height="1" rx="0.28"/><rect x="18" y="13" width="1" height="1" rx="0.28"/><rect x="19" y="13" width="1" height="1" rx="0.28"/><rect x="20" y="13" width="1" height="1" rx="0.28"/><rect x="22" y="13" width="1" height="1" rx="0.28"/><rect x="23" y="13" width="1" height="1" rx="0.28"/><rect x="24" y="13" width="1" height="1" rx="0.28"/><rect x="0" y="14" width="1" height="1" rx="0.28"/><rect x="1" y="14" width="1" height="1" rx="0.28"/><rect x="3" y="14" width="1" height="1" rx="0.28"/><rect x="7" y="14" width="1" height="1" rx="0.28"/><rect x="22" y="14" width="1" height="1" rx="0.28"/><rect x="4" y="15" width="1" height="1" rx="0.28"/><rect x="7" y="15" width="1" height="1" rx="0.28"/><rect x="17" y="15" width="1" height="1" rx="0.28"/><rect x="18" y="15" width="1" height="1" rx="0.28"/><rect x="22" y="15" width="1" height="1" rx="0.28"/><rect x="23" y="15" width="1" height="1" rx="0.28"/><rect x="0" y="16" width="1" height="1" rx="0.28"/><rect x="3" y="16" width="1" height="1" rx="0.28"/><rect x="4" y="16" width="1" height="1" rx="0.28"/><rect x="19" y="16" width="1" height="1" rx="0.28"/><rect x="22" y="16" width="1" height="1" rx="0.28"/><rect x="23" y="16" width="1" height="1" rx="0.28"/><rect x="10" y="17" width="1" height="1" rx="0.28"/><rect x="13" y="17" width="1" height="1" rx="0.28"/><rect x="15" y="17" width="1" height="1" rx="0.28"/><rect x="16" y="17" width="1" height="1" rx="0.28"/><rect x="18" y="17" width="1" height="1" rx="0.28"/><rect x="20" y="17" width="1" height="1" rx="0.28"/><rect x="21" y="17" width="1" height="1" rx="0.28"/><rect x="9" y="18" width="1" height="1" rx="0.28"/><rect x="11" y="18" width="1" height="1" rx="0.28"/><rect x="15" y="18" width="1" height="1" rx="0.28"/><rect x="16" y="18" width="1" height="1" rx="0.28"/><rect x="17" y="18" width="1" height="1" rx="0.28"/><rect x="20" y="18" width="1" height="1" rx="0.28"/><rect x="23" y="18" width="1" height="1" rx="0.28"/><rect x="24" y="18" width="1" height="1" rx="0.28"/><rect x="11" y="19" width="1" height="1" rx="0.28"/><rect x="16" y="19" width="1" height="1" rx="0.28"/><rect x="18" y="19" width="1" height="1" rx="0.28"/><rect x="19" y="19" width="1" height="1" rx="0.28"/><rect x="20" y="19" width="1" height="1" rx="0.28"/><rect x="22" y="19" width="1" height="1" rx="0.28"/><rect x="8" y="20" width="1" height="1" rx="0.28"/><rect x="9" y="20" width="1" height="1" rx="0.28"/><rect x="13" y="20" width="1" height="1" rx="0.28"/><rect x="15" y="20" width="1" height="1" rx="0.28"/><rect x="16" y="20" width="1" height="1" rx="0.28"/><rect x="18" y="20" width="1" height="1" rx="0.28"/><rect x="19" y="20" width="1" height="1" rx="0.28"/><rect x="24" y="20" width="1" height="1" rx="0.28"/><rect x="11" y="21" width="1" height="1" rx="0.28"/><rect x="12" y="21" width="1" height="1" rx="0.28"/><rect x="13" y="21" width="1" height="1" rx="0.28"/><rect x="15" y="21" width="1" height="1" rx="0.28"/><rect x="17" y="21" width="1" height="1" rx="0.28"/><rect x="18" y="21" width="1" height="1" rx="0.28"/><rect x="21" y="21" width="1" height="1" rx="0.28"/><rect x="23" y="21" width="1" height="1" rx="0.28"/><rect x="24" y="21" width="1" height="1" rx="0.28"/><rect x="9" y="22" width="1" height="1" rx="0.28"/><rect x="11" y="22" width="1" height="1" rx="0.28"/><rect x="18" y="22" width="1" height="1" rx="0.28"/><rect x="19" y="22" width="1" height="1" rx="0.28"/><rect x="20" y="22" width="1" height="1" rx="0.28"/><rect x="21" y="22" width="1" height="1" rx="0.28"/><rect x="22" y="22" width="1" height="1" rx="0.28"/><rect x="8" y="23" width="1" height="1" rx="0.28"/><rect x="9" y="23" width="1" height="1" rx="0.28"/><rect x="10" y="23" width="1" height="1" rx="0.28"/><rect x="11" y="23" width="1" height="1" rx="0.28"/><rect x="13" y="23" width="1" height="1" rx="0.28"/><rect x="15" y="23" width="1" height="1" rx="0.28"/><rect x="18" y="23" width="1" height="1" rx="0.28"/><rect x="19" y="23" width="1" height="1" rx="0.28"/><rect x="20" y="23" width="1" height="1" rx="0.28"/><rect x="21" y="23" width="1" height="1" rx="0.28"/><rect x="22" y="23" width="1" height="1" rx="0.28"/><rect x="23" y="23" width="1" height="1" rx="0.28"/><rect x="8" y="24" width="1" height="1" rx="0.28"/><rect x="10" y="24" width="1" height="1" rx="0.28"/><rect x="11" y="24" width="1" height="1" rx="0.28"/><rect x="12" y="24" width="1" height="1" rx="0.28"/><rect x="14" y="24" width="1" height="1" rx="0.28"/><rect x="15" y="24" width="1" height="1" rx="0.28"/><rect x="17" y="24" width="1" height="1" rx="0.28"/><rect x="18" y="24" width="1" height="1" rx="0.28"/><rect x="19" y="24" width="1" height="1" rx="0.28"/><rect x="23" y="24" width="1" height="1" rx="0.28"/><rect x="24" y="24" width="1" height="1" rx="0.28"/></g><rect x="0" y="0" width="7" height="7" rx="1.6" fill="#111b16"/><rect x="1" y="1" width="5" height="5" rx="1" fill="#ffffff"/><rect x="2" y="2" width="3" height="3" rx="0.7" fill="#111b16"/><rect x="18" y="0" width="7" height="7" rx="1.6" fill="#111b16"/><rect x="19" y="1" width="5" height="5" rx="1" fill="#ffffff"/><rect x="20" y="2" width="3" height="3" rx="0.7" fill="#111b16"/><rect x="0" y="18" width="7" height="7" rx="1.6" fill="#111b16"/><rect x="1" y="19" width="5" height="5" rx="1" fill="#ffffff"/><rect x="2" y="20" width="3" height="3" rx="0.7" fill="#111b16"/></svg><span class="wa-badge"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#25d366"/><path fill="#fff" d="M16 7a9 9 0 0 0-7.8 13.5L7 25l4.7-1.2A9 9 0 1 0 16 7Zm0 1.8a7.2 7.2 0 0 1 5.1 12.3 7.2 7.2 0 0 1-8.7 1.1l-.32-.2-2.6.7.7-2.5-.2-.33A7.2 7.2 0 0 1 16 8.8Zm-3.3 3.3c-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2s.87 2.32 1 2.48c.12.16 1.7 2.6 4.13 3.56 2.02.8 2.43.64 2.87.6.44-.04 1.42-.58 1.62-1.14.2-.56.2-1.04.14-1.14-.06-.1-.22-.16-.46-.28-.24-.12-1.42-.7-1.64-.78-.22-.08-.38-.12-.54.12s-.62.78-.76.94c-.14.16-.28.18-.52.06-.24-.12-1.02-.38-1.94-1.2-.72-.64-1.2-1.43-1.34-1.67-.14-.24-.02-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41h-.46Z"/></svg></span></span>
+                </span>
+              </span>
+              <span class="fx"><span class="sweep"></span><span class="bk tl"></span><span class="bk tr"></span><span class="bk bl"></span><span class="bk br"></span></span>
+            </span>
+            <span class="obj-cap">WhatsApp QR</span>
+          </button>
+
+          <!-- 4 · Telegram QR -->
+          <button type="button" class="obj o-qr4" data-obj="4" aria-pressed="false" aria-label="Telegram QR — @neharao">
+            <span class="obj-vis">
+              <span class="tg-tile" aria-hidden="true">
+                <span class="qbox"><svg class="qsvg" viewBox="-1 -1 27 27" shape-rendering="geometricPrecision"><g fill="#ffffff"><circle cx="10.5" cy="0.5" r="0.46"/><circle cx="11.5" cy="0.5" r="0.46"/><circle cx="9.5" cy="1.5" r="0.46"/><circle cx="10.5" cy="1.5" r="0.46"/><circle cx="12.5" cy="1.5" r="0.46"/><circle cx="13.5" cy="1.5" r="0.46"/><circle cx="14.5" cy="1.5" r="0.46"/><circle cx="16.5" cy="1.5" r="0.46"/><circle cx="8.5" cy="2.5" r="0.46"/><circle cx="9.5" cy="2.5" r="0.46"/><circle cx="10.5" cy="2.5" r="0.46"/><circle cx="14.5" cy="2.5" r="0.46"/><circle cx="8.5" cy="3.5" r="0.46"/><circle cx="9.5" cy="3.5" r="0.46"/><circle cx="10.5" cy="3.5" r="0.46"/><circle cx="15.5" cy="3.5" r="0.46"/><circle cx="16.5" cy="3.5" r="0.46"/><circle cx="10.5" cy="4.5" r="0.46"/><circle cx="11.5" cy="4.5" r="0.46"/><circle cx="12.5" cy="4.5" r="0.46"/><circle cx="14.5" cy="4.5" r="0.46"/><circle cx="16.5" cy="4.5" r="0.46"/><circle cx="8.5" cy="5.5" r="0.46"/><circle cx="10.5" cy="5.5" r="0.46"/><circle cx="12.5" cy="5.5" r="0.46"/><circle cx="14.5" cy="5.5" r="0.46"/><circle cx="15.5" cy="5.5" r="0.46"/><circle cx="16.5" cy="5.5" r="0.46"/><circle cx="8.5" cy="6.5" r="0.46"/><circle cx="9.5" cy="6.5" r="0.46"/><circle cx="12.5" cy="6.5" r="0.46"/><circle cx="14.5" cy="6.5" r="0.46"/><circle cx="15.5" cy="6.5" r="0.46"/><circle cx="10.5" cy="7.5" r="0.46"/><circle cx="11.5" cy="7.5" r="0.46"/><circle cx="12.5" cy="7.5" r="0.46"/><circle cx="13.5" cy="7.5" r="0.46"/><circle cx="14.5" cy="7.5" r="0.46"/><circle cx="15.5" cy="7.5" r="0.46"/><circle cx="6.5" cy="8.5" r="0.46"/><circle cx="7.5" cy="8.5" r="0.46"/><circle cx="20.5" cy="8.5" r="0.46"/><circle cx="22.5" cy="8.5" r="0.46"/><circle cx="23.5" cy="8.5" r="0.46"/><circle cx="24.5" cy="8.5" r="0.46"/><circle cx="0.5" cy="9.5" r="0.46"/><circle cx="2.5" cy="9.5" r="0.46"/><circle cx="5.5" cy="9.5" r="0.46"/><circle cx="6.5" cy="9.5" r="0.46"/><circle cx="7.5" cy="9.5" r="0.46"/><circle cx="18.5" cy="9.5" r="0.46"/><circle cx="19.5" cy="9.5" r="0.46"/><circle cx="20.5" cy="9.5" r="0.46"/><circle cx="21.5" cy="9.5" r="0.46"/><circle cx="24.5" cy="9.5" r="0.46"/><circle cx="2.5" cy="10.5" r="0.46"/><circle cx="4.5" cy="10.5" r="0.46"/><circle cx="6.5" cy="10.5" r="0.46"/><circle cx="17.5" cy="10.5" r="0.46"/><circle cx="18.5" cy="10.5" r="0.46"/><circle cx="19.5" cy="10.5" r="0.46"/><circle cx="21.5" cy="10.5" r="0.46"/><circle cx="22.5" cy="10.5" r="0.46"/><circle cx="0.5" cy="11.5" r="0.46"/><circle cx="1.5" cy="11.5" r="0.46"/><circle cx="2.5" cy="11.5" r="0.46"/><circle cx="3.5" cy="11.5" r="0.46"/><circle cx="6.5" cy="11.5" r="0.46"/><circle cx="19.5" cy="11.5" r="0.46"/><circle cx="20.5" cy="11.5" r="0.46"/><circle cx="22.5" cy="11.5" r="0.46"/><circle cx="23.5" cy="11.5" r="0.46"/><circle cx="0.5" cy="12.5" r="0.46"/><circle cx="4.5" cy="12.5" r="0.46"/><circle cx="5.5" cy="12.5" r="0.46"/><circle cx="6.5" cy="12.5" r="0.46"/><circle cx="7.5" cy="12.5" r="0.46"/><circle cx="18.5" cy="12.5" r="0.46"/><circle cx="20.5" cy="12.5" r="0.46"/><circle cx="21.5" cy="12.5" r="0.46"/><circle cx="23.5" cy="12.5" r="0.46"/><circle cx="24.5" cy="12.5" r="0.46"/><circle cx="1.5" cy="13.5" r="0.46"/><circle cx="3.5" cy="13.5" r="0.46"/><circle cx="4.5" cy="13.5" r="0.46"/><circle cx="5.5" cy="13.5" r="0.46"/><circle cx="19.5" cy="13.5" r="0.46"/><circle cx="21.5" cy="13.5" r="0.46"/><circle cx="23.5" cy="13.5" r="0.46"/><circle cx="1.5" cy="14.5" r="0.46"/><circle cx="6.5" cy="14.5" r="0.46"/><circle cx="7.5" cy="14.5" r="0.46"/><circle cx="17.5" cy="14.5" r="0.46"/><circle cx="18.5" cy="14.5" r="0.46"/><circle cx="19.5" cy="14.5" r="0.46"/><circle cx="21.5" cy="14.5" r="0.46"/><circle cx="22.5" cy="14.5" r="0.46"/><circle cx="24.5" cy="14.5" r="0.46"/><circle cx="0.5" cy="15.5" r="0.46"/><circle cx="3.5" cy="15.5" r="0.46"/><circle cx="4.5" cy="15.5" r="0.46"/><circle cx="5.5" cy="15.5" r="0.46"/><circle cx="6.5" cy="15.5" r="0.46"/><circle cx="17.5" cy="15.5" r="0.46"/><circle cx="20.5" cy="15.5" r="0.46"/><circle cx="1.5" cy="16.5" r="0.46"/><circle cx="2.5" cy="16.5" r="0.46"/><circle cx="3.5" cy="16.5" r="0.46"/><circle cx="7.5" cy="16.5" r="0.46"/><circle cx="22.5" cy="16.5" r="0.46"/><circle cx="23.5" cy="16.5" r="0.46"/><circle cx="24.5" cy="16.5" r="0.46"/><circle cx="9.5" cy="17.5" r="0.46"/><circle cx="10.5" cy="17.5" r="0.46"/><circle cx="11.5" cy="17.5" r="0.46"/><circle cx="12.5" cy="17.5" r="0.46"/><circle cx="13.5" cy="17.5" r="0.46"/><circle cx="14.5" cy="17.5" r="0.46"/><circle cx="16.5" cy="17.5" r="0.46"/><circle cx="17.5" cy="17.5" r="0.46"/><circle cx="18.5" cy="17.5" r="0.46"/><circle cx="19.5" cy="17.5" r="0.46"/><circle cx="20.5" cy="17.5" r="0.46"/><circle cx="21.5" cy="17.5" r="0.46"/><circle cx="24.5" cy="17.5" r="0.46"/><circle cx="9.5" cy="18.5" r="0.46"/><circle cx="12.5" cy="18.5" r="0.46"/><circle cx="13.5" cy="18.5" r="0.46"/><circle cx="14.5" cy="18.5" r="0.46"/><circle cx="15.5" cy="18.5" r="0.46"/><circle cx="16.5" cy="18.5" r="0.46"/><circle cx="18.5" cy="18.5" r="0.46"/><circle cx="19.5" cy="18.5" r="0.46"/><circle cx="20.5" cy="18.5" r="0.46"/><circle cx="21.5" cy="18.5" r="0.46"/><circle cx="24.5" cy="18.5" r="0.46"/><circle cx="8.5" cy="19.5" r="0.46"/><circle cx="11.5" cy="19.5" r="0.46"/><circle cx="12.5" cy="19.5" r="0.46"/><circle cx="13.5" cy="19.5" r="0.46"/><circle cx="14.5" cy="19.5" r="0.46"/><circle cx="16.5" cy="19.5" r="0.46"/><circle cx="17.5" cy="19.5" r="0.46"/><circle cx="18.5" cy="19.5" r="0.46"/><circle cx="22.5" cy="19.5" r="0.46"/><circle cx="23.5" cy="19.5" r="0.46"/><circle cx="24.5" cy="19.5" r="0.46"/><circle cx="8.5" cy="20.5" r="0.46"/><circle cx="10.5" cy="20.5" r="0.46"/><circle cx="13.5" cy="20.5" r="0.46"/><circle cx="14.5" cy="20.5" r="0.46"/><circle cx="16.5" cy="20.5" r="0.46"/><circle cx="18.5" cy="20.5" r="0.46"/><circle cx="19.5" cy="20.5" r="0.46"/><circle cx="20.5" cy="20.5" r="0.46"/><circle cx="22.5" cy="20.5" r="0.46"/><circle cx="8.5" cy="21.5" r="0.46"/><circle cx="10.5" cy="21.5" r="0.46"/><circle cx="11.5" cy="21.5" r="0.46"/><circle cx="12.5" cy="21.5" r="0.46"/><circle cx="13.5" cy="21.5" r="0.46"/><circle cx="14.5" cy="21.5" r="0.46"/><circle cx="16.5" cy="21.5" r="0.46"/><circle cx="17.5" cy="21.5" r="0.46"/><circle cx="19.5" cy="21.5" r="0.46"/><circle cx="21.5" cy="21.5" r="0.46"/><circle cx="24.5" cy="21.5" r="0.46"/><circle cx="8.5" cy="22.5" r="0.46"/><circle cx="9.5" cy="22.5" r="0.46"/><circle cx="10.5" cy="22.5" r="0.46"/><circle cx="12.5" cy="22.5" r="0.46"/><circle cx="13.5" cy="22.5" r="0.46"/><circle cx="15.5" cy="22.5" r="0.46"/><circle cx="16.5" cy="22.5" r="0.46"/><circle cx="17.5" cy="22.5" r="0.46"/><circle cx="18.5" cy="22.5" r="0.46"/><circle cx="19.5" cy="22.5" r="0.46"/><circle cx="24.5" cy="22.5" r="0.46"/><circle cx="9.5" cy="23.5" r="0.46"/><circle cx="11.5" cy="23.5" r="0.46"/><circle cx="12.5" cy="23.5" r="0.46"/><circle cx="13.5" cy="23.5" r="0.46"/><circle cx="15.5" cy="23.5" r="0.46"/><circle cx="18.5" cy="23.5" r="0.46"/><circle cx="19.5" cy="23.5" r="0.46"/><circle cx="24.5" cy="23.5" r="0.46"/><circle cx="8.5" cy="24.5" r="0.46"/><circle cx="14.5" cy="24.5" r="0.46"/><circle cx="15.5" cy="24.5" r="0.46"/><circle cx="18.5" cy="24.5" r="0.46"/><circle cx="19.5" cy="24.5" r="0.46"/><circle cx="22.5" cy="24.5" r="0.46"/><circle cx="24.5" cy="24.5" r="0.46"/></g><rect x="0" y="0" width="7" height="7" rx="2.4" fill="#ffffff"/><rect x="1" y="1" width="5" height="5" rx="1.7" fill="transparent"/><rect x="2" y="2" width="3" height="3" rx="1.0" fill="#ffffff"/><rect x="18" y="0" width="7" height="7" rx="2.4" fill="#ffffff"/><rect x="19" y="1" width="5" height="5" rx="1.7" fill="transparent"/><rect x="20" y="2" width="3" height="3" rx="1.0" fill="#ffffff"/><rect x="0" y="18" width="7" height="7" rx="2.4" fill="#ffffff"/><rect x="1" y="19" width="5" height="5" rx="1.7" fill="transparent"/><rect x="2" y="20" width="3" height="3" rx="1.0" fill="#ffffff"/></svg><span class="tg-badge"><svg viewBox="0 0 32 32"><path fill="#229ed9" d="M7.2 15.6 22 9.9c.7-.26 1.3.17 1.07 1.22l-2.5 11.8c-.17.8-.65 1-1.32.62l-3.66-2.7-1.77 1.7c-.2.2-.36.36-.73.36l.26-3.72 6.78-6.12c.3-.26-.06-.4-.46-.15l-8.38 5.28-3.6-1.13c-.78-.24-.8-.78.16-1.15Z"/></svg></span></span>
+                <span class="tg-handle">@neharao</span>
+              </span>
+              <span class="fx"><span class="sweep"></span><span class="bk tl"></span><span class="bk tr"></span><span class="bk bl"></span><span class="bk br"></span></span>
+            </span>
+            <span class="obj-cap">Telegram QR</span>
+          </button>
+
+          <!-- 5 · Event badge — three tiers -->
+          <button type="button" class="obj o-badge" data-obj="5" aria-pressed="false" aria-label="Event badge — VIP pass, Global Fintech Fest">
+            <span class="obj-vis">
+              <span class="badge-unit" aria-hidden="true">
+                <span class="lanyard"><span class="strap l"></span><span class="strap r"></span><span class="clip"></span></span>
+                <span class="badge-fan">
+                  <span class="tbadge t-att"><span class="tb-head">Attendee</span><span class="tb-body"><span class="tb-line"></span><span class="tb-line s2"></span></span></span>
+                  <span class="tbadge t-exh"><span class="tb-head">Exhibitor</span><span class="tb-body"><span class="tb-line"></span><span class="tb-line s2"></span></span></span>
+                  <span class="tbadge t-vip">
+                    <span class="tb-head">VIP</span>
+                    <span class="tb-body">
+                      <span class="tb-name" style="display:block">Sana Kapoor</span>
+                      <span class="tb-co" style="display:block">Fintech Wave</span>
+                      <span class="tb-event" style="display:block">Global Fintech Fest '26</span>
+                    </span>
+                  </span>
+                </span>
+              </span>
+              <span class="fx"><span class="sweep"></span><span class="bk tl"></span><span class="bk tr"></span><span class="bk bl"></span><span class="bk br"></span></span>
+            </span>
+            <span class="obj-cap">Event badge</span>
+          </button>
+
+                </div><!-- /.inputs-rail -->
+
+        <!-- ---------------- CONVERGING FLOW (desktop) ---------------- -->
+        <div class="flow" aria-hidden="true">
+          <svg viewBox="0 0 1000 120" preserveAspectRatio="none">
+            <path class="flow-path is-active" data-p="0" pathLength="100" d="M83 4 C83 66, 500 58, 500 116"/>
+            <path class="flow-path" data-p="1" pathLength="100" d="M250 4 C250 66, 500 66, 500 116"/>
+            <path class="flow-path" data-p="2" pathLength="100" d="M417 4 C417 66, 500 74, 500 116"/>
+            <path class="flow-path" data-p="3" pathLength="100" d="M583 4 C583 66, 500 74, 500 116"/>
+            <path class="flow-path" data-p="4" pathLength="100" d="M750 4 C750 66, 500 66, 500 116"/>
+            <path class="flow-path" data-p="5" pathLength="100" d="M917 4 C917 66, 500 58, 500 116"/>
+            <circle class="flow-hit" cx="500" cy="115" r="4"></circle>
+          </svg>
+        </div>
+
+        <!-- ---------------- SIMPLE CONNECTOR (mobile) ---------------- -->
+        <div class="flow-mini" aria-hidden="true"><span class="pkt"></span></div>
+
+        <!-- ---------------- LEAD CARD — six faces cross-fade ---------------- -->
+        <div class="lead-stack">
+
+          <!-- FACE 0 · from visiting card (Harvest Heaven) -->
+          <div class="leadface is-active" data-face="0">
+            <div class="panel-bar"><span class="pb-label">Lead</span><span class="pb-label pb-brand">CardPing</span></div>
+            <div class="lead-status" role="status">
+              <span class="live-dot"></span>
+              <span class="s s--focus">Detecting card…</span>
+              <span class="s s--read">Reading 6 fields…</span>
+              <span class="s s--done">Card read · lead ready · ~2.0s</span>
+            </div>
+            <div class="lead-body">
+              <div class="lead-head">
+                <div class="avatar"><span class="av-skel" aria-hidden="true"></span><span class="av-i">AT</span></div>
+                <div class="lead-id">
+                  <div class="lead-name"><span class="v" style="--i:0">Adarsh Thapa</span></div>
+                  <div class="lead-sub"><span class="v" style="--i:1">Manager</span><span class="dot" aria-hidden="true">·</span><span class="v" style="--i:2">Harvest Heaven</span></div>
+                </div>
+              </div>
+              <div class="lead-rows">
+                <div class="row"><span class="row-label">Phone</span><span class="row-val"><span class="v" style="--i:3">+91 95932 75969</span></span><span class="rc" style="--i:3" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+                <div class="row"><span class="row-label">Email</span><span class="row-val"><span class="v" style="--i:4">hhopcsl@gmail.com</span></span><span class="rc" style="--i:4" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+                <div class="row"><span class="row-label">Company</span><span class="row-val"><span class="v" style="--i:5">Harvest Heaven Organic Producers</span></span><span class="rc" style="--i:5" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+                <div class="row"><span class="row-label">City</span><span class="row-val"><span class="v" style="--i:6">Tharpu, Sikkim</span></span><span class="rc" style="--i:6" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+              </div>
+              <div class="lead-foot">
+                <span class="ftag"><svg class="fi" width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5" stroke="currentColor" stroke-width="1.8"/><line x1="7" y1="10" x2="13" y2="10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="7" y1="13.5" x2="11" y2="13.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Visiting card</span>
+                <span class="added"><span class="badge2" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Added to pipeline</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- FACE 1 · from QR code -->
+          <div class="leadface" data-face="1">
+            <div class="panel-bar"><span class="pb-label">Lead</span><span class="pb-label pb-brand">CardPing</span></div>
+            <div class="lead-status" role="status">
+              <span class="live-dot"></span>
+              <span class="s s--focus">Locking QR…</span>
+              <span class="s s--read">Decoding payload…</span>
+              <span class="s s--done">QR resolved · lead ready · ~0.8s</span>
+            </div>
+            <div class="lead-body">
+              <div class="lead-head">
+                <div class="avatar"><span class="av-skel" aria-hidden="true"></span><span class="av-i">MN</span></div>
+                <div class="lead-id">
+                  <div class="lead-name"><span class="v" style="--i:0">Meera Nair</span></div>
+                  <div class="lead-sub"><span class="v" style="--i:1">Founder</span><span class="dot" aria-hidden="true">·</span><span class="v" style="--i:2">Loop Commerce</span></div>
+                </div>
+              </div>
+              <div class="lead-rows">
+                <div class="row"><span class="row-label">Website</span><span class="row-val"><span class="v" style="--i:3">loopcommerce.in</span></span><span class="rc" style="--i:3" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+                <div class="row"><span class="row-label">Email</span><span class="row-val"><span class="v" style="--i:4">meera@loopcommerce.in</span></span><span class="rc" style="--i:4" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+                <div class="row"><span class="row-label">Company</span><span class="row-val"><span class="v" style="--i:5">Loop Commerce</span></span><span class="rc" style="--i:5" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+                <div class="row"><span class="row-label">City</span><span class="row-val"><span class="v" style="--i:6">Bengaluru, Karnataka</span></span><span class="rc" style="--i:6" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+              </div>
+              <div class="lead-foot">
+                <span class="ftag"><svg class="fi" width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="4" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="14" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="4" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.8"/><rect x="4" y="14" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.8"/></svg>Website QR</span>
+                <span class="added"><span class="badge2" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Added to pipeline</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- FACE 2 · from LinkedIn QR -->
+          <div class="leadface" data-face="2">
+            <div class="panel-bar"><span class="pb-label">Lead</span><span class="pb-label pb-brand">CardPing</span></div>
+            <div class="lead-status" role="status">
+              <span class="live-dot"></span>
+              <span class="s s--focus">Reading profile QR…</span>
+              <span class="s s--read">Resolving profile…</span>
+              <span class="s s--done">Profile read · lead ready · ~1.2s</span>
+            </div>
+            <div class="lead-body">
+              <div class="lead-head">
+                <div class="avatar"><span class="av-skel" aria-hidden="true"></span><span class="av-i">AV</span></div>
+                <div class="lead-id">
+                  <div class="lead-name"><span class="v" style="--i:0">Arjun Verma</span></div>
+                  <div class="lead-sub"><span class="v" style="--i:1">Growth @ Zephyr Labs</span><span class="dot" aria-hidden="true">·</span><span class="v" style="--i:2">ex-Razorpay</span></div>
+                </div>
+              </div>
+              <div class="lead-rows">
+                <div class="row"><span class="row-label">Company</span><span class="row-val"><span class="v" style="--i:3">Zephyr Labs</span></span><span class="rc" style="--i:3" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+                <div class="row"><span class="row-label">Role</span><span class="row-val"><span class="v" style="--i:4">Growth</span></span><span class="rc" style="--i:4" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+                <div class="row"><span class="row-label">Previously</span><span class="row-val"><span class="v" style="--i:5">Razorpay</span></span><span class="rc" style="--i:5" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+                <div class="row"><span class="row-label">City</span><span class="row-val"><span class="v" style="--i:6">Mumbai, Maharashtra</span></span><span class="rc" style="--i:6" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+              </div>
+              <div class="lead-foot">
+                <span class="ftag"><span class="gmark" style="width:15px;height:15px;background:var(--li);color:#fff;font-size:9px;font-weight:700;letter-spacing:-0.04em;display:inline-flex;align-items:center;justify-content:center" aria-hidden="true">in</span>LinkedIn profile</span>
+                <span class="added"><span class="badge2" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Added to pipeline</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- FACE 3 · from WhatsApp QR -->
+          <div class="leadface" data-face="3">
+            <div class="panel-bar"><span class="pb-label">Lead</span><span class="pb-label pb-brand">CardPing</span></div>
+            <div class="lead-status" role="status">
+              <span class="live-dot"></span>
+              <span class="s s--focus">Reading WhatsApp QR…</span>
+              <span class="s s--read">Fetching number…</span>
+              <span class="s s--done">WhatsApp lead · ready · ~0.9s</span>
+            </div>
+            <div class="lead-body">
+              <div class="lead-head">
+                <div class="avatar"><span class="av-skel" aria-hidden="true"></span><span class="av-i">RS</span></div>
+                <div class="lead-id">
+                  <div class="lead-name"><span class="v" style="--i:0">Rohit Sharma</span></div>
+                  <div class="lead-sub"><span class="v" style="--i:1">Regional Sales Lead</span><span class="dot" aria-hidden="true">·</span><span class="v" style="--i:2">Zappr Retail</span></div>
+                </div>
+              </div>
+              <div class="lead-rows">
+                <div class="row"><span class="row-label">Phone</span><span class="row-val"><span class="v" style="--i:3">+91 90040 21188</span></span><span class="rc" style="--i:3" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+                <div class="row"><span class="row-label">Role</span><span class="row-val"><span class="v" style="--i:4">Regional Sales Lead</span></span><span class="rc" style="--i:4" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+                <div class="row"><span class="row-label">Company</span><span class="row-val"><span class="v" style="--i:5">Zappr Retail</span></span><span class="rc" style="--i:5" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+                <div class="row"><span class="row-label">City</span><span class="row-val"><span class="v" style="--i:6">Delhi</span></span><span class="rc" style="--i:6" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+              </div>
+              <div class="lead-foot">
+                <span class="ftag"><svg class="gmark" width="15" height="15" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#25d366"/><path fill="#fff" d="M16 7a9 9 0 0 0-7.8 13.5L7 25l4.7-1.2A9 9 0 1 0 16 7Zm-3.3 5.1c.14 0 .4-.07.62.42.2.48.68 1.66.74 1.78.06.12.1.26.02.42-.08.16-.12.26-.24.4-.12.14-.25.31-.36.42-.12.12-.24.25-.1.49.14.24.62 1.03 1.34 1.67.92.82 1.7 1.08 1.94 1.2.24.12.38.1.52-.06.14-.16.6-.7.76-.94s.32-.2.54-.12c.22.08 1.4.66 1.64.78.24.12.4.18.46.28.06.1.06.58-.14 1.14-.2.56-1.18 1.1-1.62 1.14-.44.04-.85.2-2.87-.6-2.43-.96-4.01-3.4-4.13-3.56-.13-.16-1-1.31-1-2.48s.63-1.76.85-2c.22-.24.48-.3.64-.3Z"/></svg>WhatsApp</span>
+                <span class="added"><span class="badge2" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Added to pipeline</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- FACE 4 · from Telegram QR -->
+          <div class="leadface" data-face="4">
+            <div class="panel-bar"><span class="pb-label">Lead</span><span class="pb-label pb-brand">CardPing</span></div>
+            <div class="lead-status" role="status">
+              <span class="live-dot"></span>
+              <span class="s s--focus">Reading Telegram QR…</span>
+              <span class="s s--read">Resolving handle…</span>
+              <span class="s s--done">Telegram lead · ready · ~0.9s</span>
+            </div>
+            <div class="lead-body">
+              <div class="lead-head">
+                <div class="avatar"><span class="av-skel" aria-hidden="true"></span><span class="av-i">NR</span></div>
+                <div class="lead-id">
+                  <div class="lead-name"><span class="v" style="--i:0">Neha Rao</span></div>
+                  <div class="lead-sub"><span class="v" style="--i:1">Community Lead</span><span class="dot" aria-hidden="true">·</span><span class="v" style="--i:2">DeFi India</span></div>
+                </div>
+              </div>
+              <div class="lead-rows">
+                <div class="row"><span class="row-label">Handle</span><span class="row-val"><span class="v" style="--i:3">@neharao</span></span><span class="rc" style="--i:3" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+                <div class="row"><span class="row-label">Role</span><span class="row-val"><span class="v" style="--i:4">Community Lead</span></span><span class="rc" style="--i:4" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+                <div class="row"><span class="row-label">Company</span><span class="row-val"><span class="v" style="--i:5">DeFi India</span></span><span class="rc" style="--i:5" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+                <div class="row"><span class="row-label">City</span><span class="row-val"><span class="v" style="--i:6">Bengaluru, Karnataka</span></span><span class="rc" style="--i:6" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+              </div>
+              <div class="lead-foot">
+                <span class="ftag"><svg class="gmark" width="15" height="15" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="16" fill="#2aabee"/><path fill="#fff" d="M7.2 15.6 22 9.9c.7-.26 1.3.17 1.07 1.22l-2.5 11.8c-.17.8-.65 1-1.32.62l-3.66-2.7-1.77 1.7c-.2.2-.36.36-.73.36l.26-3.72 6.78-6.12c.3-.26-.06-.4-.46-.15l-8.38 5.28-3.6-1.13c-.78-.24-.8-.78.16-1.15Z"/></svg>Telegram</span>
+                <span class="added"><span class="badge2" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Added to pipeline</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- FACE 5 · from event badge (VIP) -->
+          <div class="leadface" data-face="5">
+            <div class="panel-bar"><span class="pb-label">Lead</span><span class="pb-label pb-brand">CardPing</span></div>
+            <div class="lead-status" role="status">
+              <span class="live-dot"></span>
+              <span class="s s--focus">Detecting badge…</span>
+              <span class="s s--read">Reading badge…</span>
+              <span class="s s--done">Badge read · lead ready · ~1.4s</span>
+            </div>
+            <div class="lead-body">
+              <div class="lead-head">
+                <div class="avatar"><span class="av-skel" aria-hidden="true"></span><span class="av-i">SK</span></div>
+                <div class="lead-id">
+                  <div class="lead-name"><span class="v" style="--i:0">Sana Kapoor</span></div>
+                  <div class="lead-sub"><span class="v" style="--i:1">Product Lead</span><span class="dot" aria-hidden="true">·</span><span class="v" style="--i:2">Fintech Wave</span></div>
+                </div>
+              </div>
+              <div class="lead-rows">
+                <div class="row"><span class="row-label">Company</span><span class="row-val"><span class="v" style="--i:3">Fintech Wave</span></span><span class="rc" style="--i:3" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+                <div class="row"><span class="row-label">Event</span><span class="row-val"><span class="v" style="--i:4">Global Fintech Fest '26</span></span><span class="rc" style="--i:4" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+                <div class="row"><span class="row-label">City</span><span class="row-val"><span class="v" style="--i:5">Mumbai, Maharashtra</span></span><span class="rc" style="--i:5" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+                <div class="row"><span class="row-label">Pass</span><span class="row-val"><span class="v" style="--i:6">VIP</span></span><span class="rc" style="--i:6" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+              </div>
+              <div class="lead-foot">
+                <span class="ftag"><svg class="fi" width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 3h6M12 3v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><rect x="5" y="6" width="14" height="15" rx="2.5" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="2" stroke="currentColor" stroke-width="1.8"/></svg>Event badge · VIP</span>
+                <span class="added"><span class="badge2" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Added to pipeline</span>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /.lead-stack -->
+      </div><!-- /.u-stage -->
+
+      <p class="u-claim">
+        CardPing is the only tool that captures the card <strong>and</strong> sends the
+        follow-up — in Indian languages, priced per event.
+      </p>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var root = document.querySelector(".cp-uscan");
+    if (!root) return;
+    var stage  = root.querySelector("#cpUStage");
+    var objs   = Array.prototype.slice.call(root.querySelectorAll(".obj"));
+    var faces  = Array.prototype.slice.call(root.querySelectorAll(".leadface"));
+    var paths  = Array.prototype.slice.call(root.querySelectorAll(".flow-path"));
+    var N = objs.length;
+
+    var CYCLE = 4200;                 // per-input dwell (matches --per)
+    var PH = { scan: 360, extract: 1500, resolve: 2560, hold: 3480 };
+
+    var timers = [];
+    function clearTimers() { for (var i = 0; i < timers.length; i++) clearTimeout(timers[i]); timers = []; }
+    function at(ms, fn) { timers.push(setTimeout(fn, ms)); }
+
+    var current = 0;
+
+    function setActive(i) {
+      current = i;
+      root.setAttribute("data-active", i);
+      for (var s = 0; s < N; s++) {
+        var on = (s === i);
+        objs[s].classList.toggle("is-active", on);
+        objs[s].setAttribute("aria-pressed", on ? "true" : "false");
+        faces[s].classList.toggle("is-active", on);
+        if (paths[s]) paths[s].classList.toggle("is-active", on);
+      }
+    }
+
+    // one input's full scan → extract → resolve → hold, then advance
+    function play(i) {
+      clearTimers();
+      root.className = "cp-uscan playing";      // clear phase classes, keep playing
+      setActive(i);
+      void stage.offsetWidth;                    // reflow so animations restart clean
+
+      at(PH.scan,    function () { root.classList.add("is-scan"); });
+      at(PH.extract, function () { root.classList.add("is-extract"); });
+      at(PH.resolve, function () { root.classList.add("is-resolve"); });
+      at(PH.hold,    function () { root.classList.add("is-hold"); });
+      at(CYCLE,      function () { play((i + 1) % N); });
+    }
+
+    var running = false;
+    function start() {
+      if (running) return;
+      running = true;
+      at(1100, function () { play(current); });  // hold resolved face 0, then loop
+    }
+    function stop() {
+      running = false;
+      clearTimers();
+      root.className = "cp-uscan";                // settle resolved & static
+      root.setAttribute("data-active", current);
+    }
+
+    // click any object to jump to it; loop keeps going
+    objs.forEach(function (obj, idx) {
+      obj.addEventListener("click", function () {
+        if (mq.matches) { setActive(idx); return; }
+        running = true;
+        play(idx);
+      });
+    });
+
+    // test/host hook: freeze a given input fully resolved & static
+    window.cpUScanFreeze = function (i) {
+      clearTimers();
+      running = false;
+      root.className = "cp-uscan";
+      setActive(typeof i === "number" ? i : current);
+    };
+
+    var mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (mq.matches) return;                       // reduced motion: leave face 0 static
+
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (e.isIntersecting) start(); else stop(); });
+      }, { threshold: 0.2 });
+      io.observe(stage);
+    } else {
+      start();
+    }
+  })();
+</script>
