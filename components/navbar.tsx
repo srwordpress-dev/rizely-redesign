@@ -38,7 +38,7 @@ export default function NavBar() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="relative flex justify-between items-center h-16">
           <div className="flex sm:hidden">
             <Button
               variant="ghost"
@@ -57,7 +57,7 @@ export default function NavBar() {
 
           <Link
             href="/"
-            className="font-medium tracking-tighter text-xl sm:text-2xl"
+            className="absolute left-1/2 -translate-x-1/2 sm:static sm:translate-x-0 font-medium tracking-tighter text-xl sm:text-2xl"
           >
             {BRAND}
             <span className="text-primary">.</span>

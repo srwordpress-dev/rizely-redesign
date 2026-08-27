@@ -58,11 +58,8 @@ export default function Testimonials() {
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: index * 0.1 }}
-            className="relative rounded-2xl border border-border bg-card/50 p-6 flex flex-col gap-4"
+            className="relative rounded-2xl border border-border bg-card/50 p-6 flex flex-col gap-5"
           >
-            <span className="self-end rounded-full border border-border px-2 py-0.5 text-[10px] uppercase tracking-wide text-muted-foreground/60">
-              Sample
-            </span>
             <blockquote className="text-sm leading-relaxed text-foreground/90">
               “{t.quote}”
             </blockquote>
