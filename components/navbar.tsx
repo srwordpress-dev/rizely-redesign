@@ -27,9 +27,12 @@ export default function NavBar() {
   const showNavbarBlur = isScrolled || isMenuOpen;
 
   return (
+    <>
     <nav
       className={`sticky top-0 z-50 w-full transition-[background-color,backdrop-filter,border-color] duration-300 ease-out ${
-        showNavbarBlur
+        isMenuOpen
+          ? "backdrop-blur bg-background/95 supports-backdrop-filter:bg-background/90 border-b border-border/60"
+          : showNavbarBlur
           ? "backdrop-blur supports-backdrop-filter:bg-background/70 border-b border-border/60"
           : "backdrop-blur-0 supports-backdrop-filter:bg-background/0 border-b border-transparent"
       }`}
@@ -113,5 +116,22 @@ export default function NavBar() {
         </AnimatePresence>
       </div>
     </nav>
+
+      {/* Dimming backdrop behind the open mobile menu */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            key="nav-backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            onClick={() => setIsMenuOpen(false)}
+            aria-hidden
+            className="sm:hidden fixed inset-x-0 top-16 bottom-0 z-40 bg-background/80 backdrop-blur-sm"
+          />
+        )}
+      </AnimatePresence>
+    </>
   );
 }

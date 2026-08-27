@@ -38,7 +38,7 @@ export default function Faq() {
       whileInView={{ y: 0, opacity: 1 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: 0.2, type: "spring", bounce: 0 }}
-      className="relative w-full max-w-(--breakpoint-xl) mx-auto px-4 py-24 gap-6 md:px-8 flex flex-col justify-center items-center"
+      className="relative w-full max-w-(--breakpoint-xl) mx-auto px-4 py-16 md:py-24 gap-6 md:px-8 flex flex-col justify-center items-center"
     >
       <div className="flex flex-col gap-3 justify-center items-center text-center">
         <h2 className="text-2xl font-semibold sm:text-3xl tracking-tight bg-linear-to-b from-foreground to-muted-foreground text-transparent bg-clip-text">

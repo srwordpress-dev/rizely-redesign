@@ -28,7 +28,7 @@ export default function HowItWorks() {
   return (
     <section
       id="how"
-      className="w-full max-w-(--breakpoint-xl) mx-auto px-4 py-24 md:px-8 flex flex-col items-center"
+      className="w-full max-w-(--breakpoint-xl) mx-auto px-4 py-16 md:py-24 md:px-8 flex flex-col items-center"
     >
       <motion.div
         initial={{ y: 20, opacity: 0 }}

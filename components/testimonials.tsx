@@ -32,7 +32,7 @@ export default function Testimonials() {
   return (
     <section
       id="testimonials"
-      className="w-full max-w-(--breakpoint-xl) mx-auto px-4 py-24 md:px-8 flex flex-col items-center"
+      className="w-full max-w-(--breakpoint-xl) mx-auto px-4 py-16 md:py-24 md:px-8 flex flex-col items-center"
     >
       <motion.div
         initial={{ y: 20, opacity: 0 }}
@@ -58,9 +58,9 @@ export default function Testimonials() {
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: index * 0.1 }}
-            className="relative rounded-2xl border border-border bg-card/50 p-6 flex flex-col gap-5"
+            className="relative rounded-2xl border border-border bg-card/50 p-6 flex flex-col gap-4"
           >
-            <span className="absolute right-4 top-4 rounded-full border border-border px-2 py-0.5 text-[10px] uppercase tracking-wide text-muted-foreground/60">
+            <span className="self-end rounded-full border border-border px-2 py-0.5 text-[10px] uppercase tracking-wide text-muted-foreground/60">
               Sample
             </span>
             <blockquote className="text-sm leading-relaxed text-foreground/90">

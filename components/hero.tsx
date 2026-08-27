@@ -60,7 +60,7 @@ export default function Hero() {
                 type="tel"
                 name="phone"
                 required
-                placeholder="Not ready? Leave your number — +91 98765 43210"
+                placeholder="Not ready? Leave your number"
                 className="flex-1 h-11 rounded-md border border-border bg-card px-3 text-sm text-foreground placeholder:text-muted-foreground/70 outline-none focus:border-primary transition-colors"
               />
               <Button type="submit" variant="outline" size="lg" className="h-11 shrink-0">

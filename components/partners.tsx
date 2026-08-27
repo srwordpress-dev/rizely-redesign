@@ -69,7 +69,7 @@ const tools: Tool[] = [
     svg: (
       <svg
         viewBox="0 0 24 24"
-        className={cls}
+        className={`${cls} text-primary`}
         fill="none"
         stroke="currentColor"
         strokeWidth={1.7}
@@ -105,7 +105,9 @@ export default function Partners() {
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: index * 0.08, type: "spring", bounce: 0 }}
-            className="flex items-center gap-2 text-muted-foreground"
+            className={`flex items-center gap-2 text-muted-foreground ${
+              index === tools.length - 1 ? "col-span-2 sm:col-span-1" : ""
+            }`}
           >
             {tool.svg}
             <span className="text-sm font-medium">{tool.name}</span>
