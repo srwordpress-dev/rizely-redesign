@@ -26,7 +26,13 @@ const tools: Tool[] = [
     name: "Telegram",
     svg: (
       <svg viewBox="0 0 48 48" className={cls} aria-hidden="true">
-        <circle cx="24" cy="24" r="20" fill="#29A9EB" />
+        <defs>
+          <linearGradient id="tg-grad" x1="24" y1="4" x2="24" y2="44" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stopColor="#2AABEE" />
+            <stop offset="1" stopColor="#229ED9" />
+          </linearGradient>
+        </defs>
+        <circle cx="24" cy="24" r="20" fill="url(#tg-grad)" />
         <path
           fill="#fff"
           d="M34.6 15.4 30.8 33.6c-.3 1.3-1 1.6-2.1 1l-5.8-4.3-2.8 2.7c-.3.3-.6.6-1.2.6l.4-6.1L30.4 18c.5-.4-.1-.6-.7-.3L13.9 27l-5.8-1.8c-1.3-.4-1.3-1.3.3-1.9l22.7-8.8c1-.4 2 .2 1.5 2z"
