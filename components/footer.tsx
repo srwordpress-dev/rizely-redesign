@@ -38,8 +38,8 @@ const Footer = () => {
 
         <Separator />
 
-        <div className="grid gap-8 sm:grid-cols-2 sm:gap-10 lg:grid-cols-3 pt-10">
-          <div className="space-y-3">
+        <div className="grid gap-10 pt-10 lg:grid-cols-2">
+          <div className="space-y-3 lg:max-w-sm">
             <Link href="/" className="inline-block text-xl font-medium tracking-tight">
               {BRAND}
               <span className="text-primary">.</span>
@@ -50,28 +50,30 @@ const Footer = () => {
             </p>
           </div>
 
-          <div className="space-y-3">
-            <h3 className="text-sm font-semibold">Explore</h3>
-            <div className="flex flex-col gap-2">
-              {footerLinks.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  {item.name}
-                </Link>
-              ))}
+          <div className="grid grid-cols-2 gap-8 sm:gap-12 lg:flex lg:gap-24">
+            <div className="space-y-3">
+              <h3 className="text-sm font-semibold">Explore</h3>
+              <div className="flex flex-col gap-2">
+                {footerLinks.map((item) => (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
             </div>
-          </div>
 
-          <div className="space-y-3">
-            <h3 className="text-sm font-semibold">Built for India</h3>
-            <ul className="flex flex-col gap-2 text-sm text-muted-foreground">
-              <li>GST invoice on every plan</li>
-              <li>Hindi, Gujarati &amp; Marathi capture</li>
-              <li>Handled with DPDP in mind</li>
-            </ul>
+            <div className="space-y-3">
+              <h3 className="text-sm font-semibold">Built for India</h3>
+              <ul className="flex flex-col gap-2 text-sm text-muted-foreground">
+                <li>GST invoice on every plan</li>
+                <li>Hindi, Gujarati &amp; Marathi capture</li>
+                <li>Handled with DPDP in mind</li>
+              </ul>
+            </div>
           </div>
         </div>
 
