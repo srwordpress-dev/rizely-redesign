@@ -7,7 +7,7 @@ import { Database } from "lucide-react";
 type Tool = {
   name: string;
   Icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>;
-  color?: string; // official brand color; omit to fall back to the CardPing accent
+  color?: string; // official brand color; omit to fall back to the Rizely accent
 };
 
 const tools: Tool[] = [

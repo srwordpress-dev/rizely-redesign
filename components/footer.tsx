@@ -5,6 +5,7 @@ import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { BRAND, WHATSAPP_URL } from "@/lib/site";
+import Logo from "@/components/logo";
 
 const Footer = () => {
   const year = new Date().getFullYear();
@@ -40,9 +41,8 @@ const Footer = () => {
 
         <div className="grid gap-10 pt-10 lg:grid-cols-2">
           <div className="space-y-3 lg:max-w-sm">
-            <Link href="/" className="inline-block text-xl font-medium tracking-tight">
-              {BRAND}
-              <span className="text-primary">.</span>
+            <Link href="/" aria-label={BRAND} className="inline-flex items-center">
+              <Logo className="h-6 w-auto" />
             </Link>
             <p className="max-w-xs text-sm leading-relaxed text-muted-foreground">
               Scan the card, send the follow-up — inside WhatsApp and Telegram, in Indian

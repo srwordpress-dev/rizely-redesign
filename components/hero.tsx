@@ -28,7 +28,7 @@ export default function Hero() {
           </h1>
 
           <p className="max-w-2xl text-base sm:text-lg mx-auto text-muted-foreground text-balance">
-            CardPing is the WhatsApp &amp; Telegram business-card scanner built for events:
+            Rizely is the WhatsApp &amp; Telegram business-card scanner built for events:
             photograph any card, it becomes a managed lead, and a personalised follow-up goes
             out in seconds — in Indian languages, no app to install.
           </p>

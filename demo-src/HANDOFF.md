@@ -1,16 +1,18 @@
-# CardPing landing page — session handoff
+# Rizely landing page — session handoff
 
 Paste this whole file into a fresh Claude Code session (run it from `/Users/ankushgupta/cardping-website`).
 
 ---
 
-You are continuing work on the **CardPing** marketing landing page. It is **already built, live, and
+You are continuing work on the **Rizely** marketing landing page. It is **already built, live, and
 audited**. Read this fully before touching anything.
 
-## What CardPing is (don't re-derive — use this)
+> **Brand (Sep 2026 rebrand):** the product is **Rizely**. The wordmark lives at `public/rizely-logo-dark.png` (light-on-dark, used by `components/logo.tsx`) with the as-supplied master at `public/rizely-logo.png`; the mark is `app/icon.png`. Brand purple is `#7848d8`. **Note the conflict:** the palette below is still CardPing's terracotta `#C2703F` and the guardrails still say "no purple" — the colour pass is deliberately deferred to Ankush, so treat terracotta as current and the purple logo as the one exception.
+
+## What Rizely is (don't re-derive — use this)
 WhatsApp- and Telegram-native **AI agent** that scans business cards collected at events, turns each into a
 managed lead, and handles the follow-up. India-first (INR, GST, Indian-language card capture, per-event pricing).
-- **The one safe superiority claim (verbatim, the ONLY "only/first" allowed):** "CardPing is the only tool that
+- **The one safe superiority claim (verbatim, the ONLY "only/first" allowed):** "Rizely is the only tool that
   captures the card **and** sends the follow-up — in Indian languages, priced per event."
 - **NEVER use these killed claims:** "India's first", "99.2% accuracy", a "₹1,499" tier, or naming dead products
   (CamCard, ABBYY, Microsoft Lens). Never call it a "service" — it's an **AI agent**. Banned CTAs: Sign Up /
@@ -39,7 +41,7 @@ as recognisable logos inside the integrations row and the chat/scanner mockups �
 **walkthrough** · pricing · faq · footer`. The three **bold** ones are the animated demos built this project:
 
 1. **chat-demo** (`components/chat-demo.tsx`) — a guided 5-step tour (left) beside two synced, scrollable phones
-   (right): iPhone/WhatsApp + Samsung/Telegram, **100% real chat UI**, verified CardPing seal, "no app to install"
+   (right): iPhone/WhatsApp + Samsung/Telegram, **100% real chat UI**, verified Rizely seal, "no app to install"
    headline. Steps: Snap the card → AI reads it → Filed under the event → Voice note transcribed → **Follow-up
    campaign scheduled (runs over the next 3 days)**. Uses cleared real cards (Adarsh Thapa/Harvest Heaven on
    WhatsApp, Amit Kumar/Recliners on Telegram). Auto-advances + Play/Pause/Prev/Next + clickable steps.
@@ -84,7 +86,7 @@ Each demo component is **auto-generated** — do not hand-edit the `.tsx`. Inste
 
 ## >>> TOP TODO for this session (Ankush's latest request) <<<
 Fix the **walkthrough** section ("Everything you scanned, working for you." — `demo-src/walkthrough.src.html`):
-- The four numbered step pointers (left column) should be reframed to be **universal to CardPing's actual features**
+- The four numbered step pointers (left column) should be reframed to be **universal to Rizely's actual features**
   (e.g. capture, auto-enrich, file under event, **credits**, **auto follow-up / campaigns**, voice notes,
   export to Sheets/CRM) — right now step 2/3 lean on specific sample events. Make the step copy feature-driven, not
   event-specific.
@@ -99,7 +101,7 @@ Fix the **walkthrough** section ("Everything you scanned, working for you." — 
   follow-up as a **3-day campaign**. Ankush may want this reconciled site-wide.
 - **QR/badge capabilities:** the scanner presents QR + LinkedIn/WhatsApp/Telegram QR + event-badge capture as live.
   Per Ankush, the **visiting card is live now; QR + badge ship ~next week** — shown as capabilities on purpose.
-- **Deferred:** a problem→solution brand-story animation (event → stack of cards → ₹12L lost → CardPing fixes it)
+- **Deferred:** a problem→solution brand-story animation (event → stack of cards → ₹12L lost → Rizely fixes it)
   was scoped but deferred by Ankush. The pain numbers: 73% of event leads never followed up · 9-day delay ·
   6+ hrs/event · ₹12L+ lost → 6h→2s, 9d→60s, 73%→100%.
 - **"Your CRM"** in the partners row is intentionally a neutral mark (agnostic). Ankush may later want a specific CRM.

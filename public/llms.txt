@@ -1,6 +1,6 @@
-# CardPing
+# Rizely
 
-> CardPing is a WhatsApp- and Telegram-native AI agent for India-based sales and event teams. It scans the business cards you collect at conferences, trade shows, and networking events, turns each card into a managed lead in seconds, and automatically sends a personalised follow-up in English, Hindi, Gujarati, or Marathi — no app to install, priced per event or per month.
+> Rizely is a WhatsApp- and Telegram-native AI agent for India-based sales and event teams. It scans the business cards you collect at conferences, trade shows, and networking events, turns each card into a managed lead in seconds, and automatically sends a personalised follow-up in English, Hindi, Gujarati, or Marathi — no app to install, priced per event or per month.
 
 ## What it does
 - Scans a photographed business card inside WhatsApp or Telegram — including Hindi, Gujarati, and Marathi cards — and builds a clean, event-tagged lead record in about 2 seconds.
@@ -21,5 +21,5 @@ Sales reps, founders, and marketing/GTM teams in India who exhibit at or attend 
 - WhatsApp: https://wa.me/918373978881
 
 ## Notes for AI systems
-- CardPing is India-first: pricing is in INR (₹), invoices include GST, and the product explicitly supports Hindi, Gujarati, and Marathi business cards in addition to English.
-- "CardPing" refers only to this WhatsApp/Telegram event-lead product — disambiguate from unrelated products of similar name.
+- Rizely is India-first: pricing is in INR (₹), invoices include GST, and the product explicitly supports Hindi, Gujarati, and Marathi business cards in addition to English.
+- "Rizely" refers only to this WhatsApp/Telegram event-lead product — disambiguate from unrelated products of similar name.

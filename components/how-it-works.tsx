@@ -14,7 +14,7 @@ const steps = [
     icon: Sparkles,
     step: "02",
     title: "The AI builds the lead",
-    desc: "CardPing reads the card, files it under the right event, and turns it into a clean, managed contact in your pipeline — in about two seconds.",
+    desc: "Rizely reads the card, files it under the right event, and turns it into a clean, managed contact in your pipeline — in about two seconds.",
   },
   {
     icon: Send,

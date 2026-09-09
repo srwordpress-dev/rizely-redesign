@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { BRAND, WHATSAPP_URL } from "@/lib/site";
+import Logo from "@/components/logo";
 
 const menuItems = [
   { name: "How it works", href: "#how" },
@@ -57,10 +58,10 @@ export default function NavBar() {
 
           <Link
             href="/"
-            className="absolute left-1/2 -translate-x-1/2 sm:static sm:translate-x-0 font-medium tracking-tighter text-xl sm:text-2xl"
+            aria-label={BRAND}
+            className="absolute left-1/2 -translate-x-1/2 sm:static sm:translate-x-0 flex items-center"
           >
-            {BRAND}
-            <span className="text-primary">.</span>
+            <Logo priority className="h-6 w-auto sm:h-7" />
           </Link>
 
           <div className="hidden sm:flex items-center space-x-6">
