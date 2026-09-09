@@ -27,19 +27,37 @@ so a post slug can never collide with a future marketing page.
 
 1. Write and **publish** the article in Strapi. Draft-but-saved is invisible to
    the public API, so it will not appear even after a rebuild.
-2. Strapi fires its webhook at the Netlify build hook (`strapi-publish`).
-3. Netlify rebuilds and deploys. Takes roughly a minute.
+2. Strapi fires the `netlify-build` webhook at the Netlify build hook.
+3. Netlify rebuilds and deploys. Roughly 45 seconds.
+
+Verified end to end on 9 Sep 2026: publishing an edit in Strapi produced a
+Netlify build with no manual step, and the change was live on rizely.net.
 
 If a post is published but not live, check in this order: is it actually
 published (not draft), did the webhook fire (Strapi → Settings → Webhooks shows
 delivery status), did the Netlify build succeed.
 
-### Wiring that up (once)
+### This is already wired up
 
-- **Netlify:** the build hook already exists — project `cardping` → Build &
-  deploy → Build hooks → `strapi-publish`. Copy its URL from there.
-- **Strapi:** Settings → Webhooks → Create. POST to that URL, and enable
-  `Entry publish`, `Entry update` and `Entry unpublish` for Article.
+Both halves exist, so publishing needs no manual step:
+
+- **Netlify:** build hook `strapi-publish` (project `cardping` → Build & deploy
+  → Build hooks).
+- **Strapi:** a webhook named `netlify-build`, registered **in code** by
+  `scripts/ensure-netlify-webhook.js` in rizely-cms, which runs on every boot
+  when `NETLIFY_BUILD_HOOK_URL` is set on the Railway service. It lives in
+  bootstrap rather than being clicked into the admin UI because the
+  Settings → Webhooks page would not load in the browser — and keeping it there
+  means it self-heals if the row is ever deleted.
+
+It fires on **`entry.publish`, `entry.unpublish` and `entry.delete`** only.
+`entry.update` was tried and removed: with draft & publish on, editing a live
+post changes the draft and only reaches the public API when someone publishes,
+so `entry.publish` already covers edits — while `entry.update` additionally
+fired on every draft save and cost two builds per publish.
+
+To change the URL or the events, edit that script and redeploy. Do not add a
+second webhook by hand, or every publish will trigger two builds.
 
 ## Environment
 
