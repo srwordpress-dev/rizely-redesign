@@ -7,7 +7,7 @@ Paste this whole file into a fresh Claude Code session (run it from `/Users/anku
 You are continuing work on the **Rizely** marketing landing page. It is **already built, live, and
 audited**. Read this fully before touching anything.
 
-> **Brand (Sep 2026 rebrand):** the product is **Rizely**. The wordmark lives at `public/rizely-logo-dark.png` (light-on-dark, used by `components/logo.tsx`) with the as-supplied master at `public/rizely-logo.png`; the mark is `app/icon.png`. The single accent is now **Rizely purple `#7848d8`** (`--primary` = `oklch(0.537 0.208 293.44)`, glow `--light` = `#7f4aee`) — the old terracotta `#C2703F` is gone everywhere, including the baked-in OG image. The "no purple" rule below is obsolete: purple IS the brand now. Still true: **one accent only**, no glassmorphism, real product UI not AI blobs.
+> **Brand (Sep 2026 rebrand):** the product is **Rizely**. The wordmark lives at `public/rizely-logo-dark.png` (light-on-dark, used by `components/logo.tsx`) with the as-supplied master at `public/rizely-logo.png`; the mark is `app/icon.png`. Brand purple is `#7848d8`. **Note the conflict:** the palette below is still CardPing's terracotta `#C2703F` and the guardrails still say "no purple" — the colour pass is deliberately deferred to Ankush, so treat terracotta as current and the purple logo as the one exception.
 
 ## What Rizely is (don't re-derive — use this)
 WhatsApp- and Telegram-native **AI agent** that scans business cards collected at events, turns each into a
@@ -31,8 +31,8 @@ managed lead, and handles the follow-up. India-first (INR, GST, Indian-language 
 
 ## Design system — match EXACTLY (one accent only)
 bg `#0a0a0a`, surface `#141414` / `#191919`, hairline borders `rgba(255,255,255,.08)` / `.14`, off-white text
-`#ededed` / muted `#a1a1a1`. **ONE accent = Rizely purple `#7848d8`** (`--primary` oklch(0.537 0.208 293.44), glow
-`#7f4aee`). Geist + Geist Mono + Noto Sans Devanagari. No glassmorphism, real product UI not AI blobs.
+`#ededed` / muted `#a1a1a1`. **ONE accent = terracotta `#c2703f`** (`--primary` oklch(0.63 0.12 47), glow
+`#d1743f`). Geist + Geist Mono + Noto Sans Devanagari. No purple, no glassmorphism, real product UI not AI blobs.
 Exception: third-party brand marks (WhatsApp green, Telegram blue, Gmail multicolor, LinkedIn blue) are allowed
 as recognisable logos inside the integrations row and the chat/scanner mockups — they are not "the accent".
 
