@@ -1,6 +1,18 @@
 import { SITE_URL } from "@/lib/site";
 
-const graph = {
+/* Split into two graphs on purpose.
+ *
+ * SITE_GRAPH (Organization + WebSite) describes the publisher and is correct on
+ * every page. HOME_GRAPH (SoftwareApplication with its price Offers, and the
+ * FAQPage) describes things that only exist on the homepage.
+ *
+ * Both used to render from the root layout, which meant /privacy, /terms and
+ * every blog post claimed six FAQs and four pricing offers that were nowhere on
+ * the page — against Google's rule that structured data must describe visible
+ * content. Worse, a blog post carrying its own FAQs emitted two competing
+ * FAQPage nodes. So HOME_GRAPH is rendered by app/page.tsx alone.
+ */
+const SITE_GRAPH = {
   "@context": "https://schema.org",
   "@graph": [
     {
@@ -20,6 +32,12 @@ const graph = {
       publisher: { "@id": `${SITE_URL}/#organization` },
       inLanguage: "en-IN",
     },
+  ],
+};
+
+const HOME_GRAPH = {
+  "@context": "https://schema.org",
+  "@graph": [
     {
       "@type": "SoftwareApplication",
       name: "Rizely",
@@ -92,11 +110,21 @@ const graph = {
   ],
 };
 
-export default function StructuredData() {
+function Ld({ graph }: { graph: unknown }) {
   return (
     <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(graph) }}
     />
   );
+}
+
+/** Publisher identity. Rendered once from the root layout, on every page. */
+export default function StructuredData() {
+  return <Ld graph={SITE_GRAPH} />;
+}
+
+/** Product + FAQ markup. Homepage only — that is the page that shows them. */
+export function HomeStructuredData() {
+  return <Ld graph={HOME_GRAPH} />;
 }

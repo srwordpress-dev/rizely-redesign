@@ -10,10 +10,13 @@ import Logo from "@/components/logo";
 const Footer = () => {
   const year = new Date().getFullYear();
 
+  // Absolute, for the same reason as the navbar: the footer renders on the
+  // legal and blog pages, where a bare hash anchor resolves nowhere.
   const footerLinks = [
-    { name: "How it works", href: "#how" },
-    { name: "Pricing", href: "#pricing" },
-    { name: "FAQ", href: "#faq" },
+    { name: "How it works", href: "/#how" },
+    { name: "Pricing", href: "/#pricing" },
+    { name: "FAQ", href: "/#faq" },
+    { name: "Blog", href: "/blogs" },
   ];
 
   return (

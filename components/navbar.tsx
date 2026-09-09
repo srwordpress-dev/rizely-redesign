@@ -8,10 +8,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import { BRAND, WHATSAPP_URL } from "@/lib/site";
 import Logo from "@/components/logo";
 
+// Absolute hrefs, not bare "#how": these render on /blogs and /privacy too,
+// where a bare hash would resolve to /blogs#how and go nowhere.
 const menuItems = [
-  { name: "How it works", href: "#how" },
-  { name: "Pricing", href: "#pricing" },
-  { name: "FAQ", href: "#faq" },
+  { name: "How it works", href: "/#how" },
+  { name: "Pricing", href: "/#pricing" },
+  { name: "FAQ", href: "/#faq" },
+  { name: "Blog", href: "/blogs" },
 ];
 
 export default function NavBar() {
