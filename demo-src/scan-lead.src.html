@@ -28,10 +28,10 @@
     --text:        #ededed;
     --muted:       #a1a1a1;
 
-    --acc:         #c2703f;
-    --acc-fill:    rgba(194, 112, 63, 0.14);
-    --acc-line:    rgba(194, 112, 63, 0.35);
-    --acc-glow:    #d1743f;
+    --acc:         #7848d8;
+    --acc-fill:    rgba(120, 72, 216, 0.14);
+    --acc-line:    rgba(120, 72, 216, 0.35);
+    --acc-glow:    #7f4aee;
 
     --paper:       #f6f4ee;
     --paper-ink:   #221e19;
@@ -78,7 +78,7 @@
     width: min(980px, 94%);
     height: 560px;
     transform: translateX(-50%);
-    background: radial-gradient(ellipse at center, rgba(194, 112, 63, 0.15), rgba(194, 112, 63, 0) 68%);
+    background: radial-gradient(ellipse at center, rgba(120, 72, 216, 0.15), rgba(120, 72, 216, 0) 68%);
     filter: blur(14px);
     pointer-events: none;
     z-index: 0;
@@ -109,7 +109,7 @@
     width: 6px; height: 6px;
     border-radius: 2px;
     background: var(--acc-glow);
-    box-shadow: 0 0 10px rgba(209, 116, 63, 0.7);
+    box-shadow: 0 0 10px rgba(127, 74, 238, 0.7);
   }
 
   .cp-uscan .u-heading {
@@ -203,9 +203,9 @@
     opacity: 1;
     border-color: var(--acc-line);
     box-shadow:
-      0 0 0 1px rgba(194,112,63,0.14),
-      0 16px 40px -14px rgba(209,116,63,0.55),
-      0 0 26px -4px rgba(209,116,63,0.30);
+      0 0 0 1px rgba(120,72,216,0.14),
+      0 16px 40px -14px rgba(127,74,238,0.55),
+      0 0 26px -4px rgba(127,74,238,0.30);
   }
 
   .cp-uscan .obj-cap {
@@ -227,7 +227,7 @@
     width: 15px; height: 15px;
     border: 2px solid var(--acc);
     opacity: 0;
-    filter: drop-shadow(0 0 6px rgba(209,116,63,0.55));
+    filter: drop-shadow(0 0 6px rgba(127,74,238,0.55));
   }
   .cp-uscan .obj .bk.tl { top: 0; left: 0; border-right: 0; border-bottom: 0; border-top-left-radius: 5px; }
   .cp-uscan .obj .bk.tr { top: 0; right: 0; border-left: 0; border-bottom: 0; border-top-right-radius: 5px; }
@@ -240,12 +240,12 @@
     border-radius: 8px;
     opacity: 0;
     background: linear-gradient(180deg,
-      rgba(209,116,63,0) 0%,
-      rgba(209,116,63,0.10) 60%,
-      rgba(209,116,63,0.32) 96%,
-      rgba(209,116,63,0) 100%);
+      rgba(127,74,238,0) 0%,
+      rgba(127,74,238,0.10) 60%,
+      rgba(127,74,238,0.32) 96%,
+      rgba(127,74,238,0) 100%);
     border-bottom: 1.5px solid var(--acc-glow);
-    box-shadow: 0 6px 22px -2px rgba(209,116,63,0.5);
+    box-shadow: 0 6px 22px -2px rgba(127,74,238,0.5);
   }
 
   /* ---------- REALISTIC OBJECTS — each recognisably real & distinct ---------- */
@@ -346,7 +346,7 @@
     display: flex; align-items: center; gap: 3px;
     font-size: 6.4px; font-weight: 600; color: #4a4234; letter-spacing: 0.01em;
   }
-  .cp-uscan .poster-url svg { width: 6px; height: 6px; color: #9a5228; flex: none; }
+  .cp-uscan .poster-url svg { width: 6px; height: 6px; color: #572bab; flex: none; }
 
   /* --- 2 · LinkedIn profile QR card --- */
   .cp-uscan .li-card {
@@ -420,7 +420,7 @@
   .cp-uscan .strap {
     position: absolute; bottom: -1px; left: 50%;
     width: 9px; height: 34px; border-radius: 2px 2px 0 0;
-    background: linear-gradient(180deg, #7c4a2c 0%, var(--acc) 55%, #a85c30 100%);
+    background: linear-gradient(180deg, #472a80 0%, var(--acc) 55%, #6235bb 100%);
     transform-origin: bottom center;
     box-shadow: inset 0 0 0 1px rgba(0,0,0,0.12);
   }
@@ -496,7 +496,7 @@
   .cp-uscan.playing.is-resolve .flow-path.is-active {
     stroke: var(--acc-glow);
     stroke-width: 1.9;
-    filter: drop-shadow(0 0 4px rgba(209,116,63,0.65));
+    filter: drop-shadow(0 0 4px rgba(127,74,238,0.65));
     stroke-dasharray: 22 100;
     animation: cpFlowDraw 1.25s var(--ease) both;
   }
@@ -574,7 +574,7 @@
   .cp-uscan .live-dot {
     width: 7px; height: 7px; border-radius: 50%;
     background: var(--acc-glow);
-    box-shadow: 0 0 8px rgba(209,116,63,0.8);
+    box-shadow: 0 0 8px rgba(127,74,238,0.8);
     flex: none;
     animation: cpLive 1.5s ease-in-out infinite;
   }
@@ -589,9 +589,9 @@
     width: 50px; height: 50px;
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    background: linear-gradient(150deg, var(--acc-glow), #9d5228);
+    background: linear-gradient(150deg, var(--acc-glow), #572baf);
     color: #fff; font-weight: 600; font-size: 17px;
-    box-shadow: 0 6px 16px -6px rgba(194,112,63,0.7);
+    box-shadow: 0 6px 16px -6px rgba(120,72,216,0.7);
   }
   .cp-uscan .av-skel {
     position: absolute; inset: 0;
@@ -663,7 +663,7 @@
   .cp-uscan .added .badge2 {
     width: 18px; height: 18px; border-radius: 50%;
     display: inline-flex; align-items: center; justify-content: center;
-    background: var(--acc); color: #120c07;
+    background: var(--acc); color: #ffffff;
     flex: none;
   }
 
@@ -675,7 +675,7 @@
     max-width: 720px;
     padding: 16px 18px;
     border-left: 2px solid var(--acc-line);
-    background: linear-gradient(90deg, var(--acc-fill), rgba(194,112,63,0));
+    background: linear-gradient(90deg, var(--acc-fill), rgba(120,72,216,0));
     border-radius: 4px;
     font-size: clamp(14px, 1.5vw, 16px);
     line-height: 1.55;
@@ -727,8 +727,8 @@
   .cp-uscan.playing.is-resolve .obj.is-active .bk { opacity: 0; }
   .cp-uscan.playing.is-resolve .leadface.is-active .av-skel { opacity: 0; }
   .cp-uscan.playing.is-resolve .leadface.is-active .avatar {
-    background: linear-gradient(150deg, var(--acc-glow), #9d5228);
-    box-shadow: 0 6px 16px -6px rgba(194,112,63,0.7);
+    background: linear-gradient(150deg, var(--acc-glow), #572baf);
+    box-shadow: 0 6px 16px -6px rgba(120,72,216,0.7);
   }
   .cp-uscan.playing.is-resolve .leadface.is-active .av-i { animation: cpPop 0.5s var(--ease) both; opacity: 1; }
   .cp-uscan.playing.is-resolve .leadface.is-active .ftag { animation: cpReveal 0.5s var(--ease) both; }
@@ -747,9 +747,9 @@
   }
   @keyframes cpBk { from { opacity: 0; transform: scale(1.4); } to { opacity: 1; transform: scale(1); } }
   @keyframes cpReveal {
-    0%   { opacity: 0; transform: translateY(7px); text-shadow: 0 0 12px rgba(209,116,63,0); }
-    55%  { opacity: 1; text-shadow: 0 0 13px rgba(209,116,63,0.5); }
-    100% { opacity: 1; transform: translateY(0); text-shadow: 0 0 0 rgba(209,116,63,0); }
+    0%   { opacity: 0; transform: translateY(7px); text-shadow: 0 0 12px rgba(127,74,238,0); }
+    55%  { opacity: 1; text-shadow: 0 0 13px rgba(127,74,238,0.5); }
+    100% { opacity: 1; transform: translateY(0); text-shadow: 0 0 0 rgba(127,74,238,0); }
   }
   @keyframes cpPop {
     0%   { opacity: 0; transform: scale(0.5); }
@@ -758,8 +758,8 @@
   }
   @keyframes cpLive { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
   @keyframes cpBadge {
-    0%   { box-shadow: 0 0 0 0 rgba(209,116,63,0.55); }
-    100% { box-shadow: 0 0 0 12px rgba(209,116,63,0); }
+    0%   { box-shadow: 0 0 0 0 rgba(127,74,238,0.55); }
+    100% { box-shadow: 0 0 0 12px rgba(127,74,238,0); }
   }
   @keyframes cpFlowDraw {
     0%   { stroke-dashoffset: 122; }
@@ -788,7 +788,7 @@
       width: 2px;
       height: clamp(34px, 9vw, 52px);
       margin: 18px auto 16px;
-      background: linear-gradient(180deg, var(--acc-line), rgba(194,112,63,0.05));
+      background: linear-gradient(180deg, var(--acc-line), rgba(120,72,216,0.05));
       border-radius: 2px;
       overflow: visible;
     }
@@ -805,7 +805,7 @@
       left: 50%; top: 0; transform: translateX(-50%);
       width: 7px; height: 7px; border-radius: 50%;
       background: var(--acc-glow);
-      box-shadow: 0 0 10px rgba(209,116,63,0.9);
+      box-shadow: 0 0 10px rgba(127,74,238,0.9);
       opacity: 0;
     }
     .cp-uscan.playing.is-extract .flow-mini .pkt,

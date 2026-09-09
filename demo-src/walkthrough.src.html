@@ -13,10 +13,10 @@
     --hair2: rgba(255,255,255,0.14);
     --text: #ededed;
     --muted: #a1a1a1;
-    --acc: #c2703f;
-    --acc-fill: rgba(194,112,63,0.14);
-    --acc-line: rgba(194,112,63,0.38);
-    --glow: #d1743f;
+    --acc: #7848d8;
+    --acc-fill: rgba(120,72,216,0.14);
+    --acc-line: rgba(120,72,216,0.38);
+    --glow: #7f4aee;
 
     /* light dashboard — matched to the real Rizely app */
     --d-bg: #f6f5f3;
@@ -25,8 +25,8 @@
     --d-ink: #211f1c;
     --d-mut: #8a837b;
     --d-hair: #eceae6;
-    --d-acc: #c2703f;
-    --d-accfill: #f6ece4;
+    --d-acc: #7848d8;
+    --d-accfill: #f2eafd;
     --d-green: #2f9e44;
     --d-greenfill: #eaf6ec;
 
@@ -62,7 +62,7 @@
     background: var(--surface); border: 1px solid var(--hair); color: var(--muted);
     transition: background 0.25s, color 0.25s, border-color 0.25s;
   }
-  .step[aria-current="true"] .num { background: var(--acc); border-color: var(--acc); color: #120c07; }
+  .step[aria-current="true"] .num { background: var(--acc); border-color: var(--acc); color: #ffffff; }
   .step .st-t { font-size: 0.98rem; font-weight: 600; margin-bottom: 3px; }
   .step .st-d { font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
   .step .st-bar { grid-column: 1 / -1; height: 2px; border-radius: 2px; background: var(--hair); margin-top: 12px; overflow: hidden; display: none; }
@@ -72,7 +72,7 @@
   @keyframes cpwFill { from { width: 0; } to { width: 100%; } }
 
   /* browser frame */
-  .frame { border-radius: 16px; overflow: hidden; border: 1px solid var(--hair); background: #201f1e; box-shadow: 0 40px 80px -34px rgba(0,0,0,0.9), 0 0 90px -50px rgba(209,116,63,0.5); }
+  .frame { border-radius: 16px; overflow: hidden; border: 1px solid var(--hair); background: #201f1e; box-shadow: 0 40px 80px -34px rgba(0,0,0,0.9), 0 0 90px -50px rgba(127,74,238,0.5); }
   .titlebar { display: flex; align-items: center; gap: 10px; padding: 10px 13px; background: #201f1e; }
   .lights { display: inline-flex; gap: 6px; }
   .lights i { width: 11px; height: 11px; border-radius: 50%; display: block; }
@@ -88,7 +88,7 @@
   /* sidebar */
   .side { background: var(--d-side); border-right: 1px solid var(--d-hair); padding: 12px 9px; display: flex; flex-direction: column; gap: 2px; }
   .side .brand { display: flex; align-items: center; gap: 8px; padding: 4px 7px 12px; }
-  .side .brand .logo { width: 26px; height: 26px; border-radius: 7px; background: linear-gradient(150deg,var(--acc),#8f4522); display: grid; place-items: center; color: #fff; font-weight: 700; font-size: 0.82rem; flex: none; }
+  .side .brand .logo { width: 26px; height: 26px; border-radius: 7px; background: linear-gradient(150deg,var(--acc),#471fa1); display: grid; place-items: center; color: #fff; font-weight: 700; font-size: 0.82rem; flex: none; }
   .side .brand .bwrap { display: flex; flex-direction: column; line-height: 1.15; }
   .side .brand .bn { font-weight: 700; color: var(--d-ink); font-size: 0.92rem; }
   .side .brand .bt { font-size: 0.58rem; color: var(--d-mut); letter-spacing: 0.01em; }
@@ -107,7 +107,7 @@
   .credits svg { width: 13px; height: 13px; }
   .tbtn { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; color: var(--d-mut); }
   .tbtn svg { width: 16px; height: 16px; }
-  .app-top .ava-t { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(150deg,var(--acc),#8f4522); color: #fff; display: grid; place-items: center; font-size: 0.66rem; font-weight: 700; }
+  .app-top .ava-t { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(150deg,var(--acc),#471fa1); color: #fff; display: grid; place-items: center; font-size: 0.66rem; font-weight: 700; }
   @media (max-width: 560px) { .credits .clabel { display: none; } }
 
   .panels { position: relative; flex: 1; overflow: hidden; }
@@ -144,7 +144,7 @@
   .scan-when { font-size: 0.6rem; line-height: 1.3; white-space: nowrap; color: var(--d-mut); }
   @media (max-width: 560px) { .scan-row { grid-template-columns: 1.7fr 1fr 22px 40px; gap: 6px; padding-left: 10px; padding-right: 10px; } .scan-row .col-job, .scan-row .col-tag, .scan-row .col-ev { display: none; } .scan-row .who .nm { white-space: normal; overflow: visible; } }
   .who { display: flex; align-items: center; gap: 8px; min-width: 0; }
-  .ava { width: 26px; height: 26px; border-radius: 50%; flex: none; display: grid; place-items: center; color: #fff; font-size: 0.58rem; font-weight: 700; background: linear-gradient(150deg,var(--acc),#8f4522); }
+  .ava { width: 26px; height: 26px; border-radius: 50%; flex: none; display: grid; place-items: center; color: #fff; font-size: 0.58rem; font-weight: 700; background: linear-gradient(150deg,var(--acc),#471fa1); }
   .ava.gray { background: #cdc7bf; color: #fff; }
   .who .nm { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .muted { color: var(--d-mut); min-width: 0; overflow: hidden; text-overflow: ellipsis; }
@@ -160,7 +160,7 @@
   .pill.rep { background: var(--d-greenfill); color: var(--d-green); }
   .pill.sent { background: #eef1f4; color: #5b6b7a; }
   .pill.sched { background: #f3eefc; color: #7b57c2; }
-  .pill.warm { background: #fdeee2; color: #b96a2e; }
+  .pill.warm { background: #f7ebff; color: #7a3acd; }
   .pill.tag { background: #f1efec; color: #6f675e; }
 
   /* events overview */
@@ -202,7 +202,7 @@
   .tag-input { border: 1px solid var(--d-hair); border-radius: 8px; padding: 7px 10px; font-size: 0.7rem; color: var(--d-mut); }
   .tag-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 9px; }
   .mnotes { margin-top: 14px; }
-  .vnote { padding: 11px 12px; background: var(--d-accfill); border: 1px solid #f0dccb; border-radius: 10px; }
+  .vnote { padding: 11px 12px; background: var(--d-accfill); border: 1px solid #e9d7fd; border-radius: 10px; }
   .vnote .vh { display: flex; align-items: center; gap: 7px; font-size: 0.7rem; font-weight: 600; color: var(--d-acc); }
   .vnote .vh svg { width: 13px; height: 13px; }
   .vnote .vt { font-size: 0.76rem; color: #6a5a4a; margin-top: 6px; line-height: 1.5; font-style: italic; }
