@@ -3,6 +3,14 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/*
+  Rizely — warm sunrise palette (locked in VISUAL-IDENTITY.md).
+  ink #171717 · terracotta #C2703F (primary CTA) · vivid orange #F05100
+  · amber #F99C00 / #FCBB00 · teal #009588 (verified/synced). No violet, ever.
+  The site is rendered in dark (forcedTheme="dark") — warm-on-near-black is the
+  brand hero look — but both themes are defined and kept coherent.
+*/
+
 @theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -10,33 +18,88 @@
   --color-light: var(--light);
   --color-card: var(--card);
   --color-border: var(--border);
+
+  /* Rizely brand tokens (available as bg-brand-*, text-brand-*, etc.) */
+  --color-brand-terracotta: #c2703f;
+  --color-brand-terracotta-hover: #a85a2e;
+  --color-brand-orange: #f05100;
+  --color-brand-amber: #f99c00;
+  --color-brand-amber-hi: #fcbb00;
+  --color-brand-teal: #009588;
 }
 
 @layer utilities {
+  /* next/font exposes --font-inter and --font-jakarta on <body>, so reference
+     them directly here (they don't resolve when hoisted into @theme at :root). */
   body {
     @apply bg-background text-foreground border-border;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--font-inter), Inter, system-ui, -apple-system, "Segoe UI",
+      Roboto, sans-serif;
+  }
+  /* Headings + the wordmark use Plus Jakarta Sans */
+  h1,
+  h2,
+  h3,
+  .font-heading {
+    font-family: var(--font-jakarta), "Plus Jakarta Sans", "Segoe UI",
+      system-ui, sans-serif;
   }
 }
 
-@layer base {
-  :root {
-    --background: #eeeeec;
-    --foreground: #131316;
-    --muted-foreground: hsl(0, 0%, 41%);
-    --light: #5ba8ff;
-    --card: #eaeaea;
-    --border: #d5d5d5;
-  }
+:root {
+  --radius: 0.75rem;
 
-  .dark {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --muted-foreground: #a1a1a1;
-    --light: #d1743f;
-    --card: #141414;
-    --border: #232323;
-  }
+  /* Light theme (kept correct; not the default render) */
+  --background: #ffffff;
+  --foreground: #171717;
+  --card: #f7f5f3;
+  --card-foreground: #171717;
+  --popover: #ffffff;
+  --popover-foreground: #171717;
+  --primary: #c2703f; /* terracotta */
+  --primary-foreground: #ffffff;
+  --secondary: #f5f5f5;
+  --secondary-foreground: #171717;
+  --muted: #f5f5f5;
+  --muted-foreground: #737373;
+  --accent: #f5efe9; /* warm tint */
+  --accent-foreground: #171717;
+  --destructive: #e40014;
+  --border: #e7e2dd;
+  --input: #e7e2dd;
+  --ring: #f05100;
+  --light: #f05100; /* hero glow */
+
+  /* Signature rising-sun gradient (0deg = bottom→top = rising) */
+  --grad-sunrise: linear-gradient(
+    0deg,
+    #c2703f 0%,
+    #f05100 42%,
+    #f99c00 78%,
+    #fcbb00 100%
+  );
+}
+
+.dark {
+  --background: #0a0a0a; /* ink deepest */
+  --foreground: #ededed; /* off-white */
+  --card: #161311; /* warm near-black surface */
+  --card-foreground: #ededed;
+  --popover: #161311;
+  --popover-foreground: #ededed;
+  --primary: #c2703f; /* terracotta — stays the CTA colour */
+  --primary-foreground: #ffffff;
+  --secondary: #221d19;
+  --secondary-foreground: #ededed;
+  --muted: #201b18;
+  --muted-foreground: #a6a09b;
+  --accent: #241c16; /* warm tint for hover surfaces */
+  --accent-foreground: #ffffff;
+  --destructive: #ff5a4d;
+  --border: #2a2320; /* warm hairline */
+  --input: #2a2320;
+  --ring: #f05100;
+  --light: #f05100; /* warm sunrise glow behind the hero */
 }
 
 @theme inline {
@@ -62,88 +125,6 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-}
-
-:root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-}
-
-.dark {
-  --background: oklch(0.135 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.185 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.185 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.63 0.12 47);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
 }
 
 @layer base {
@@ -152,6 +133,74 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* The signature sunrise gradient as a reusable helper */
+.bg-sunrise {
+  background-image: var(--grad-sunrise);
+}
+.text-sunrise {
+  background-image: var(--grad-sunrise);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/*
+  Agents-orbit motif — the user's business is the sun; Rizely's agents orbit it.
+  Two counter-rotating rings; the chips counter-rotate so their labels stay upright.
+  Fully disabled under prefers-reduced-motion.
+*/
+@keyframes rizely-orbit-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes rizely-orbit-spin-rev {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+@keyframes rizely-sun-pulse {
+  0%,
+  100% {
+    opacity: 0.85;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
+.orbit-ring {
+  animation: rizely-orbit-spin var(--orbit-duration, 40s) linear infinite;
+}
+.orbit-ring-rev {
+  animation: rizely-orbit-spin-rev var(--orbit-duration, 55s) linear infinite;
+}
+.orbit-chip-counter {
+  animation: rizely-orbit-spin-rev var(--orbit-duration, 40s) linear infinite;
+}
+.orbit-chip-counter-rev {
+  animation: rizely-orbit-spin var(--orbit-duration, 55s) linear infinite;
+}
+.sun-pulse {
+  animation: rizely-sun-pulse 6s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .orbit-ring,
+  .orbit-ring-rev,
+  .orbit-chip-counter,
+  .orbit-chip-counter-rev,
+  .sun-pulse {
+    animation: none !important;
   }
 }
 

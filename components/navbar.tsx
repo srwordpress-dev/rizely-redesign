@@ -5,10 +5,12 @@ import { HamburgerMenuIcon, Cross1Icon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { BRAND, WHATSAPP_URL } from "@/lib/site";
+import { WHATSAPP_URL } from "@/lib/site";
+import { RizelyLogo } from "@/components/logo";
 
 const menuItems = [
   { name: "How it works", href: "#how" },
+  { name: "Agents", href: "#agents" },
   { name: "Pricing", href: "#pricing" },
   { name: "FAQ", href: "#faq" },
 ];
@@ -52,12 +54,8 @@ export default function NavBar() {
             </Button>
           </div>
 
-          <Link
-            href="/"
-            className="font-medium tracking-tighter text-xl sm:text-2xl"
-          >
-            {BRAND}
-            <span className="text-primary">.</span>
+          <Link href="/" aria-label="Rizely home">
+            <RizelyLogo />
           </Link>
 
           <div className="hidden sm:flex items-center space-x-6">

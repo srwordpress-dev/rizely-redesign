@@ -3,40 +3,49 @@ import "./globals.css";
 import { Providers } from "./providers";
 import NavBar from "@/components/navbar";
 import StructuredData from "@/components/structured-data";
-import { Geist } from "next/font/google";
+import { Plus_Jakarta_Sans, Inter } from "next/font/google";
 
-const geist = Geist({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
+  variable: "--font-jakarta",
+  display: "swap",
 });
 
-const SITE_URL = "https://cardping.netlify.app";
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const SITE_URL = "https://rizely.net";
 const DESCRIPTION =
-  "CardPing is a WhatsApp- and Telegram-native AI agent and business-card scanner that turns the cards you collect at events into a managed lead pipeline and sends the follow-up automatically — in Indian languages, priced per event.";
+  "Rizely is a platform of AI micro-agents for Indian business owners. The first one scans the business cards you collect at events, builds a managed lead pipeline, and sends the follow-up automatically — inside WhatsApp and Telegram, in Indian languages, priced per event.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "CardPing — WhatsApp business-card scanner + auto follow-up for events",
+  title: "Rizely — scan the card, send the follow-up, on WhatsApp",
   description: DESCRIPTION,
   keywords: [
     "business card scanner WhatsApp",
-    "event lead capture app India",
+    "event lead capture India",
     "AI follow-up for events",
     "Telegram business card scanner",
     "lead capture at trade shows",
-    "CardPing",
+    "AI agents for business",
+    "Rizely",
   ],
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     url: SITE_URL,
-    siteName: "CardPing",
-    title: "CardPing — scan the card, send the follow-up",
+    siteName: "Rizely",
+    title: "Rizely — use Rizely to rise your business",
     description: DESCRIPTION,
     locale: "en_IN",
   },
   twitter: {
     card: "summary_large_image",
-    title: "CardPing — scan the card, send the follow-up",
+    title: "Rizely — scan the card, send the follow-up",
     description: DESCRIPTION,
   },
 };
@@ -55,7 +64,7 @@ export default function RootLayout({
           <style>{`[style*="opacity:0"]{opacity:1!important;transform:none!important}`}</style>
         </noscript>
       </head>
-      <body className={`${geist.className} antialiased`}>
+      <body className={`${jakarta.variable} ${inter.variable} antialiased`}>
         <StructuredData />
         <Providers>
           <NavBar />

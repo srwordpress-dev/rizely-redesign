@@ -1,4 +1,4 @@
-const SITE_URL = "https://cardping.netlify.app";
+const SITE_URL = "https://rizely.net";
 
 const graph = {
   "@context": "https://schema.org",
@@ -6,33 +6,33 @@ const graph = {
     {
       "@type": "Organization",
       "@id": `${SITE_URL}/#organization`,
-      name: "CardPing",
+      name: "Rizely",
       url: SITE_URL,
       description:
-        "WhatsApp- and Telegram-native AI agent that scans event business cards, builds a lead pipeline, and sends automatic follow-ups. India-first.",
+        "Rizely is a platform of WhatsApp- and Telegram-native AI micro-agents for Indian business owners. The first one scans event business cards, builds a lead pipeline, and sends automatic follow-ups. India-first.",
       areaServed: "IN",
     },
     {
       "@type": "WebSite",
       "@id": `${SITE_URL}/#website`,
       url: SITE_URL,
-      name: "CardPing",
+      name: "Rizely",
       publisher: { "@id": `${SITE_URL}/#organization` },
       inLanguage: "en-IN",
     },
     {
       "@type": "SoftwareApplication",
-      name: "CardPing",
+      name: "Rizely",
       applicationCategory: "BusinessApplication",
       operatingSystem: "WhatsApp, Telegram, Web",
       url: SITE_URL,
       description:
-        "Scan the business cards you collect at events inside WhatsApp or Telegram, build a managed lead pipeline, and send personalised follow-ups automatically — in Indian languages, priced per event.",
+        "Scan the business cards you collect at events inside WhatsApp or Telegram, build a managed lead pipeline, and send personalised follow-ups automatically — in Indian languages, priced per event. Annual plans, ex-GST.",
       offers: [
-        { "@type": "Offer", name: "Solo", price: "399", priceCurrency: "INR" },
-        { "@type": "Offer", name: "Team", price: "1299", priceCurrency: "INR" },
-        { "@type": "Offer", name: "Business", price: "2999", priceCurrency: "INR" },
-        { "@type": "Offer", name: "Event Pass", price: "2499", priceCurrency: "INR" },
+        { "@type": "Offer", name: "Solo (annual)", price: "3499", priceCurrency: "INR" },
+        { "@type": "Offer", name: "Team (annual)", price: "11999", priceCurrency: "INR" },
+        { "@type": "Offer", name: "Business (annual)", price: "27999", priceCurrency: "INR" },
+        { "@type": "Offer", name: "Event Pass (per event)", price: "2499", priceCurrency: "INR" },
       ],
     },
     {
@@ -41,50 +41,50 @@ const graph = {
       mainEntity: [
         {
           "@type": "Question",
-          name: "Do I need to install an app?",
+          name: "What does Rizely actually do right now?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "No. CardPing works right inside WhatsApp and Telegram — the apps already open on your phone at every event. Nothing to download, nothing for your leads to install either.",
+            text: "Rizely Cards is live: photograph a business card in WhatsApp or Telegram, and it reads the card, files the lead into your pipeline, and drafts a personalised follow-up ready to send. The other agents are on the roadmap — we'll say clearly when each one ships.",
           },
         },
         {
           "@type": "Question",
-          name: "WhatsApp or Telegram?",
+          name: "Do I need to download an app?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Both. Scan and capture on either one, and your leads land in the same pipeline.",
+            text: "No. Rizely Cards lives inside WhatsApp and Telegram — apps already open on your phone. Nothing to install, nothing for your leads to install either.",
           },
         },
         {
           "@type": "Question",
-          name: "Can it read Indian-language cards?",
+          name: "Will it read a Hindi or Gujarati card, or only English?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Yes — Hindi, Gujarati, Marathi and more. Reading Indian-language cards is one of the things CardPing does that the global scanners don't.",
+            text: "Indian-language cards too — Hindi, Gujarati and Marathi, not just English. This is exactly where most scanners quietly fall over. When it's unsure about a badly printed card, it flags the lead for a quick human check rather than guessing.",
           },
         },
         {
           "@type": "Question",
-          name: "Is my data safe?",
+          name: "Does it send the follow-ups on its own, or do I approve them first?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Your leads are yours. Data is handled with India's DPDP rules in mind, and you can export or delete it whenever you like.",
+            text: "You're in control. You review and approve the first batch so it sounds like you. After that you can let it run automatically, or keep approving each batch — your call, changeable any time.",
           },
         },
         {
           "@type": "Question",
-          name: "Does it work with my CRM or Google Sheets?",
+          name: "What happens after the 50 free scans?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Yes. One scan can fan out to Google Sheets, Gmail and your CRM, so leads reach wherever your team already works.",
+            text: "You move to an annual plan when you're ready — in INR, ex-GST, with a GST invoice you can claim, paid by UPI. Solo is around ₹3,499/year; exhibitors can buy a per-event pass instead. You won't be charged automatically the moment the free scans run out.",
           },
         },
         {
           "@type": "Question",
-          name: "How does pricing work?",
+          name: "Whose data is it, and is it safe?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Start free with 50 scans. After that, choose an annual plan or a one-off Event Pass for a single show. Prices are in INR, ex-GST, and every plan comes with a GST invoice.",
+            text: "The leads are yours — export them any time, no ransom fee to get your own data out. We're building to India's DPDP rules and only act on contacts you've collected with consent. We won't scrape lists or blast strangers on your behalf.",
           },
         },
       ],

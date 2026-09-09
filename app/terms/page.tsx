@@ -3,8 +3,8 @@ import LegalLayout from "@/components/legal-layout";
 import { WHATSAPP_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Terms of Service — CardPing",
-  description: "The terms that govern your use of CardPing.",
+  title: "Terms of Service — Rizely",
+  description: "The terms that govern your use of Rizely.",
   alternates: { canonical: "/terms" },
 };
 
@@ -12,7 +12,7 @@ export default function TermsPage() {
   return (
     <LegalLayout title="Terms of Service" updated="22 August 2026">
       <p>
-        These Terms govern your use of <strong>CardPing</strong> (the &quot;Service&quot;) — a
+        These Terms govern your use of <strong>Rizely</strong> (the &quot;Service&quot;) — a
         WhatsApp- and Telegram-based tool that scans business cards, builds a lead pipeline, and
         sends follow-ups. By using the Service, you agree to these Terms.
       </p>
@@ -58,7 +58,7 @@ export default function TermsPage() {
 
       <h2>6. Intellectual property</h2>
       <p>
-        The Service, including its software, design, and content, belongs to CardPing. We grant you
+        The Service, including its software, design, and content, belongs to Rizely. We grant you
         a limited, non-exclusive right to use it under these Terms. Your leads and content remain
         yours.
       </p>
@@ -73,7 +73,7 @@ export default function TermsPage() {
       <h2>8. Disclaimers and limitation of liability</h2>
       <p>
         The Service is provided &quot;as is&quot; without warranties of any kind. To the maximum
-        extent permitted by law, CardPing is not liable for indirect or consequential losses, and
+        extent permitted by law, Rizely is not liable for indirect or consequential losses, and
         our total liability is limited to the amount you paid us in the three months before the
         claim.
       </p>

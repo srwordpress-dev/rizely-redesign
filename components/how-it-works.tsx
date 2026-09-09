@@ -7,20 +7,20 @@ const steps = [
   {
     icon: ScanLine,
     step: "01",
-    title: "Snap the card on WhatsApp",
-    desc: "Photograph any business card inside WhatsApp or Telegram — even Hindi, Gujarati or Marathi cards. No app to install, no typing.",
+    title: "Snap it",
+    desc: "Photograph the card inside WhatsApp or Telegram — the apps already open on your phone. Or work a whole stack from the badge queue. Nothing to download, no typing, no 'please enter your email' form.",
   },
   {
     icon: Sparkles,
     step: "02",
-    title: "The AI builds the lead",
-    desc: "CardPing reads the card, files it under the right event, and turns it into a clean, managed contact in your pipeline — in about two seconds.",
+    title: "Rizely files it",
+    desc: "The agent reads the card — Hindi, Gujarati and Marathi too, not just English — sorts the details into a clean lead, and drops it into your pipeline. That's where most scanners quietly give up.",
   },
   {
     icon: Send,
     step: "03",
-    title: "The follow-up sends itself",
-    desc: "A personalised follow-up goes out automatically, so the lead hears from you in seconds instead of nine days later — or never.",
+    title: "It follows up",
+    desc: "Rizely drafts a personalised follow-up for each lead and sends it on WhatsApp or Telegram. You approve the first batch so it sounds like you — after that it can run on its own.",
   },
 ];
 
@@ -37,10 +37,10 @@ export default function HowItWorks() {
         transition={{ duration: 0.6, type: "spring", bounce: 0 }}
         className="flex flex-col gap-3 text-center mb-14 max-w-2xl"
       >
-        <h2 className="text-2xl font-semibold sm:text-3xl tracking-tight bg-linear-to-b from-foreground to-muted-foreground text-transparent bg-clip-text">
-          From booth to follow-up in three steps
+        <h2 className="text-3xl font-heading font-bold sm:text-4xl tracking-tight">
+          From a card in your hand to a reply in your inbox
         </h2>
-        <p className="text-muted-foreground">
+        <p className="text-muted-foreground text-lg">
           The whole loop happens in the chat app you already have open at the event.
         </p>
       </motion.div>
@@ -56,12 +56,12 @@ export default function HowItWorks() {
             className="relative rounded-2xl border border-border bg-card/50 p-6 flex flex-col gap-4"
           >
             <div className="flex items-center justify-between">
-              <div className="flex size-10 items-center justify-center rounded-lg border border-border bg-background">
+              <div className="flex size-11 items-center justify-center rounded-xl bg-primary/10 border border-primary/20">
                 <s.icon className="size-5 text-primary" />
               </div>
               <span className="font-mono text-sm text-muted-foreground/70">{s.step}</span>
             </div>
-            <h3 className="text-lg font-semibold">{s.title}</h3>
+            <h3 className="text-lg font-heading font-semibold">{s.title}</h3>
             <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
           </motion.div>
         ))}

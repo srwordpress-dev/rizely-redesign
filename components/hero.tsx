@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { WHATSAPP_URL } from "@/lib/site";
+import { Check } from "lucide-react";
 
 function WhatsAppIcon({ className = "" }: { className?: string }) {
   return (
@@ -12,83 +13,75 @@ function WhatsAppIcon({ className = "" }: { className?: string }) {
   );
 }
 
+const chips = [
+  "Reads Hindi, Gujarati & Marathi cards",
+  "Follow-ups drafted in your voice",
+  "GST invoice on every plan",
+];
+
 export default function Hero() {
   return (
     <div className="relative overflow-hidden">
-      <section className="max-w-(--breakpoint-xl) mx-auto px-4 pt-24 pb-20 md:pt-28 md:pb-24 md:px-8 flex flex-col justify-center items-center">
+      <section className="max-w-(--breakpoint-xl) mx-auto px-4 pt-20 pb-20 md:pt-28 md:pb-24 md:px-8 flex flex-col justify-center items-center">
         {/* Above-the-fold content renders immediately — no JS-gated fade — so the
             LCP heading paints as fast as possible and is never blank. */}
         <div className="flex flex-col justify-center items-center space-y-6 max-w-3xl mx-auto text-center">
           <span className="w-fit text-xs sm:text-sm bg-card px-3 py-1 border border-border rounded-full text-muted-foreground">
-            AI lead agent for events · WhatsApp &amp; Telegram
+            AI agents for events · WhatsApp &amp; Telegram
           </span>
 
-          <h1 className="text-4xl font-medium tracking-tighter mx-auto md:text-6xl text-balance bg-linear-to-b from-foreground to-muted-foreground bg-clip-text text-transparent">
-            Scan the card. Send the follow-up. Automatically.
+          <h1 className="text-4xl font-heading font-extrabold tracking-tight mx-auto md:text-6xl text-balance leading-[1.05]">
+            Use Rizely to <span className="text-sunrise">rise</span> your business.
           </h1>
 
           <p className="max-w-2xl text-base sm:text-lg mx-auto text-muted-foreground text-balance">
-            CardPing is the WhatsApp &amp; Telegram business-card scanner built for events:
-            photograph any card, it becomes a managed lead, and a personalised follow-up goes
-            out in seconds — in Indian languages, no app to install.
+            It starts with an AI agent on WhatsApp that turns the cards you pile up at every
+            event into followed-up leads — while you&apos;re still shaking the next hand. It
+            reads the card, files the lead, and sends the personalised follow-up you&apos;d
+            never have got around to. No new app. No Excel at midnight.
           </p>
 
-          {/* Primary CTA: fire WhatsApp on mobile */}
-          <div className="flex flex-col items-center gap-4 w-full pt-2">
-            <Button asChild size="lg" className="h-12 px-6 text-base shadow-lg">
+          {/* Primary CTA dominates; one low-friction secondary beside it. */}
+          <div className="flex flex-col sm:flex-row items-center gap-3 w-full justify-center pt-2">
+            <Button
+              asChild
+              size="lg"
+              className="h-14 px-8 text-base sm:text-lg font-semibold shadow-lg shadow-primary/20 w-full sm:w-auto"
+            >
               <Link href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
                 <WhatsAppIcon className="size-5" />
                 Start free on WhatsApp
               </Link>
             </Button>
-
-            {/* Secondary: phone waitlist (Netlify Forms) */}
-            <form
-              name="waitlist"
-              method="POST"
-              data-netlify="true"
-              netlify-honeypot="bot-field"
-              className="flex w-full max-w-sm items-center gap-2"
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="h-14 px-6 text-base w-full sm:w-auto"
             >
-              <input type="hidden" name="form-name" value="waitlist" />
-              <p className="hidden">
-                <label>
-                  Don&apos;t fill this out: <input name="bot-field" />
-                </label>
-              </p>
-              <input
-                type="tel"
-                name="phone"
-                required
-                placeholder="Not ready? Leave your number — +91 98765 43210"
-                className="flex-1 h-11 rounded-md border border-border bg-card px-3 text-sm text-foreground placeholder:text-muted-foreground/70 outline-none focus:border-primary transition-colors"
-              />
-              <Button type="submit" variant="outline" size="lg" className="h-11 shrink-0">
-                Notify me
-              </Button>
-            </form>
+              <Link href="#how">See it work</Link>
+            </Button>
           </div>
 
-          {/* Trust row: the transformation */}
-          <div className="flex flex-wrap justify-center items-center gap-x-6 gap-y-2 pt-4 text-sm text-muted-foreground">
-            <span>
-              <span className="text-foreground font-medium">6 hours → 2 seconds</span> to log a card
-            </span>
-            <span className="hidden sm:inline text-border">·</span>
-            <span>
-              <span className="text-foreground font-medium">9 days → 60 seconds</span> to follow up
-            </span>
-            <span className="hidden sm:inline text-border">·</span>
-            <span>
-              <span className="text-foreground font-medium">73% lost → 100%</span> followed up
-            </span>
+          <p className="text-sm text-muted-foreground">
+            50 scans on us — no card, no app to install. On the WhatsApp you already use.
+          </p>
+
+          {/* Honest capability chips — no fabricated stats or results. */}
+          <div className="flex flex-wrap justify-center items-center gap-x-5 gap-y-2 pt-3 text-sm text-muted-foreground">
+            {chips.map((c) => (
+              <span key={c} className="inline-flex items-center gap-1.5">
+                <Check className="size-4 text-brand-teal" />
+                {c}
+              </span>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* single soft accent glow (decorative, behind content) */}
+      {/* Warm sunrise glow (decorative, behind content) — the brand "rise" light. */}
       <div className="w-full h-full absolute -top-40 left-1/2 -translate-x-1/2 flex justify-center items-start pointer-events-none -z-10">
-        <div className="w-[36rem] h-72 bg-light blur-[120px] rounded-full opacity-30" />
+        <div className="w-[42rem] h-80 bg-light blur-[130px] rounded-full opacity-25" />
       </div>
     </div>
   );
