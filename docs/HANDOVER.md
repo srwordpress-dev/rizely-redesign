@@ -96,10 +96,18 @@ that is not yet serving is worse than leaving them briefly stale.
 
 ## Open issues
 
-1. **The GitHub → Netlify build webhook is not firing.** See Deploying. Highest
-   priority — it also means blog publishes will not trigger builds until fixed
-   or until the Strapi build hook is wired (that hook is inbound, so it works
-   independently).
+1. **The GitHub → Netlify build webhook is not firing.** A push or merge to
+   `main` produces no build at all. The Strapi build hook *is* inbound and does
+   trigger one, so blog publishes work; only push-triggered deploys are missing.
+   Reconnect the integration in Netlify's UI when convenient.
+
+   Netlify's own builds were additionally broken until 9 Sep 2026 by a stale
+   `pnpm-lock.yaml` that predated `react-icons` being added to `package.json`.
+   Netlify saw the pnpm lockfile, ran `pnpm install --frozen-lockfile` (the CI
+   default) and pnpm refused with `ERR_PNPM_OUTDATED_LOCKFILE`. Every deploy
+   before that date was a manual `--dir` upload, which skips install and so
+   never hit it. The file is deleted; **this repo uses npm and
+   `package-lock.json` only — do not commit a second lockfile.**
 2. **Canonical mismatch and duplicate content.** `cardping.rankkking.com` and
    `cardping.netlify.app` both return 200 with no redirect between them, and
    both canonicalise to the netlify.app subdomain — so the primary domain
