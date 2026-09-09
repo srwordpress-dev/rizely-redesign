@@ -4,18 +4,18 @@ import { Providers } from "./providers";
 import NavBar from "@/components/navbar";
 import StructuredData from "@/components/structured-data";
 import { Geist } from "next/font/google";
+import { SITE_URL } from "@/lib/site";
 
 const geist = Geist({
   subsets: ["latin"],
 });
 
-const SITE_URL = "https://cardping.netlify.app";
 const DESCRIPTION =
-  "CardPing is a WhatsApp- and Telegram-native AI agent and business-card scanner that turns the cards you collect at events into a managed lead pipeline and sends the follow-up automatically — in Indian languages, priced per event.";
+  "Rizely is a WhatsApp- and Telegram-native AI agent and business-card scanner that turns the cards you collect at events into a managed lead pipeline and sends the follow-up automatically — in Indian languages, priced per event.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "CardPing — WhatsApp business-card scanner + auto follow-up for events",
+  title: "Rizely — WhatsApp business-card scanner + auto follow-up for events",
   description: DESCRIPTION,
   keywords: [
     "business card scanner WhatsApp",
@@ -23,20 +23,20 @@ export const metadata: Metadata = {
     "AI follow-up for events",
     "Telegram business card scanner",
     "lead capture at trade shows",
-    "CardPing",
+    "Rizely",
   ],
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     url: SITE_URL,
-    siteName: "CardPing",
-    title: "CardPing — scan the card, send the follow-up",
+    siteName: "Rizely",
+    title: "Rizely — scan the card, send the follow-up",
     description: DESCRIPTION,
     locale: "en_IN",
   },
   twitter: {
     card: "summary_large_image",
-    title: "CardPing — scan the card, send the follow-up",
+    title: "Rizely — scan the card, send the follow-up",
     description: DESCRIPTION,
   },
 };

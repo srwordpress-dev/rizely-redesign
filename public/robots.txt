@@ -1,4 +1,4 @@
-# CardPing — https://cardping.netlify.app
+# Rizely — https://cardping.netlify.app
 User-agent: GPTBot
 Allow: /
 User-agent: OAI-SearchBot

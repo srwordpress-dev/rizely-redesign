@@ -1,4 +1,4 @@
-const SITE_URL = "https://cardping.netlify.app";
+import { SITE_URL } from "@/lib/site";
 
 const graph = {
   "@context": "https://schema.org",
@@ -6,7 +6,7 @@ const graph = {
     {
       "@type": "Organization",
       "@id": `${SITE_URL}/#organization`,
-      name: "CardPing",
+      name: "Rizely",
       url: SITE_URL,
       description:
         "WhatsApp- and Telegram-native AI agent that scans event business cards, builds a lead pipeline, and sends automatic follow-ups. India-first.",
@@ -16,13 +16,13 @@ const graph = {
       "@type": "WebSite",
       "@id": `${SITE_URL}/#website`,
       url: SITE_URL,
-      name: "CardPing",
+      name: "Rizely",
       publisher: { "@id": `${SITE_URL}/#organization` },
       inLanguage: "en-IN",
     },
     {
       "@type": "SoftwareApplication",
-      name: "CardPing",
+      name: "Rizely",
       applicationCategory: "BusinessApplication",
       operatingSystem: "WhatsApp, Telegram, Web",
       url: SITE_URL,
@@ -44,7 +44,7 @@ const graph = {
           name: "Do I need to install an app?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "No. CardPing works right inside WhatsApp and Telegram — the apps already open on your phone at every event. Nothing to download, nothing for your leads to install either.",
+            text: "No. Rizely works right inside WhatsApp and Telegram — the apps already open on your phone at every event. Nothing to download, nothing for your leads to install either.",
           },
         },
         {
@@ -60,7 +60,7 @@ const graph = {
           name: "Can it read Indian-language cards?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Yes — Hindi, Gujarati, Marathi and more. Reading Indian-language cards is one of the things CardPing does that the global scanners don't.",
+            text: "Yes — Hindi, Gujarati, Marathi and more. Reading Indian-language cards is one of the things Rizely does that the global scanners don't.",
           },
         },
         {

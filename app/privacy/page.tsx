@@ -3,8 +3,8 @@ import LegalLayout from "@/components/legal-layout";
 import { WHATSAPP_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy — CardPing",
-  description: "How CardPing collects, uses, and protects personal data. India-first, DPDP-aware.",
+  title: "Privacy Policy — Rizely",
+  description: "How Rizely collects, uses, and protects personal data. India-first, DPDP-aware.",
   alternates: { canonical: "/privacy" },
 };
 
@@ -12,7 +12,7 @@ export default function PrivacyPage() {
   return (
     <LegalLayout title="Privacy Policy" updated="22 August 2026">
       <p>
-        This Privacy Policy explains how <strong>CardPing</strong> (&quot;CardPing&quot;,
+        This Privacy Policy explains how <strong>Rizely</strong> (&quot;Rizely&quot;,
         &quot;we&quot;, &quot;us&quot;) collects, uses, shares, and protects personal data when you
         use our website and our WhatsApp- and Telegram-based business-card scanning and follow-up
         service (the &quot;Service&quot;). We are an India-first product and handle personal data

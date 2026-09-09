@@ -6,7 +6,7 @@ import { ChevronDown } from "lucide-react";
 const faqs = [
   {
     q: "Do I need to install an app?",
-    a: "No. CardPing works right inside WhatsApp and Telegram — the apps already open on your phone at every event. Nothing to download, nothing for your leads to install either.",
+    a: "No. Rizely works right inside WhatsApp and Telegram — the apps already open on your phone at every event. Nothing to download, nothing for your leads to install either.",
   },
   {
     q: "WhatsApp or Telegram?",
@@ -14,7 +14,7 @@ const faqs = [
   },
   {
     q: "Can it read Indian-language cards?",
-    a: "Yes — Hindi, Gujarati, Marathi and more. Reading Indian-language cards is one of the things CardPing does that the global scanners don't.",
+    a: "Yes — Hindi, Gujarati, Marathi and more. Reading Indian-language cards is one of the things Rizely does that the global scanners don't.",
   },
   {
     q: "Is my data safe?",
@@ -45,7 +45,7 @@ export default function Faq() {
           Questions, answered
         </h2>
         <p className="max-w-xl text-muted-foreground text-center">
-          The things people ask before their first event with CardPing.
+          The things people ask before their first event with Rizely.
         </p>
       </div>
 
