@@ -1,4 +1,4 @@
-# Rizely — https://cardping.netlify.app
+# Rizely — https://rizely.net
 User-agent: GPTBot
 Allow: /
 User-agent: OAI-SearchBot
@@ -24,4 +24,4 @@ User-agent: *
 Allow: /
 Disallow: /__forms.html
 
-Sitemap: https://cardping.netlify.app/sitemap.xml
+Sitemap: https://rizely.net/sitemap.xml

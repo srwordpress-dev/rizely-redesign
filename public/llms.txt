@@ -12,10 +12,10 @@
 Sales reps, founders, and marketing/GTM teams in India who exhibit at or attend conferences, trade shows, and networking events and currently rely on manual data entry or a pile of physical cards to follow up with leads.
 
 ## Key sections
-- [Homepage](https://cardping.netlify.app/): full product overview, how it works, pricing, and FAQ
-- [How it works](https://cardping.netlify.app/#how): the three-step scan → build lead → auto follow-up flow
-- [Pricing](https://cardping.netlify.app/#pricing): Solo, Team, Business, and Event Pass plans in INR
-- [FAQ](https://cardping.netlify.app/#faq): app install requirements, WhatsApp vs Telegram, Indian-language support, data safety (DPDP), CRM/Sheets export, and how pricing works
+- [Homepage](https://rizely.net/): full product overview, how it works, pricing, and FAQ
+- [How it works](https://rizely.net/#how): the three-step scan → build lead → auto follow-up flow
+- [Pricing](https://rizely.net/#pricing): Solo, Team, Business, and Event Pass plans in INR
+- [FAQ](https://rizely.net/#faq): app install requirements, WhatsApp vs Telegram, Indian-language support, data safety (DPDP), CRM/Sheets export, and how pricing works
 
 ## Contact
 - WhatsApp: https://wa.me/918373978881
