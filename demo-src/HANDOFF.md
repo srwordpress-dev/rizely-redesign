@@ -7,7 +7,7 @@ Paste this whole file into a fresh Claude Code session (run it from `/Users/anku
 You are continuing work on the **Rizely** marketing landing page. It is **already built, live, and
 audited**. Read this fully before touching anything.
 
-> **Brand (Sep 2026 rebrand):** the product is **Rizely**. The wordmark lives at `public/rizely-logo-dark.png` (light-on-dark, used by `components/logo.tsx`) with the as-supplied master at `public/rizely-logo.png`; the mark is `app/icon.png`. Brand purple is `#7848d8`. **Note the conflict:** the palette below is still CardPing's terracotta `#C2703F` and the guardrails still say "no purple" — the colour pass is deliberately deferred to Ankush, so treat terracotta as current and the purple logo as the one exception.
+> **Brand (Sep 2026 rebrand):** the product is **Rizely**. The wordmark lives at `public/rizely-logo-dark.png` (used by `components/logo.tsx`: terracotta type, white mark, for the dark site) with the light-background master at `public/rizely-logo.png` (terracotta type, black mark); the mark alone is `app/icon.png`. The supplied artwork was purple `#865cda`, and it has been **recoloured to the site accent `#C2703F`** — the site palette did not move, the logo did. So there is no purple anywhere and the "one accent only / no purple" rule below still holds exactly as written. If you ever need the original purple art, it is live on rizely.net, not in this repo.
 
 ## What Rizely is (don't re-derive — use this)
 WhatsApp- and Telegram-native **AI agent** that scans business cards collected at events, turns each into a
