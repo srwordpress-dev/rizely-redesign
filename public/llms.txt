@@ -7,7 +7,7 @@
 - Drafts and sends a personalised follow-up on WhatsApp or Telegram; you approve the first batch, then it can run on its own. This capture-and-follow-up loop is the differentiator: it does capture AND follow-up, in Indian languages, priced per event.
 - Exports leads to Google Sheets, Gmail, or a connected CRM.
 - Connects to AI assistants: you can run your pipeline from inside Claude today (add and find contacts, organise events, pull a per-event recap, export leads, top up over UPI), all in plain language. ChatGPT works via custom connectors on paid plans in developer mode; some tiers are read-only. It is a window onto your pipeline, not a standalone product — it needs a Rizely account with WhatsApp or Telegram linked.
-- Priced in USD, monthly or annual (save ~25%): Solo $79/year ($9/mo), Team $199/year ($22/mo), Business $499/year ($55/mo), or a pay-per-event Event Pass at $49 (5 seats, 750 scans + follow-ups, 30-day window). First 50 scans are free. In India, INR pricing with a GST invoice and UPI is available. (Plans proposed; may change.)
+- Priced annually: Solo $79/year, Team $199/year, Business $499/year, or a pay-per-event Event Pass at $49 (5 seats, 750 scans + follow-ups, 30-day window). In India: Solo ₹3,499/year, Team ₹11,999/year, Business ₹27,999/year, Event Pass ₹2,499 — all ex-GST, with a GST invoice and UPI. Plans are annual rather than monthly because RBI e-mandates make monthly subscriptions hostile in India. First 50 scans are free. (Plans proposed; may change.)
 
 ## The agents
 - Rizely Cards — LIVE. Event business-card capture + automatic follow-up.
@@ -23,6 +23,7 @@ Sales reps, founders, and marketing/GTM teams worldwide — with an active launc
 - [How it works](https://rizely.net/#how): the three-step snap it → Rizely files it → it follows up flow
 - [Agents](https://rizely.net/agents): the platform of micro-agents, what's live and what's on the roadmap
 - [Connect](https://rizely.net/connect): run your Rizely pipeline from inside Claude (and ChatGPT next) — capabilities, how to connect, and honest limits
+- [Blog](https://rizely.net/blogs): practical writing on event lead capture and follow-up
 - [Pricing](https://rizely.net/#pricing): Solo, Team, Business, and Event Pass plans in INR
 - [FAQ](https://rizely.net/#faq): app install requirements, WhatsApp vs Telegram, Indian-language support, data safety (DPDP), CRM/Sheets export, and how pricing works
 

@@ -10,12 +10,15 @@ import { RizelyLogo } from "@/components/logo";
 const Footer = () => {
   const year = new Date().getFullYear();
 
+  // Absolute, for the same reason as the navbar: the footer renders on the
+  // legal and blog pages, where a bare hash anchor resolves nowhere.
   const footerLinks = [
     { name: "How it works", href: "/#how" },
     { name: "Agents", href: "/agents" },
     { name: "Connect", href: "/connect" },
     { name: "Pricing", href: "/#pricing" },
     { name: "FAQ", href: "/#faq" },
+    { name: "Blog", href: "/blogs" },
   ];
 
   return (
@@ -56,29 +59,44 @@ const Footer = () => {
             </p>
           </div>
 
-          <div className="space-y-3">
-            <h3 className="text-sm font-semibold">Explore</h3>
-            <div className="flex flex-col gap-2">
-              {footerLinks.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  {item.name}
-                </Link>
-              ))}
+          <div className="grid grid-cols-2 gap-8 sm:gap-12 lg:flex lg:gap-24">
+            <div className="space-y-3">
+              <h3 className="text-sm font-semibold">Explore</h3>
+              <div className="flex flex-col gap-2">
+                {footerLinks.map((item) => (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
             </div>
-          </div>
 
-          <div className="space-y-3">
-            <h3 className="text-sm font-semibold">Why Rizely</h3>
-            <ul className="flex flex-col gap-2 text-sm text-muted-foreground">
-              <li>Capture and follow-up in one flow</li>
-              <li>Reads cards in many languages</li>
-              <li>Per-event, monthly or annual pricing</li>
-              <li>Run it from WhatsApp, Telegram or Claude</li>
-            </ul>
+            <div className="space-y-3">
+              <h3 className="text-sm font-semibold">Why Rizely</h3>
+              <ul className="flex flex-col gap-2 text-sm text-muted-foreground">
+                <li>Capture and follow-up in one flow</li>
+                <li>Reads cards in many languages</li>
+                {/* Annual or per-event only — never monthly. RBI e-mandates
+                    make monthly subscriptions hostile in India. */}
+                <li>Per-event or annual pricing</li>
+                <li>Run it from WhatsApp, Telegram or Claude</li>
+              </ul>
+            </div>
+
+            {/* Kept from main: accurate, India-first, and it fills the third
+                column the grid already expects. */}
+            <div className="space-y-3">
+              <h3 className="text-sm font-semibold">Built for India</h3>
+              <ul className="flex flex-col gap-2 text-sm text-muted-foreground">
+                <li>GST invoice on every plan</li>
+                <li>Hindi, Gujarati &amp; Marathi capture</li>
+                <li>Handled with DPDP in mind</li>
+              </ul>
+            </div>
           </div>
         </div>
 

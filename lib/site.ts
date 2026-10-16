@@ -5,6 +5,15 @@ export const BRAND = "Rizely";
 export const BRAND_DOMAIN = "rizely.net";
 export const TAGLINE = "Use Rizely to rise your business.";
 
+// Canonical origin used by metadata, JSON-LD, the OG tags and the generated
+// sitemap. Cut over to rizely.net on 2026-09-09, once the domain was serving
+// with a valid certificate — not before, so the canonical never pointed at a
+// host that was not yet live.
+//
+// cardping.rankkking.com and cardping.netlify.app still resolve and return 200,
+// so this canonical is what consolidates all three onto one host.
+export const SITE_URL = "https://rizely.net";
+
 // Rizely WhatsApp business number (digits only, country code first): +91 83739 78881
 export const WHATSAPP_NUMBER = "918373978881";
 export const WHATSAPP_MESSAGE =
@@ -12,3 +21,7 @@ export const WHATSAPP_MESSAGE =
 export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
   WHATSAPP_MESSAGE
 )}`;
+
+// The NFC card store. Shopify handles checkout, GST invoices, the pack ladder
+// and shipping — the marketing site never duplicates any of it (PRD v4 D2).
+export const SHOP_URL = "https://shop.rizely.net";

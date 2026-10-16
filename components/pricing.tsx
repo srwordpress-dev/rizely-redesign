@@ -14,7 +14,6 @@ type Plan = {
   name: string;
   desc: string;
   annual: number;
-  perMonth: number;
   isMostPop: boolean;
   features: string[];
 };
@@ -24,7 +23,6 @@ const plans: Plan[] = [
     name: "Solo",
     desc: "For one rep working events",
     annual: 79,
-    perMonth: 9,
     isMostPop: false,
     features: [
       "1 seat",
@@ -38,7 +36,6 @@ const plans: Plan[] = [
     name: "Team",
     desc: "For a small sales or GTM team",
     annual: 199,
-    perMonth: 22,
     isMostPop: true,
     features: [
       "Everything in Solo",
@@ -52,7 +49,6 @@ const plans: Plan[] = [
     name: "Business",
     desc: "For teams running events at scale",
     annual: 499,
-    perMonth: 55,
     isMostPop: false,
     features: [
       "Everything in Team",
@@ -83,8 +79,8 @@ export default function Pricing() {
           Start free. Pay only when it&apos;s earning its keep.
         </h2>
         <p className="mx-auto max-w-xl text-muted-foreground text-lg">
-          Your first 50 scans are free — no card, no app. After that, pick monthly or annual and
-          save about 25%. Prices in USD.
+          Your first 50 scans are free — no card, no app. After that, plans are annual, or buy a
+          one-off Event Pass for a single show.
         </p>
       </motion.div>
 
@@ -126,8 +122,7 @@ export default function Pricing() {
                     </span>
                   </div>
                   <p className="mt-1 text-xs text-muted-foreground/80">
-                    or {usd(plan.perMonth)}/month · save{" "}
-                    {Math.round((1 - plan.annual / (plan.perMonth * 12)) * 100)}%
+                    billed annually · [PRICING PROPOSED]
                   </p>
                 </div>
 

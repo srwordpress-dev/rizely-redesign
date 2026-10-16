@@ -4,6 +4,7 @@ import { Providers } from "./providers";
 import NavBar from "@/components/navbar";
 import StructuredData from "@/components/structured-data";
 import { Plus_Jakarta_Sans, Inter } from "next/font/google";
+import { SITE_URL } from "@/lib/site";
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -17,7 +18,6 @@ const inter = Inter({
   display: "swap",
 });
 
-const SITE_URL = "https://rizely.net";
 const DESCRIPTION =
   "Rizely is a platform of AI micro-agents for sales and event teams. The first one scans the business cards you collect at events, builds a managed lead pipeline, and sends the follow-up automatically — inside WhatsApp and Telegram, in many languages, priced per event. Works worldwide.";
 

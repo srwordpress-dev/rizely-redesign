@@ -11,10 +11,12 @@ import Personas from "@/components/personas";
 import Pricing from "@/components/pricing";
 import Faq from "@/components/faq";
 import Footer from "@/components/footer";
+import { HomeStructuredData } from "@/components/structured-data";
 
 export default function Home() {
   return (
     <main className="flex flex-col min-h-dvh">
+      <HomeStructuredData />
       <Hero />
       <Partners />
       <HowItWorks />

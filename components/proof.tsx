@@ -92,9 +92,11 @@ export default function Proof() {
         <p className="inline-flex flex-wrap items-center justify-center gap-2 text-sm text-muted-foreground">
           <Sparkles aria-hidden="true" className="size-4 text-brand-amber" />
           <span>
+            {/* No customer claim until there is a customer to point at: the
+                line next to this one promises exactly that. */}
             <span className="font-medium text-foreground">Early access.</span> Rizely Cards is
-            live with the first exhibitors. Real, logged event stories will land here — we
-            publish those, not invented numbers or stock testimonials.
+            live. Real, logged event stories will land here — we publish those, not invented
+            numbers or stock testimonials.
           </span>
         </p>
       </motion.div>

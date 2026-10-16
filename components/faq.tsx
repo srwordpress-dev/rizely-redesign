@@ -22,7 +22,7 @@ export const faqs = [
   },
   {
     q: "What happens after the 50 free scans?",
-    a: "You move to a paid plan when you're ready — monthly or annual (save about 25%), in USD. Solo is around $79/year, or buy a one-off Event Pass for a single show. In India, INR pricing with a GST invoice and UPI is available. You won't be charged automatically the moment the free scans run out. (Plans are proposed and may change.)",
+    a: "You move to an annual plan when you're ready, or buy a one-off Event Pass for a single show. Solo is around $79/year; in India it is ₹3,499/year ex-GST, with a GST invoice and UPI. Plans are annual rather than monthly because RBI e-mandates make monthly subscriptions genuinely painful in India. You won't be charged automatically the moment the free scans run out. (Plans are proposed and may change.)",
   },
   {
     q: "Whose data is it, and is it safe?",

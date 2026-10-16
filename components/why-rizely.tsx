@@ -22,7 +22,7 @@ const points = [
   {
     icon: Ticket,
     title: "Priced the way you actually sell",
-    desc: "Monthly, annual, or a one-off pass for a single event — pay for the show, not the year. Prices in USD; in India, INR with a GST invoice and UPI.",
+    desc: "Annual, or a one-off pass for a single event — pay for the show, not the year. Prices in USD; in India, INR with a GST invoice and UPI.",
   },
 ];
 
@@ -41,9 +41,14 @@ export default function WhyRizely() {
             Most tools stop at the scan. Rizely keeps going.
           </h2>
           <p className="text-muted-foreground text-lg">
-            We&apos;re not the first to scan a card on WhatsApp. We&apos;re the one that does
-            capture <em className="not-italic text-foreground font-medium">and</em> follow-up,
-            in your language, priced per event.
+            {/* The sanctioned positioning line, used as CORRECTIONS.md writes it.
+                "only one" is defensible only in the Indian-language framing —
+                the verifiable gap (Karo "works best with English", Freshsales
+                English-only). Broadening it to "your language" would quietly
+                turn a supported claim into an unsupported one. */}
+            We&apos;re not the first to scan a card on WhatsApp. We&apos;re the only one that
+            does capture <em className="not-italic text-foreground font-medium">and</em>{" "}
+            follow-up, in Indian languages, priced per event.
           </p>
         </motion.div>
 

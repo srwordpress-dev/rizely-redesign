@@ -1,6 +1,18 @@
-const SITE_URL = "https://rizely.net";
+import { SITE_URL } from "@/lib/site";
 
-const graph = {
+/* Split into two graphs on purpose (kept from main, 9 Sep).
+ *
+ * SITE_GRAPH (Organization + WebSite) describes the publisher and is correct on
+ * every page. HOME_GRAPH (SoftwareApplication with its price Offers, and the
+ * FAQPage) describes things that only exist on the homepage.
+ *
+ * Both used to render from the root layout, which meant /privacy, /terms and
+ * every blog post claimed FAQs and pricing offers that were nowhere on the
+ * page — against Google's rule that structured data must describe visible
+ * content. Worse, a blog post carrying its own FAQs emitted two competing
+ * FAQPage nodes. So HOME_GRAPH is rendered by app/page.tsx alone.
+ */
+const SITE_GRAPH = {
   "@context": "https://schema.org",
   "@graph": [
     {
@@ -19,6 +31,12 @@ const graph = {
       publisher: { "@id": `${SITE_URL}/#organization` },
       inLanguage: "en-IN",
     },
+  ],
+};
+
+const HOME_GRAPH = {
+  "@context": "https://schema.org",
+  "@graph": [
     {
       "@type": "SoftwareApplication",
       name: "Rizely",
@@ -26,12 +44,16 @@ const graph = {
       operatingSystem: "WhatsApp, Telegram, Web",
       url: SITE_URL,
       description:
-        "Scan the business cards you collect at events inside WhatsApp or Telegram, build a managed lead pipeline, and send personalised follow-ups automatically — in many languages, priced per event. Monthly or annual plans.",
+        "Scan the business cards you collect at events inside WhatsApp or Telegram, build a managed lead pipeline, and send personalised follow-ups automatically — in many languages, priced per event or per year.",
+      /* INR only, deliberately. The page itself switches currency per visitor
+         (PRD v4 §5) but this markup is served identically to everyone, so it
+         states one unambiguous set rather than two competing ones.
+         [PRICING PROPOSED] — see PRD v4 D3. */
       offers: [
-        { "@type": "Offer", name: "Solo (annual)", price: "79", priceCurrency: "USD" },
-        { "@type": "Offer", name: "Team (annual)", price: "199", priceCurrency: "USD" },
-        { "@type": "Offer", name: "Business (annual)", price: "499", priceCurrency: "USD" },
-        { "@type": "Offer", name: "Event Pass (per event)", price: "49", priceCurrency: "USD" },
+        { "@type": "Offer", name: "Solo (annual)", price: "3499", priceCurrency: "INR" },
+        { "@type": "Offer", name: "Team (annual)", price: "11999", priceCurrency: "INR" },
+        { "@type": "Offer", name: "Business (annual)", price: "27999", priceCurrency: "INR" },
+        { "@type": "Offer", name: "Event Pass (per event)", price: "2499", priceCurrency: "INR" },
       ],
     },
     {
@@ -75,7 +97,7 @@ const graph = {
           name: "What happens after the 50 free scans?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "You move to a paid plan when you're ready — monthly or annual (save about 25%), in USD. Solo is around $79/year, or buy a one-off Event Pass for a single show. In India, INR pricing with a GST invoice and UPI is available. You won't be charged automatically the moment the free scans run out.",
+            text: "You move to an annual plan when you're ready, or buy a one-off Event Pass for a single show. In India that is \u20b93,499/year ex-GST with a GST invoice and UPI; elsewhere it is $79/year. Plans are annual rather than monthly because RBI e-mandates make monthly subscriptions genuinely painful in India. You won't be charged the moment the free scans run out.",
           },
         },
         {
@@ -107,11 +129,21 @@ const graph = {
   ],
 };
 
-export default function StructuredData() {
+function Ld({ graph }: { graph: unknown }) {
   return (
     <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(graph) }}
     />
   );
+}
+
+/** Publisher identity. Rendered once from the root layout, on every page. */
+export default function StructuredData() {
+  return <Ld graph={SITE_GRAPH} />;
+}
+
+/** Product + FAQ markup. Homepage only — that is the page that shows them. */
+export function HomeStructuredData() {
+  return <Ld graph={HOME_GRAPH} />;
 }
