@@ -34,8 +34,18 @@ export const T = {
     and the text stays legible. Narrow screens need a far wider band: the same
     headline wraps to four lines and fills the width. */
 export type Safe = { cx: number; cy: number; w: number; h: number; dim: number };
-export const safeFor = (W: number): Safe =>
-  W < 768
+export type Mode = "stage" | "hero";
+
+/* "stage" is the prototype: one headline, lots of clear air.
+   "hero" is the real page: a full text column — badge, headline, subhead,
+   two CTAs, microcopy — so the protected band is much taller and the settled
+   profile drops below the text instead of sitting behind it. */
+export const safeFor = (W: number, mode: Mode = "stage"): Safe =>
+  mode === "hero"
+    ? W < 768
+      ? { cx: 0.5, cy: 0.42, w: 0.96, h: 0.72, dim: 0.86 }
+      : { cx: 0.5, cy: 0.42, w: 0.64, h: 0.68, dim: 0.72 }
+    : W < 768
     ? // On a phone the headline wraps to four lines and fills the width, so the
       // fields cannot meet behind it. The text moves to a band at the top and
       // the whole composition drops below it (see LAYOUT).
@@ -46,8 +56,43 @@ export const safeFor = (W: number): Safe =>
       { cx: 0.5, cy: 0.5, w: 0.66, h: 0.3, dim: 0.6 };
 
 /** Where each piece sits, as canvas fractions. Two layouts, one per breakpoint. */
-function layoutFor(W: number) {
+function layoutFor(W: number, mode: Mode) {
   const narrow = W < 768;
+  if (mode === "hero") {
+    // Everything that must stay readable lives in the upper two thirds, so the
+    // profile and the follow-ups settle along the bottom edge.
+    return narrow
+      ? {
+          fieldY: 0.44,
+          cardX: 0.2,
+          agentX: 0.8,
+          nearCardX: 0.37,
+          nearAgentX: 0.63,
+          profile: [0.5, 0.85] as const,
+          bubbles: [
+            [0.19, 0.9],
+            [0.3, 0.95],
+            [0.78, 0.92],
+          ] as const,
+          arcY: [0.97, 0.52] as const,
+        }
+      : {
+          fieldY: 0.46,
+          // Far enough in that a full-width card is never clipped by the
+          // viewport edge: half the card is ~0.13W at the hero's scale.
+          cardX: 0.16,
+          agentX: 0.84,
+          nearCardX: 0.31,
+          nearAgentX: 0.69,
+          profile: [0.5, 0.86] as const,
+          bubbles: [
+            [0.68, 0.93],
+            [0.78, 0.87],
+            [0.87, 0.8],
+          ] as const,
+          arcY: [0.98, 0.3] as const,
+        };
+  }
   return narrow
     ? {
         fieldY: 0.47,
@@ -328,13 +373,18 @@ function place(
  * Build the scene for a canvas of W×H CSS pixels. Called at mount and on resize.
  * `density` scales the particle count (1 = desktop, ~0.45 = phone).
  */
-export function buildScene(W: number, H: number, density: number): Scene {
+export function buildScene(
+  W: number,
+  H: number,
+  density: number,
+  mode: Mode = "stage",
+): Scene {
   const gap = density >= 0.7 ? 2 : 3; // line art needs tight sampling to read
   // Uniform scale off the design size, floored so the shapes stay readable on a
   // phone instead of shrinking into confetti.
   const s = Math.max(Math.min(W / 1200, H / 620), W < 768 ? 0.46 : 0.3);
 
-  const L = layoutFor(W);
+  const L = layoutFor(W, mode);
   const contact: Pt = { x: W * 0.5, y: H * L.fieldY };
 
   // --- the two fields, formed then approaching
@@ -474,7 +524,7 @@ export function buildScene(W: number, H: number, density: number): Scene {
     push(agentFormed[i], agentNear[i], 1, roleFor(Math.random(), true), 0);
   }
 
-  return { particles, contact, safe: safeFor(W) };
+  return { particles, contact, safe: safeFor(W, mode) };
 }
 
 /* ------------------------------------------------------------------ update */

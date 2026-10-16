@@ -56,8 +56,30 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en-IN" suppressHydrationWarning className="dark">
+    <html
+      lang="en-IN"
+      suppressHydrationWarning
+      className="dark"
+      data-currency="usd"
+    >
       <head>
+        {/* Currency, decided before first paint so prices never shift or flash
+            (PRD v4 §5). Precedence: the visitor's own choice > the Netlify edge
+            function's geo read > this timezone guess > the USD default already
+            in the markup. Everything is wrapped in try/catch: a thrown
+            storage access must never stop the page rendering. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){try{var d=document.documentElement;" +
+              "var c=localStorage.getItem('rizely-currency');" +
+              "if(c==='inr'||c==='usd'){d.setAttribute('data-currency',c);return;}" +
+              "if(d.hasAttribute('data-geo-resolved'))return;" +
+              "var t=(Intl.DateTimeFormat().resolvedOptions().timeZone||'');" +
+              "if(t==='Asia/Kolkata'||t==='Asia/Calcutta')" +
+              "d.setAttribute('data-currency','inr');}catch(e){}})()",
+          }}
+        />
         {/* No-JS resilience: if JavaScript never runs, don't leave animated
             (opacity:0) sections invisible — force them visible. */}
         <noscript>

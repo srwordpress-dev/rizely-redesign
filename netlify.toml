@@ -1,6 +1,11 @@
 [build]
   command = "npm run build"
   publish = "out"
+  # Edge functions live in netlify/edge-functions (the default). Declared
+  # explicitly so a `netlify deploy --dir=out` from the repo root always
+  # carries them: if geo-currency.ts is missing from a deploy, India
+  # silently sees USD.
+  edge_functions = "netlify/edge-functions"
 
 [[headers]]
   for = "/*"

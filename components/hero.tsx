@@ -1,10 +1,22 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { WHATSAPP_URL } from "@/lib/site";
+import { WHATSAPP_URL, SHOP_URL } from "@/lib/site";
 import { Check } from "lucide-react";
-import { FadeRiseWord } from "@/components/rotating";
+import HeroParticles from "@/components/hero-particles";
+
+/*
+  The hero leads with the three layers — card, profile, agent — because all
+  three have shipped, while most of the micro-agents are still roadmap. That
+  framing moves to its own section further down (PRD v4 D1).
+
+  Headline variant B (chosen 17 Oct): the H1 paints immediately and only the
+  particles animate. The storyboard's 2.0-2.6s headline reveal looked better
+  but put LCP at ~2.6s, and this is the page an acquisition-bottlenecked
+  business sends cold traffic to.
+
+  No "use client" here on purpose: the whole block is static markup, so the
+  H1 is in the first byte of HTML. Only the canvas is a client component.
+*/
 
 function WhatsAppIcon({ className = "" }: { className?: string }) {
   return (
@@ -20,46 +32,34 @@ const chips = [
   "No new app — WhatsApp or Telegram",
 ];
 
-// Rotating words in the hero H1 — the event type, the outcome, and the crossed-out
-// "old way". Each is width-locked (no reflow) and cycles slowly and staggered.
-const EVENTS = ["event", "conference", "networking meetup", "expo", "trade show"];
-const OUTCOMES = ["replies", "sales", "calls", "meetings"];
-const OLD_WAY = ["a pile of cards", "a bunch of numbers", "a full camera roll"];
-
 export default function Hero() {
   return (
     <div className="relative overflow-hidden">
-      <section className="max-w-(--breakpoint-xl) mx-auto px-4 pt-20 pb-20 md:pt-28 md:pb-24 md:px-8 flex flex-col justify-center items-center">
-        {/* Above-the-fold content renders immediately — no JS-gated fade — so the
-            LCP heading paints as fast as possible and is never blank. */}
+      {/* The shot: a card from the left, the agent from the right, the tap in
+          the middle. Decorative — the H1 carries the meaning, and under
+          prefers-reduced-motion this renders one composed still frame. */}
+      <div className="pointer-events-none absolute inset-0 -z-10">
+        <HeroParticles mode="hero" />
+      </div>
+
+      <section className="max-w-(--breakpoint-xl) mx-auto px-4 pt-20 pb-28 md:pt-28 md:pb-40 md:px-8 flex flex-col justify-center items-center">
         <div className="flex flex-col justify-center items-center space-y-6 max-w-3xl mx-auto text-center">
-          <span className="w-fit text-xs sm:text-sm bg-card px-3 py-1 border border-border rounded-full text-muted-foreground">
-            A platform of AI micro-agents · WhatsApp &amp; Telegram
+          <span className="w-fit text-xs sm:text-sm bg-card/80 backdrop-blur-sm px-3 py-1 border border-border rounded-full text-muted-foreground">
+            NFC card · digital profile · AI agent
           </span>
 
           <h1 className="text-4xl font-heading font-extrabold tracking-[-0.03em] mx-auto md:text-6xl text-balance leading-[1.08]">
-            {/* Screen readers + crawlers get one stable sentence; the rotating
-                version below is decorative. */}
-            <span className="sr-only">
-              Come back from the event with replies. Not a pile of cards.
-            </span>
-            <span aria-hidden="true">
-              Come back from the <FadeRiseWord words={EVENTS} period={5200} /> with{" "}
-              <FadeRiseWord words={OUTCOMES} className="text-sunrise" period={6000} />.
-              <span className="mt-3 block text-2xl md:text-4xl font-bold text-muted-foreground">
-                Not <FadeRiseWord words={OLD_WAY} strike period={7000} />.
-              </span>
-            </span>
+            A card they tap. A profile they keep.{" "}
+            <span className="text-sunrise">An agent that follows up.</span>
           </h1>
 
           <p className="max-w-2xl text-base sm:text-lg mx-auto text-muted-foreground text-balance">
-            Rizely is a platform of AI micro-agents. The first one scans every card you collect at
-            an event — right inside WhatsApp or Telegram — files the lead, and sends the
-            personalised follow-up in their language, while you&apos;re still shaking the next
-            hand. No new app. No Excel at midnight.
+            Hand over a Rizely card and your profile opens on their phone — no app, nothing to
+            type. Point the same Rizely at the cards <em className="not-italic font-medium text-foreground">you</em>{" "}
+            collected and the agent reads them, files every lead, and sends each person a
+            personalised WhatsApp or Telegram follow-up in their language.
           </p>
 
-          {/* Primary CTA dominates; one low-friction secondary beside it. */}
           <div className="flex flex-col sm:flex-row items-center gap-3 w-full justify-center pt-2">
             <Button
               asChild
@@ -75,17 +75,19 @@ export default function Hero() {
               asChild
               variant="outline"
               size="lg"
-              className="h-14 px-6 text-base w-full sm:w-auto"
+              className="h-14 px-6 text-base w-full sm:w-auto bg-background/60 backdrop-blur-sm"
             >
-              <Link href="#how">See it work</Link>
+              <Link href={SHOP_URL} target="_blank" rel="noopener noreferrer">
+                Get your card — ₹599
+              </Link>
             </Button>
           </div>
 
           <p className="text-sm text-muted-foreground">
-            50 scans on us — no card, no app to install. On the WhatsApp you already use.
+            First 50 scans on us — no card, no app to install. The card is a one-off ₹599, and
+            your profile comes with it.
           </p>
 
-          {/* Honest capability chips — no fabricated stats or results. */}
           <div className="flex flex-wrap justify-center items-center gap-x-5 gap-y-2 pt-3 text-sm text-muted-foreground">
             {chips.map((c) => (
               <span key={c} className="inline-flex items-center gap-1.5">
@@ -97,8 +99,8 @@ export default function Hero() {
         </div>
       </section>
 
-      {/* Warm sunrise glow (decorative, behind content) — the brand "rise" light. */}
-      <div className="w-full h-full absolute -top-40 left-1/2 -translate-x-1/2 flex justify-center items-start pointer-events-none -z-10">
+      {/* Warm sunrise glow (decorative, behind everything) — the brand "rise" light. */}
+      <div className="w-full h-full absolute -top-40 left-1/2 -translate-x-1/2 flex justify-center items-start pointer-events-none -z-20">
         <div className="w-[42rem] h-80 bg-light blur-[130px] rounded-full opacity-25" />
       </div>
     </div>

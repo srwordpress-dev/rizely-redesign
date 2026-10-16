@@ -6,14 +6,25 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { CheckIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
-import { WHATSAPP_URL } from "@/lib/site";
+import { WHATSAPP_URL, SHOP_URL } from "@/lib/site";
+import CurrencyToggle from "@/components/currency-toggle";
 
-// Annual-first, ex-GST — grounded in workstreams/07-research/PRICING.md.
-// India: RBI e-mandates make monthly subscriptions hostile, so every plan is annual.
+/*
+  Annual, ex-GST, grounded in workstreams/07-research/PRICING.md.
+  India: RBI e-mandates make monthly subscriptions hostile, so every plan is
+  annual. Never add a monthly tier here without that constraint changing.
+
+  Both currency sets render; CSS hides one based on data-currency on <html>
+  (PRD v4 §5). Every figure is [PRICING PROPOSED] — there is an unresolved
+  conflict between ₹3,499/yr here and the ₹399/mo billed annually (₹4,788)
+  currently live on rizely.net.
+*/
+
 type Plan = {
   name: string;
   desc: string;
-  annual: number;
+  inr: number;
+  usd: number;
   isMostPop: boolean;
   features: string[];
 };
@@ -22,7 +33,8 @@ const plans: Plan[] = [
   {
     name: "Solo",
     desc: "For one rep working events",
-    annual: 79,
+    inr: 3499,
+    usd: 79,
     isMostPop: false,
     features: [
       "1 seat",
@@ -35,7 +47,8 @@ const plans: Plan[] = [
   {
     name: "Team",
     desc: "For a small sales or GTM team",
-    annual: 199,
+    inr: 11999,
+    usd: 199,
     isMostPop: true,
     features: [
       "Everything in Solo",
@@ -48,7 +61,8 @@ const plans: Plan[] = [
   {
     name: "Business",
     desc: "For teams running events at scale",
-    annual: 499,
+    inr: 27999,
+    usd: 499,
     isMostPop: false,
     features: [
       "Everything in Team",
@@ -60,7 +74,20 @@ const plans: Plan[] = [
   },
 ];
 
+const EVENT_PASS = { inr: 2499, usd: 49 };
+
+const inr = (n: number) => `₹${n.toLocaleString("en-IN")}`;
 const usd = (n: number) => `$${n.toLocaleString("en-US")}`;
+
+/** Both prices, one hidden by CSS. No JS runs to pick — so nothing shifts. */
+function Price({ plan }: { plan: { inr: number; usd: number } }) {
+  return (
+    <>
+      <span data-price="inr">{inr(plan.inr)}</span>
+      <span data-price="usd">{usd(plan.usd)}</span>
+    </>
+  );
+}
 
 export default function Pricing() {
   return (
@@ -73,7 +100,7 @@ export default function Pricing() {
         whileInView={{ y: 0, opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="mb-12 flex flex-col gap-3 text-center sm:mb-16"
+        className="mb-12 flex flex-col items-center gap-3 text-center sm:mb-16"
       >
         <h2 className="text-3xl font-heading font-bold sm:text-4xl tracking-tight">
           Start free. Pay only when it&apos;s earning its keep.
@@ -82,6 +109,16 @@ export default function Pricing() {
           Your first 50 scans are free — no card, no app. After that, plans are annual, or buy a
           one-off Event Pass for a single show.
         </p>
+        <div className="flex flex-col items-center gap-2 pt-1">
+          <CurrencyToggle />
+          <p className="text-xs text-muted-foreground" data-price="inr">
+            Prices ex-GST. Every payment comes with a GST invoice you can claim, and UPI works at
+            checkout.
+          </p>
+          <p className="text-xs text-muted-foreground" data-price="usd">
+            Prices in USD, billed annually.
+          </p>
+        </div>
       </motion.div>
 
       <div className="mx-auto grid max-w-5xl gap-4 sm:gap-6 md:grid-cols-3 md:gap-8">
@@ -116,7 +153,9 @@ export default function Pricing() {
                   </h3>
                   <p className="mb-3 text-sm text-muted-foreground sm:mb-4">{plan.desc}</p>
                   <div className="flex items-baseline justify-center tabular-nums">
-                    <span className="text-3xl font-bold sm:text-4xl">{usd(plan.annual)}</span>
+                    <span className="text-3xl font-bold sm:text-4xl">
+                      <Price plan={plan} />
+                    </span>
                     <span className="ml-1 text-sm text-muted-foreground sm:text-base">
                       /year
                     </span>
@@ -128,25 +167,23 @@ export default function Pricing() {
 
                 <Separator className="my-4 sm:my-6" />
 
-                <ul className="space-y-2.5 sm:space-y-3">
-                  {plan.features.map((feature, featureIndex) => (
-                    <li key={featureIndex} className="flex items-center text-xs sm:text-sm">
-                      <CheckIcon aria-hidden="true" className="mr-2 h-4 w-4 shrink-0 text-primary sm:mr-3" />
-                      {feature}
+                <ul className="space-y-2.5 text-sm sm:space-y-3">
+                  {plan.features.map((feature) => (
+                    <li key={feature} className="flex items-start gap-2.5">
+                      <CheckIcon
+                        aria-hidden="true"
+                        className="mt-0.5 size-4 shrink-0 text-brand-teal"
+                      />
+                      <span className="text-muted-foreground">{feature}</span>
                     </li>
                   ))}
                 </ul>
               </CardContent>
 
               <CardFooter className="p-4 pt-0 sm:p-6 sm:pt-0">
-                <Button
-                  asChild
-                  className={`w-full ${plan.isMostPop ? "cta-sunrise" : ""}`}
-                  variant={plan.isMostPop ? "default" : "outline"}
-                  size="lg"
-                >
+                <Button asChild className="w-full cta-sunrise h-11" size="lg">
                   <Link href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-                    Start free
+                    Start free on WhatsApp
                   </Link>
                 </Button>
               </CardFooter>
@@ -155,39 +192,50 @@ export default function Pricing() {
         ))}
       </div>
 
-      {/* Event Pass — the per-event SKU nobody else sells (PRICING.md). */}
-      <motion.div
-        initial={{ y: 20, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        className="mx-auto mt-8 max-w-5xl"
-      >
-        <div className="rounded-2xl border border-primary/30 bg-card/50 p-6 sm:p-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div className="space-y-1">
-            <div className="flex items-center gap-2">
-              <h3 className="text-lg font-heading font-semibold">Event Pass</h3>
-              <span className="rounded-full border border-primary/40 bg-primary/10 px-2 py-0.5 text-xs text-primary">
-                One booth, one price
-              </span>
-            </div>
-            <p className="text-sm text-muted-foreground max-w-xl">
-              Running just one show this week? Pay per event — <strong>$49 per event</strong> for
-              5 seats, 750 scans and 750 follow-ups over a 30-day window. No subscription. It
-              matches how exhibitors actually budget: pay for the show, not the year.
-            </p>
+      {/* Event Pass + the card, side by side — the two ways to start that are
+          not a yearly commitment. The card links out to Shopify; nothing is
+          sold on this site (PRD v4 D2). */}
+      <div className="mx-auto mt-6 grid max-w-5xl gap-4 sm:mt-8 sm:gap-6 md:grid-cols-2">
+        <div className="rounded-2xl border border-border bg-card/40 p-6">
+          <h3 className="font-heading text-lg font-semibold">Event Pass</h3>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Running a booth? Pay for the show, not the year.
+          </p>
+          <div className="mt-3 flex items-baseline tabular-nums">
+            <span className="text-3xl font-bold">
+              <Price plan={EVENT_PASS} />
+            </span>
+            <span className="ml-1 text-sm text-muted-foreground">/event</span>
           </div>
-          <Button asChild size="lg" variant="outline" className="shrink-0">
+          <p className="mt-1 text-xs text-muted-foreground/80">
+            5 seats · 750 scans · 750 follow-ups · 30-day window · [PRICING PROPOSED]
+          </p>
+          <Button asChild variant="outline" className="mt-4 h-11 w-full">
             <Link href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-              Get an Event Pass
+              Ask about the Event Pass
             </Link>
           </Button>
         </div>
-        <p className="mt-4 text-center text-xs text-muted-foreground/70">
-          Prices in USD, ex-tax. Plans are proposed and being finalised — final prices may change.
-          Based in India? INR pricing with a GST invoice and UPI is available — just ask on WhatsApp.
-        </p>
-      </motion.div>
+
+        <div className="rounded-2xl border border-border bg-card/40 p-6">
+          <h3 className="font-heading text-lg font-semibold">The NFC card</h3>
+          <p className="mt-1 text-sm text-muted-foreground">
+            A one-off purchase, not a plan. Your profile is included, free forever.
+          </p>
+          <div className="mt-3 flex items-baseline tabular-nums">
+            <span className="text-3xl font-bold">₹599</span>
+            <span className="ml-1 text-sm text-muted-foreground">incl. GST</span>
+          </div>
+          <p className="mt-1 text-xs text-muted-foreground/80">
+            102 designs · packs down to ₹399 a card · free shipping over ₹999
+          </p>
+          <Button asChild variant="outline" className="mt-4 h-11 w-full">
+            <Link href={SHOP_URL} target="_blank" rel="noopener noreferrer">
+              Choose your card
+            </Link>
+          </Button>
+        </div>
+      </div>
     </section>
   );
 }

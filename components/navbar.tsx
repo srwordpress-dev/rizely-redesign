@@ -102,7 +102,7 @@ export default function NavBar() {
                   <Link
                     key={item.name}
                     href={item.href}
-                    className="block px-3 py-2 text-base font-medium text-foreground hover:bg-muted rounded-md transition-colors"
+                    className="flex min-h-11 items-center px-3 py-2 text-base font-medium text-foreground hover:bg-muted rounded-md transition-colors"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {item.name}

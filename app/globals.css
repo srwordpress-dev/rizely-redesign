@@ -380,3 +380,15 @@ details[open] > summary .faq-chevron {
     animation: none;
   }
 }
+
+/*
+  Geo pricing (PRD v4 §5). Both currency sets ship in the HTML; exactly one is
+  hidden by this rule, keyed off data-currency on <html>. Nothing is fetched and
+  nothing is measured after paint, so switching cannot shift the layout — and
+  the visible element keeps its natural display type, which is why this hides
+  the inactive one rather than showing the active one.
+*/
+:root[data-currency="usd"] [data-price="inr"],
+:root[data-currency="inr"] [data-price="usd"] {
+  display: none;
+}

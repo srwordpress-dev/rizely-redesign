@@ -9,7 +9,7 @@
 */
 
 import { useEffect, useRef } from "react";
-import { COLORS, buildScene, update, type Scene } from "@/lib/hero-anim";
+import { COLORS, buildScene, update, type Mode, type Scene } from "@/lib/hero-anim";
 
 /** Alpha is quantised into these levels so the draw pass can batch by style. */
 const LEVELS = [0.28, 0.52, 0.76, 1] as const;
@@ -22,11 +22,14 @@ export default function HeroParticles({
   replay = 0,
   /** Freeze on one moment, in seconds. Used by the prototype's scrubber. */
   scrubTo,
+  /** "hero" drops the composition clear of the page's full text column. */
+  mode = "stage",
 }: {
   className?: string;
   forceStatic?: boolean;
   replay?: number;
   scrubTo?: number;
+  mode?: Mode;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -75,7 +78,7 @@ export default function HeroParticles({
       const density = W < 768 ? 0.45 : W < 1100 ? 0.8 : 0.95;
       dot = W < 768 ? 1.5 : 1.9;
 
-      scene = buildScene(W, H, density);
+      scene = buildScene(W, H, density, mode);
       const n = scene.particles.length;
       X = new Float32Array(n);
       Y = new Float32Array(n);
@@ -190,7 +193,7 @@ export default function HeroParticles({
       io.disconnect();
       ro.disconnect();
     };
-  }, [forceStatic, replay, scrubTo]);
+  }, [forceStatic, replay, scrubTo, mode]);
 
   return (
     <canvas

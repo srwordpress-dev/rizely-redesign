@@ -6,6 +6,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { BRAND, WHATSAPP_URL } from "@/lib/site";
 import { RizelyLogo } from "@/components/logo";
+import { SHOP_URL } from "@/lib/site";
 
 const Footer = () => {
   const year = new Date().getFullYear();
@@ -19,6 +20,7 @@ const Footer = () => {
     { name: "Pricing", href: "/#pricing" },
     { name: "FAQ", href: "/#faq" },
     { name: "Blog", href: "/blogs" },
+    { name: "Buy a card", href: SHOP_URL },
   ];
 
   return (
@@ -54,8 +56,9 @@ const Footer = () => {
               <RizelyLogo markClassName="h-6 w-6" wordClassName="text-xl" />
             </Link>
             <p className="max-w-xs text-sm leading-relaxed text-muted-foreground">
-              A platform of AI micro-agents for sales and event teams. Scan the card, send the
-              follow-up — inside WhatsApp and Telegram, in many languages, priced per event.
+              An NFC card, a digital profile and an AI agent that follows up. Hand your details
+              over with a tap; let the agent work the cards you collected — inside WhatsApp and
+              Telegram, in many languages, priced per event.
             </p>
           </div>
 
@@ -67,7 +70,7 @@ const Footer = () => {
                   <Link
                     key={item.name}
                     href={item.href}
-                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                    className="inline-flex min-h-11 items-center text-sm text-muted-foreground transition-colors hover:text-foreground"
                   >
                     {item.name}
                   </Link>
@@ -107,10 +110,10 @@ const Footer = () => {
             © {year} {BRAND}. All rights reserved.
           </span>
           <div className="flex items-center gap-4">
-            <Link href="/privacy" className="transition-colors hover:text-foreground">
+            <Link href="/privacy" className="inline-flex min-h-11 items-center transition-colors hover:text-foreground">
               Privacy
             </Link>
-            <Link href="/terms" className="transition-colors hover:text-foreground">
+            <Link href="/terms" className="inline-flex min-h-11 items-center transition-colors hover:text-foreground">
               Terms
             </Link>
             <span>Made in India 🇮🇳</span>

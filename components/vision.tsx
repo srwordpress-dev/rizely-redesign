@@ -4,9 +4,13 @@ import { motion } from "framer-motion";
 import { Handshake, Database, Bot } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
-// The three-layer vision, told honestly (Acquisition -> Management -> Agentic).
-// One product, built in layers. Each line labels what's live vs on the way.
-type Layer = {
+// Where the product is going (Acquisition -> Management -> Agentic), told
+// honestly: each line labels what is live vs on the way.
+//
+// Deliberately says STAGES, not layers. The three-layers section above owns
+// that word for the card/profile/agent story, and a reader meeting "layers"
+// twice meaning two different things learns neither.
+type Stage = {
   n: string;
   icon: LucideIcon;
   title: string;
@@ -15,7 +19,7 @@ type Layer = {
   next: string; // what's coming
 };
 
-const layers: Layer[] = [
+const stages: Stage[] = [
   {
     n: "01",
     icon: Handshake,
@@ -56,19 +60,20 @@ export default function Vision() {
         className="flex flex-col gap-3 text-center mb-14 max-w-2xl mx-auto"
       >
         <span className="mx-auto w-fit text-xs font-semibold uppercase tracking-widest text-primary">
-          The vision
+          Where this is going
         </span>
         <h2 className="text-3xl font-heading font-bold sm:text-4xl tracking-tight">
           Capture it, keep it, close it — as one product.
         </h2>
         <p className="text-muted-foreground text-lg">
-          Rizely is built in three layers. One product, shipped a layer at a time — we turn each
-          one on only when it actually works, and we&apos;ll always tell you which is which.
+          The card, the profile and the agent are here today. Underneath them the product is
+          being built in three stages — one at a time, each turned on only when it actually
+          works, and we&apos;ll always tell you which is which.
         </p>
       </motion.div>
 
       <div className="grid gap-5 lg:grid-cols-3 max-w-6xl mx-auto">
-        {layers.map((layer, index) => {
+        {stages.map((layer, index) => {
           const Icon = layer.icon;
           return (
             <motion.div
