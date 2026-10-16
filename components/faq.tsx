@@ -22,11 +22,19 @@ export const faqs = [
   },
   {
     q: "What happens after the 50 free scans?",
-    a: "You move to an annual plan when you're ready — in rupees, ex-GST, with a GST invoice you can claim, paid by UPI. Solo is around ₹3,499/year; exhibitors can buy a per-event pass instead. You won't be charged automatically the moment the free scans run out. (Plans are proposed and may change.)",
+    a: "You move to a paid plan when you're ready — monthly or annual (save about 25%), in USD. Solo is around $79/year, or buy a one-off Event Pass for a single show. In India, INR pricing with a GST invoice and UPI is available. You won't be charged automatically the moment the free scans run out. (Plans are proposed and may change.)",
   },
   {
     q: "Whose data is it, and is it safe?",
     a: "The leads are yours — export them any time, no ransom fee to get your own data out. We're building to India's DPDP rules and only act on contacts you've actually collected with consent. We won't scrape lists or blast strangers on your behalf; that's not follow-up, that's spam.",
+  },
+  {
+    q: "Is Rizely just a card scanner, or a whole platform?",
+    a: "It's a platform of AI micro-agents — each owns one job. The Card Agent is live today (scan, file, follow up). Others, like the Keeper and the Reviews Agent, are on the roadmap. You turn on what you need and pay for what you use, rather than buying one bloated app.",
+  },
+  {
+    q: "Can I use Rizely from Claude or ChatGPT?",
+    a: "Yes — Rizely connects to Claude today (web, desktop and Code). You can add and find contacts, organise events, pull an event recap, export leads and top up, all in plain language. ChatGPT works through custom connectors on paid plans in developer mode (some tiers are read-only). It's a window onto your pipeline, so you'll still need a Rizely account with WhatsApp or Telegram linked.",
   },
 ];
 
@@ -55,7 +63,7 @@ export default function Faq() {
           <details key={i} className="group py-1">
             <summary className="faq-summary flex cursor-pointer items-center justify-between gap-4 py-4 text-left font-medium text-foreground">
               {item.q}
-              <ChevronDown className="faq-chevron size-4 shrink-0 text-muted-foreground" />
+              <ChevronDown aria-hidden="true" className="faq-chevron size-4 shrink-0 text-muted-foreground" />
             </summary>
             <p className="pb-4 pr-8 text-muted-foreground leading-relaxed">{item.a}</p>
           </details>

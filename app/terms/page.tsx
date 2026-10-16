@@ -50,10 +50,11 @@ export default function TermsPage() {
 
       <h2>5. Plans, pricing and billing</h2>
       <p>
-        Paid plans are billed in Indian Rupees (₹), exclusive of GST, and are generally billed
+        Paid plans are billed in the currency shown at checkout — US Dollars (USD) by default, or
+        Indian Rupees (INR) with GST for customers in India — and may be billed monthly or
         annually; a free tier is available. Prices shown on the site are being finalised and may
         change before general availability — the price and inclusions confirmed at checkout apply.
-        A GST invoice is provided on paid plans.
+        A GST invoice is provided on Indian plans.
       </p>
 
       <h2>6. Intellectual property</h2>

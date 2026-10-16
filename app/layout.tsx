@@ -19,7 +19,7 @@ const inter = Inter({
 
 const SITE_URL = "https://rizely.net";
 const DESCRIPTION =
-  "Rizely is a platform of AI micro-agents for Indian business owners. The first one scans the business cards you collect at events, builds a managed lead pipeline, and sends the follow-up automatically — inside WhatsApp and Telegram, in Indian languages, priced per event.";
+  "Rizely is a platform of AI micro-agents for sales and event teams. The first one scans the business cards you collect at events, builds a managed lead pipeline, and sends the follow-up automatically — inside WhatsApp and Telegram, in many languages, priced per event. Works worldwide.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   description: DESCRIPTION,
   keywords: [
     "business card scanner WhatsApp",
-    "event lead capture India",
+    "event lead capture software",
     "AI follow-up for events",
     "Telegram business card scanner",
     "lead capture at trade shows",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     type: "website",
     url: SITE_URL,
     siteName: "Rizely",
-    title: "Rizely — use Rizely to rise your business",
+    title: "Rizely — come back from the event with replies",
     description: DESCRIPTION,
     locale: "en_IN",
   },

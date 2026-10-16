@@ -65,6 +65,33 @@ const tools: Tool[] = [
     ),
   },
   {
+    // Neutral mark, not the official logo — text-only claim (Anthropic badge not yet approved).
+    name: "Claude",
+    svg: (
+      <svg viewBox="0 0 24 24" className={cls} fill="currentColor" aria-hidden="true">
+        <path d="M12 2l1.7 6.8L20.5 10l-6.8 1.2L12 22l-1.7-10.8L3.5 10l6.8-1.2z" />
+      </svg>
+    ),
+  },
+  {
+    // Neutral mark, not the official logo.
+    name: "ChatGPT",
+    svg: (
+      <svg
+        viewBox="0 0 24 24"
+        className={cls}
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={1.7}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z" />
+      </svg>
+    ),
+  },
+  {
     name: "Your CRM",
     svg: (
       <svg
@@ -87,7 +114,7 @@ const tools: Tool[] = [
 
 export default function Partners() {
   return (
-    <section className="max-w-(--breakpoint-md) w-full mx-auto px-4 py-16 gap-8 md:px-8 flex flex-col justify-center items-center text-center">
+    <section className="max-w-(--breakpoint-lg) w-full mx-auto px-4 py-16 gap-8 md:px-8 flex flex-col justify-center items-center text-center">
       <motion.p
         initial={{ y: 20, opacity: 0, filter: "blur(3px)" }}
         whileInView={{ y: 0, opacity: 1, filter: "blur(0px)" }}
@@ -97,7 +124,7 @@ export default function Partners() {
       >
         Plugs into the tools you already use
       </motion.p>
-      <div className="w-full grid grid-cols-2 sm:grid-cols-5 gap-4 place-items-center">
+      <div className="w-full flex flex-wrap justify-center items-center gap-x-8 gap-y-4">
         {tools.map((tool, index) => (
           <motion.div
             key={tool.name}

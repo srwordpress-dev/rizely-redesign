@@ -52,7 +52,7 @@ export default function Proof() {
           <ul className="space-y-4">
             {before.map((line) => (
               <li key={line} className="flex gap-3 text-sm text-muted-foreground">
-                <X className="mt-0.5 size-4 shrink-0 text-destructive" />
+                <X aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-destructive" />
                 <span>{line}</span>
               </li>
             ))}
@@ -73,7 +73,7 @@ export default function Proof() {
           <ul className="space-y-4">
             {after.map((line) => (
               <li key={line} className="flex gap-3 text-sm text-foreground/90">
-                <Check className="mt-0.5 size-4 shrink-0 text-brand-teal" />
+                <Check aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-brand-teal" />
                 <span>{line}</span>
               </li>
             ))}
@@ -90,7 +90,7 @@ export default function Proof() {
         className="mx-auto mt-8 max-w-4xl rounded-2xl border border-dashed border-border bg-card/30 p-5 text-center"
       >
         <p className="inline-flex flex-wrap items-center justify-center gap-2 text-sm text-muted-foreground">
-          <Sparkles className="size-4 text-brand-amber" />
+          <Sparkles aria-hidden="true" className="size-4 text-brand-amber" />
           <span>
             <span className="font-medium text-foreground">Early access.</span> Rizely Cards is
             live with the first exhibitors. Real, logged event stories will land here — we

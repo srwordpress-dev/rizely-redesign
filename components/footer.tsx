@@ -11,10 +11,11 @@ const Footer = () => {
   const year = new Date().getFullYear();
 
   const footerLinks = [
-    { name: "How it works", href: "#how" },
-    { name: "Agents", href: "#agents" },
-    { name: "Pricing", href: "#pricing" },
-    { name: "FAQ", href: "#faq" },
+    { name: "How it works", href: "/#how" },
+    { name: "Agents", href: "/agents" },
+    { name: "Connect", href: "/connect" },
+    { name: "Pricing", href: "/#pricing" },
+    { name: "FAQ", href: "/#faq" },
   ];
 
   return (
@@ -50,8 +51,8 @@ const Footer = () => {
               <RizelyLogo markClassName="h-6 w-6" wordClassName="text-xl" />
             </Link>
             <p className="max-w-xs text-sm leading-relaxed text-muted-foreground">
-              A platform of AI micro-agents for Indian business owners. Scan the card, send the
-              follow-up — inside WhatsApp and Telegram, in Indian languages, priced per event.
+              A platform of AI micro-agents for sales and event teams. Scan the card, send the
+              follow-up — inside WhatsApp and Telegram, in many languages, priced per event.
             </p>
           </div>
 
@@ -71,12 +72,12 @@ const Footer = () => {
           </div>
 
           <div className="space-y-3">
-            <h3 className="text-sm font-semibold">Built for India</h3>
+            <h3 className="text-sm font-semibold">Why Rizely</h3>
             <ul className="flex flex-col gap-2 text-sm text-muted-foreground">
-              <li>GST invoice on every plan</li>
-              <li>Hindi, Gujarati &amp; Marathi capture</li>
-              <li>Annual pricing, UPI checkout</li>
-              <li>Handled with DPDP in mind</li>
+              <li>Capture and follow-up in one flow</li>
+              <li>Reads cards in many languages</li>
+              <li>Per-event, monthly or annual pricing</li>
+              <li>Run it from WhatsApp, Telegram or Claude</li>
             </ul>
           </div>
         </div>

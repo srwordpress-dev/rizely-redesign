@@ -22,37 +22,37 @@ type Plan = {
 const plans: Plan[] = [
   {
     name: "Solo",
-    desc: "For a single rep working events",
-    annual: 3499,
-    perMonth: 291,
+    desc: "For one rep working events",
+    annual: 79,
+    perMonth: 9,
     isMostPop: false,
     features: [
       "1 seat",
       "500 scans / month",
       "200 auto follow-ups / month",
-      "Indian-language capture",
-      "GST invoice included",
+      "Multilingual card capture",
+      "WhatsApp & Telegram",
     ],
   },
   {
     name: "Team",
     desc: "For a small sales or GTM team",
-    annual: 11999,
-    perMonth: 999,
+    annual: 199,
+    perMonth: 22,
     isMostPop: true,
     features: [
       "Everything in Solo",
       "3 seats",
       "2,000 scans / month",
       "1,000 auto follow-ups / month",
-      "Google Sheets & CRM export",
+      "Sheets & CRM export · Connect to Claude",
     ],
   },
   {
     name: "Business",
     desc: "For teams running events at scale",
-    annual: 27999,
-    perMonth: 2333,
+    annual: 499,
+    perMonth: 55,
     isMostPop: false,
     features: [
       "Everything in Team",
@@ -64,7 +64,7 @@ const plans: Plan[] = [
   },
 ];
 
-const inr = (n: number) => `₹${n.toLocaleString("en-IN")}`;
+const usd = (n: number) => `$${n.toLocaleString("en-US")}`;
 
 export default function Pricing() {
   return (
@@ -83,8 +83,8 @@ export default function Pricing() {
           Start free. Pay only when it&apos;s earning its keep.
         </h2>
         <p className="mx-auto max-w-xl text-muted-foreground text-lg">
-          Your first 50 scans are free — no card, no app. After that, plans are annual, in ₹,
-          ex-GST, with a GST invoice you can claim and UPI checkout.
+          Your first 50 scans are free — no card, no app. After that, pick monthly or annual and
+          save about 25%. Prices in USD.
         </p>
       </motion.div>
 
@@ -120,13 +120,14 @@ export default function Pricing() {
                   </h3>
                   <p className="mb-3 text-sm text-muted-foreground sm:mb-4">{plan.desc}</p>
                   <div className="flex items-baseline justify-center tabular-nums">
-                    <span className="text-3xl font-bold sm:text-4xl">{inr(plan.annual)}</span>
+                    <span className="text-3xl font-bold sm:text-4xl">{usd(plan.annual)}</span>
                     <span className="ml-1 text-sm text-muted-foreground sm:text-base">
                       /year
                     </span>
                   </div>
                   <p className="mt-1 text-xs text-muted-foreground/80">
-                    about {inr(plan.perMonth)}/month · ex-GST
+                    or {usd(plan.perMonth)}/month · save{" "}
+                    {Math.round((1 - plan.annual / (plan.perMonth * 12)) * 100)}%
                   </p>
                 </div>
 
@@ -135,7 +136,7 @@ export default function Pricing() {
                 <ul className="space-y-2.5 sm:space-y-3">
                   {plan.features.map((feature, featureIndex) => (
                     <li key={featureIndex} className="flex items-center text-xs sm:text-sm">
-                      <CheckIcon className="mr-2 h-4 w-4 shrink-0 text-primary sm:mr-3" />
+                      <CheckIcon aria-hidden="true" className="mr-2 h-4 w-4 shrink-0 text-primary sm:mr-3" />
                       {feature}
                     </li>
                   ))}
@@ -145,7 +146,7 @@ export default function Pricing() {
               <CardFooter className="p-4 pt-0 sm:p-6 sm:pt-0">
                 <Button
                   asChild
-                  className="w-full"
+                  className={`w-full ${plan.isMostPop ? "cta-sunrise" : ""}`}
                   variant={plan.isMostPop ? "default" : "outline"}
                   size="lg"
                 >
@@ -176,10 +177,9 @@ export default function Pricing() {
               </span>
             </div>
             <p className="text-sm text-muted-foreground max-w-xl">
-              Running just one show this week? Pay per event — <strong>₹2,499 per event</strong>{" "}
-              (ex-GST) for 5 seats, 750 scans and 750 follow-ups over a 30-day window. No
-              subscription. GST invoice included. It matches how exhibitors actually budget:
-              pay for the show, not the year.
+              Running just one show this week? Pay per event — <strong>$49 per event</strong> for
+              5 seats, 750 scans and 750 follow-ups over a 30-day window. No subscription. It
+              matches how exhibitors actually budget: pay for the show, not the year.
             </p>
           </div>
           <Button asChild size="lg" variant="outline" className="shrink-0">
@@ -189,7 +189,8 @@ export default function Pricing() {
           </Button>
         </div>
         <p className="mt-4 text-center text-xs text-muted-foreground/70">
-          Plans are proposed and being finalised — final prices may change. All figures ex-GST.
+          Prices in USD, ex-tax. Plans are proposed and being finalised — final prices may change.
+          Based in India? INR pricing with a GST invoice and UPI is available — just ask on WhatsApp.
         </p>
       </motion.div>
     </section>

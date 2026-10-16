@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Repeat2, Languages, MessageCircle, IndianRupee } from "lucide-react";
+import { Repeat2, Languages, MessageCircle, Ticket } from "lucide-react";
 
 const points = [
   {
@@ -11,8 +11,8 @@ const points = [
   },
   {
     icon: Languages,
-    title: "Reads Indian cards, not just English",
-    desc: "Hindi, Gujarati, Marathi. Most scanners admit, in their own docs, that they “work best with English.” A coffee-stained card at 11pm can still stump it — we’d rather tell you that than pretend.",
+    title: "Reads cards in your language, not just English",
+    desc: "Hindi, Gujarati, Marathi and plenty more — most scanners admit, in their own docs, that they “work best with English.” A coffee-stained card at 11pm can still stump it — we’d rather tell you that than pretend.",
   },
   {
     icon: MessageCircle,
@@ -20,9 +20,9 @@ const points = [
     desc: "It works where your leads already are — no new app to make anyone install, nothing for your team to learn by Monday.",
   },
   {
-    icon: IndianRupee,
-    title: "Built India-first",
-    desc: "Priced in rupees, a GST invoice on every payment, pay by UPI. Annual plans, because RBI e-mandates make monthly subscriptions a genuine headache here.",
+    icon: Ticket,
+    title: "Priced the way you actually sell",
+    desc: "Monthly, annual, or a one-off pass for a single event — pay for the show, not the year. Prices in USD; in India, INR with a GST invoice and UPI.",
   },
 ];
 
@@ -43,7 +43,7 @@ export default function WhyRizely() {
           <p className="text-muted-foreground text-lg">
             We&apos;re not the first to scan a card on WhatsApp. We&apos;re the one that does
             capture <em className="not-italic text-foreground font-medium">and</em> follow-up,
-            in Indian languages, priced per event.
+            in your language, priced per event.
           </p>
         </motion.div>
 
@@ -58,7 +58,7 @@ export default function WhyRizely() {
               className="flex gap-4 rounded-2xl border border-border bg-background/60 p-6"
             >
               <div className="grid size-11 shrink-0 place-items-center rounded-xl bg-primary/10 border border-primary/20">
-                <p.icon className="size-5 text-primary" />
+                <p.icon aria-hidden="true" className="size-5 text-primary" />
               </div>
               <div className="space-y-1.5">
                 <h3 className="font-heading font-semibold text-lg">{p.title}</h3>

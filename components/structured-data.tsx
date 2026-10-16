@@ -9,8 +9,7 @@ const graph = {
       name: "Rizely",
       url: SITE_URL,
       description:
-        "Rizely is a platform of WhatsApp- and Telegram-native AI micro-agents for Indian business owners. The first one scans event business cards, builds a lead pipeline, and sends automatic follow-ups. India-first.",
-      areaServed: "IN",
+        "Rizely is a platform of WhatsApp- and Telegram-native AI micro-agents for sales and event teams. The first one scans event business cards, builds a lead pipeline, and sends automatic follow-ups in many languages. Works worldwide.",
     },
     {
       "@type": "WebSite",
@@ -27,12 +26,12 @@ const graph = {
       operatingSystem: "WhatsApp, Telegram, Web",
       url: SITE_URL,
       description:
-        "Scan the business cards you collect at events inside WhatsApp or Telegram, build a managed lead pipeline, and send personalised follow-ups automatically — in Indian languages, priced per event. Annual plans, ex-GST.",
+        "Scan the business cards you collect at events inside WhatsApp or Telegram, build a managed lead pipeline, and send personalised follow-ups automatically — in many languages, priced per event. Monthly or annual plans.",
       offers: [
-        { "@type": "Offer", name: "Solo (annual)", price: "3499", priceCurrency: "INR" },
-        { "@type": "Offer", name: "Team (annual)", price: "11999", priceCurrency: "INR" },
-        { "@type": "Offer", name: "Business (annual)", price: "27999", priceCurrency: "INR" },
-        { "@type": "Offer", name: "Event Pass (per event)", price: "2499", priceCurrency: "INR" },
+        { "@type": "Offer", name: "Solo (annual)", price: "79", priceCurrency: "USD" },
+        { "@type": "Offer", name: "Team (annual)", price: "199", priceCurrency: "USD" },
+        { "@type": "Offer", name: "Business (annual)", price: "499", priceCurrency: "USD" },
+        { "@type": "Offer", name: "Event Pass (per event)", price: "49", priceCurrency: "USD" },
       ],
     },
     {
@@ -76,7 +75,7 @@ const graph = {
           name: "What happens after the 50 free scans?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "You move to an annual plan when you're ready — in INR, ex-GST, with a GST invoice you can claim, paid by UPI. Solo is around ₹3,499/year; exhibitors can buy a per-event pass instead. You won't be charged automatically the moment the free scans run out.",
+            text: "You move to a paid plan when you're ready — monthly or annual (save about 25%), in USD. Solo is around $79/year, or buy a one-off Event Pass for a single show. In India, INR pricing with a GST invoice and UPI is available. You won't be charged automatically the moment the free scans run out.",
           },
         },
         {
@@ -85,6 +84,22 @@ const graph = {
           acceptedAnswer: {
             "@type": "Answer",
             text: "The leads are yours — export them any time, no ransom fee to get your own data out. We're building to India's DPDP rules and only act on contacts you've collected with consent. We won't scrape lists or blast strangers on your behalf.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Is Rizely just a card scanner, or a whole platform?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "It's a platform of AI micro-agents — each owns one job. The Card Agent is live today (scan, file, follow up). Others, like the Keeper and the Reviews Agent, are on the roadmap. You turn on what you need rather than buying one bloated app.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Can I use Rizely from Claude or ChatGPT?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes — Rizely connects to Claude today (web, desktop and Code): add and find contacts, organise events, pull a recap, export leads and top up, all in plain language. ChatGPT works through custom connectors on paid plans in developer mode; some tiers are read-only. You'll need a Rizely account with WhatsApp or Telegram linked.",
           },
         },
       ],

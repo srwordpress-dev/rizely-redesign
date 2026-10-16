@@ -9,10 +9,11 @@ import { WHATSAPP_URL } from "@/lib/site";
 import { RizelyLogo } from "@/components/logo";
 
 const menuItems = [
-  { name: "How it works", href: "#how" },
-  { name: "Agents", href: "#agents" },
-  { name: "Pricing", href: "#pricing" },
-  { name: "FAQ", href: "#faq" },
+  { name: "How it works", href: "/#how" },
+  { name: "Agents", href: "/agents" },
+  { name: "Connect", href: "/connect" },
+  { name: "Pricing", href: "/#pricing" },
+  { name: "FAQ", href: "/#faq" },
 ];
 
 export default function NavBar() {
@@ -49,7 +50,11 @@ export default function NavBar() {
                 animate={{ rotate: isMenuOpen ? 90 : 0 }}
                 transition={{ duration: 0.3, ease: "easeInOut" }}
               >
-                {isMenuOpen ? <Cross1Icon /> : <HamburgerMenuIcon />}
+                {isMenuOpen ? (
+                  <Cross1Icon aria-hidden="true" />
+                ) : (
+                  <HamburgerMenuIcon aria-hidden="true" />
+                )}
               </motion.div>
             </Button>
           </div>

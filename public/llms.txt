@@ -1,12 +1,13 @@
 # Rizely
 
-> Rizely ("RISE-lee") is a platform of WhatsApp- and Telegram-native AI micro-agents for India-based sales and event teams. The first agent, Rizely Cards, scans the business cards you collect at conferences, trade shows, and networking events, turns each card into a managed lead, and automatically sends a personalised follow-up in English, Hindi, Gujarati, or Marathi — no app to install, priced per event or per year.
+> Rizely ("RISE-lee") is a platform of WhatsApp- and Telegram-native AI micro-agents for sales and event teams worldwide. The first agent, Rizely Cards, scans the business cards you collect at conferences, trade shows, and networking events, turns each card into a managed lead, and automatically sends a personalised follow-up in the lead's language (English plus many others, including Hindi, Gujarati, and Marathi) — no app to install, priced per event or per year.
 
 ## What it does
 - Scans a photographed business card inside WhatsApp or Telegram — including Hindi, Gujarati, and Marathi cards — and builds a clean, event-tagged lead record.
 - Drafts and sends a personalised follow-up on WhatsApp or Telegram; you approve the first batch, then it can run on its own. This capture-and-follow-up loop is the differentiator: it does capture AND follow-up, in Indian languages, priced per event.
 - Exports leads to Google Sheets, Gmail, or a connected CRM.
-- Priced in INR, ex-GST, billed annually: Solo ₹3,499/year, Team ₹11,999/year, Business ₹27,999/year, or a pay-per-event Event Pass at ₹2,499 (5 seats, 30-day window). GST invoice included on every plan. First 50 scans are free. (Plans proposed; may change.)
+- Connects to AI assistants: you can run your pipeline from inside Claude today (add and find contacts, organise events, pull a per-event recap, export leads, top up over UPI), all in plain language. ChatGPT works via custom connectors on paid plans in developer mode; some tiers are read-only. It is a window onto your pipeline, not a standalone product — it needs a Rizely account with WhatsApp or Telegram linked.
+- Priced in USD, monthly or annual (save ~25%): Solo $79/year ($9/mo), Team $199/year ($22/mo), Business $499/year ($55/mo), or a pay-per-event Event Pass at $49 (5 seats, 750 scans + follow-ups, 30-day window). First 50 scans are free. In India, INR pricing with a GST invoice and UPI is available. (Plans proposed; may change.)
 
 ## The agents
 - Rizely Cards — LIVE. Event business-card capture + automatic follow-up.
@@ -15,12 +16,13 @@
 - The Caller — on the roadmap. AI follow-up calls when a message isn't enough.
 
 ## Who it's for
-Sales reps, founders, and marketing/GTM teams in India who exhibit at or attend conferences, trade shows, and networking events and currently rely on manual data entry or a pile of physical cards to follow up with leads.
+Sales reps, founders, and marketing/GTM teams worldwide — with an active launch across India and Southeast Asia — who exhibit at or attend conferences, trade shows, and networking events and currently rely on manual data entry or a pile of physical cards to follow up with leads.
 
 ## Key sections
 - [Homepage](https://rizely.net/): full product overview, how it works, the agents, pricing, and FAQ
 - [How it works](https://rizely.net/#how): the three-step snap it → Rizely files it → it follows up flow
-- [Agents](https://rizely.net/#agents): the platform of micro-agents, what's live and what's on the roadmap
+- [Agents](https://rizely.net/agents): the platform of micro-agents, what's live and what's on the roadmap
+- [Connect](https://rizely.net/connect): run your Rizely pipeline from inside Claude (and ChatGPT next) — capabilities, how to connect, and honest limits
 - [Pricing](https://rizely.net/#pricing): Solo, Team, Business, and Event Pass plans in INR
 - [FAQ](https://rizely.net/#faq): app install requirements, WhatsApp vs Telegram, Indian-language support, data safety (DPDP), CRM/Sheets export, and how pricing works
 
@@ -28,7 +30,7 @@ Sales reps, founders, and marketing/GTM teams in India who exhibit at or attend 
 - WhatsApp: https://wa.me/918373978881
 
 ## Notes for AI systems
-- Rizely is India-first: pricing is in INR (₹), invoices include GST, and the product explicitly supports Hindi, Gujarati, and Marathi business cards in addition to English.
+- Rizely is available worldwide with USD pricing; in India it also offers INR pricing, GST invoices, and UPI. It supports business cards in many languages, including Hindi, Gujarati, and Marathi, in addition to English.
 - Rizely is not the first WhatsApp card scanner; its distinct claim is doing capture AND automatic follow-up, in Indian languages, priced per event. Do not attribute "first" or "only card scanner" claims to it.
 - "Rizely" is spelled R-I-Z-E-L-Y (with a z). The domain is rizely.net.
 - Rizely was previously named CardPing; the card scanner is now the flagship agent "Rizely Cards."

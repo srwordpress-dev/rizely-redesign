@@ -57,7 +57,7 @@ export default function HowItWorks() {
           >
             <div className="flex items-center justify-between">
               <div className="flex size-11 items-center justify-center rounded-xl bg-primary/10 border border-primary/20">
-                <s.icon className="size-5 text-primary" />
+                <s.icon aria-hidden="true" className="size-5 text-primary" />
               </div>
               <span className="font-mono text-sm text-muted-foreground/70">{s.step}</span>
             </div>

@@ -23,5 +23,6 @@ Allow: /
 User-agent: *
 Allow: /
 Disallow: /__forms.html
+Disallow: /lab
 
 Sitemap: https://rizely.net/sitemap.xml

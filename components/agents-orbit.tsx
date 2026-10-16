@@ -91,6 +91,7 @@ function OrbitChip({
       <div className={`-translate-x-1/2 -translate-y-1/2 ${counterClass}`}>
         <div className="flex items-center gap-1 rounded-full border border-border bg-card/95 px-2 py-1 shadow-sm backdrop-blur">
           <Icon
+            aria-hidden="true"
             className={`size-3.5 ${
               agent.status === "live" ? "text-primary" : "text-muted-foreground"
             }`}
@@ -209,7 +210,7 @@ export default function AgentsOrbit() {
                         : "border-border bg-background text-muted-foreground"
                     }`}
                   >
-                    <Icon className="size-5" />
+                    <Icon aria-hidden="true" className="size-5" />
                   </div>
                   <div className="space-y-1.5">
                     <div className="flex flex-wrap items-center gap-2">
@@ -231,11 +232,14 @@ export default function AgentsOrbit() {
             );
           })}
 
-          <div className="pt-2">
+          <div className="flex flex-col sm:flex-row gap-3 pt-2">
             <Button asChild size="lg" className="w-full sm:w-auto">
               <Link href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
                 Put the live agent to work
               </Link>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="w-full sm:w-auto">
+              <Link href="/agents">Meet all the agents</Link>
             </Button>
           </div>
         </div>

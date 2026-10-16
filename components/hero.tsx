@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { WHATSAPP_URL } from "@/lib/site";
 import { Check } from "lucide-react";
+import { FadeRiseWord } from "@/components/rotating";
 
 function WhatsAppIcon({ className = "" }: { className?: string }) {
   return (
@@ -14,10 +15,16 @@ function WhatsAppIcon({ className = "" }: { className?: string }) {
 }
 
 const chips = [
-  "Reads Hindi, Gujarati & Marathi cards",
+  "Reads cards in many languages",
   "Follow-ups drafted in your voice",
-  "GST invoice on every plan",
+  "No new app — WhatsApp or Telegram",
 ];
+
+// Rotating words in the hero H1 — the event type, the outcome, and the crossed-out
+// "old way". Each is width-locked (no reflow) and cycles slowly and staggered.
+const EVENTS = ["event", "conference", "networking meetup", "expo", "trade show"];
+const OUTCOMES = ["replies", "sales", "calls", "meetings"];
+const OLD_WAY = ["a pile of cards", "a bunch of numbers", "a full camera roll"];
 
 export default function Hero() {
   return (
@@ -27,18 +34,29 @@ export default function Hero() {
             LCP heading paints as fast as possible and is never blank. */}
         <div className="flex flex-col justify-center items-center space-y-6 max-w-3xl mx-auto text-center">
           <span className="w-fit text-xs sm:text-sm bg-card px-3 py-1 border border-border rounded-full text-muted-foreground">
-            AI agents for events · WhatsApp &amp; Telegram
+            A platform of AI micro-agents · WhatsApp &amp; Telegram
           </span>
 
-          <h1 className="text-4xl font-heading font-extrabold tracking-tight mx-auto md:text-6xl text-balance leading-[1.05]">
-            Use Rizely to <span className="text-sunrise">rise</span> your business.
+          <h1 className="text-4xl font-heading font-extrabold tracking-[-0.03em] mx-auto md:text-6xl text-balance leading-[1.08]">
+            {/* Screen readers + crawlers get one stable sentence; the rotating
+                version below is decorative. */}
+            <span className="sr-only">
+              Come back from the event with replies. Not a pile of cards.
+            </span>
+            <span aria-hidden="true">
+              Come back from the <FadeRiseWord words={EVENTS} period={5200} /> with{" "}
+              <FadeRiseWord words={OUTCOMES} className="text-sunrise" period={6000} />.
+              <span className="mt-3 block text-2xl md:text-4xl font-bold text-muted-foreground">
+                Not <FadeRiseWord words={OLD_WAY} strike period={7000} />.
+              </span>
+            </span>
           </h1>
 
           <p className="max-w-2xl text-base sm:text-lg mx-auto text-muted-foreground text-balance">
-            It starts with an AI agent on WhatsApp that turns the cards you pile up at every
-            event into followed-up leads — while you&apos;re still shaking the next hand. It
-            reads the card, files the lead, and sends the personalised follow-up you&apos;d
-            never have got around to. No new app. No Excel at midnight.
+            Rizely is a platform of AI micro-agents. The first one scans every card you collect at
+            an event — right inside WhatsApp or Telegram — files the lead, and sends the
+            personalised follow-up in their language, while you&apos;re still shaking the next
+            hand. No new app. No Excel at midnight.
           </p>
 
           {/* Primary CTA dominates; one low-friction secondary beside it. */}
@@ -46,7 +64,7 @@ export default function Hero() {
             <Button
               asChild
               size="lg"
-              className="h-14 px-8 text-base sm:text-lg font-semibold shadow-lg shadow-primary/20 w-full sm:w-auto"
+              className="cta-sunrise h-14 px-8 text-base sm:text-lg font-semibold w-full sm:w-auto"
             >
               <Link href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
                 <WhatsAppIcon className="size-5" />
@@ -71,7 +89,7 @@ export default function Hero() {
           <div className="flex flex-wrap justify-center items-center gap-x-5 gap-y-2 pt-3 text-sm text-muted-foreground">
             {chips.map((c) => (
               <span key={c} className="inline-flex items-center gap-1.5">
-                <Check className="size-4 text-brand-teal" />
+                <Check aria-hidden="true" className="size-4 text-brand-teal" />
                 {c}
               </span>
             ))}

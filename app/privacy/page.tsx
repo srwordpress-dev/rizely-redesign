@@ -4,7 +4,7 @@ import { WHATSAPP_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Privacy Policy — Rizely",
-  description: "How Rizely collects, uses, and protects personal data. India-first, DPDP-aware.",
+  description: "How Rizely collects, uses, and protects personal data. Privacy-conscious and DPDP-aware.",
   alternates: { canonical: "/privacy" },
 };
 
@@ -15,8 +15,8 @@ export default function PrivacyPage() {
         This Privacy Policy explains how <strong>Rizely</strong> (&quot;Rizely&quot;,
         &quot;we&quot;, &quot;us&quot;) collects, uses, shares, and protects personal data when you
         use our website and our WhatsApp- and Telegram-based business-card scanning and follow-up
-        service (the &quot;Service&quot;). We are an India-first product and handle personal data
-        with India&apos;s Digital Personal Data Protection Act, 2023 (DPDP) in mind.
+        service (the &quot;Service&quot;). We operate globally, with a strong presence in India, and
+        handle personal data with India&apos;s Digital Personal Data Protection Act, 2023 (DPDP) in mind.
       </p>
 
       <h2>1. Information we collect</h2>
