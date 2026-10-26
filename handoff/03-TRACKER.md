@@ -15,7 +15,7 @@ _Baseline taken 26 Oct 2026 against `rizely-platform.netlify.app` (deploy `6ad27
 | Homepage sections built | **16** — the structure is complete |
 | Supporting pages built | 6 of 6 (`/agents`, `/connect`, `/blogs`, `/privacy`, `/terms`, + home) |
 | Banned-claim scan on the preview | **clean** — zero hits |
-| Open work items | **13** (4 P0, 6 P1, 3 P2) |
+| Open work items | **29** (6 P0, 14 P1, 9 P2) — 13 from the baseline, 16 added in Dev's audit (26 Oct) |
 | Decisions waiting on Ankush | **4** |
 | Live on rizely.net | **No** — rizely.net still serves the old page |
 
@@ -135,6 +135,105 @@ off before go-live, which means D-1 has to be answered first.
 
 ---
 
+### Dev's audit pass — 26 Oct 2026
+
+_Walked `rizely-platform.netlify.app` at 1440px and 375px, plus rizely.net and shop.rizely.net,
+and scanned a local `npm run build` of `dev/homepage` @ `1e36e7f`. Not yet tested: the WhatsApp
+agent itself. Nothing below is fixed yet — list first, as asked._
+
+Re-measured while I was there: mobile height is now **23,706px** (desktop 13,665px). W-01 and
+W-03 both reproduce: at 375px the hero canvas shows nothing at all, and "How it works" sits with
+its heading painted and all three steps near-invisible at a normal scroll pace.
+
+#### P0
+
+**W-14 · The chat demo shows real people's business cards.**
+`public/chat-wa.jpg` and `public/chat-tg.jpg` are photos of what look like two real visiting
+cards, and the "Card read" bubbles in `components/chat-demo.tsx` (and
+`components/scan-lead.tsx`, plus `demo-src/`) spell out each person's full name, company, role,
+email and mobile number. That breaks rule 4 of the handoff ("no real customer data on a public
+page"). One of the two is also on live rizely.net today, in the "Universal scanner" block. I have
+not copied the details anywhere.
+*Done when:* both images and both data blocks are replaced with a mocked card whose details are
+obviously fake (an `example.com` email, a dummy number), or Ankush confirms in writing that both
+people agreed. The live rizely.net copy is Ankush's call (§6).
+
+**W-15 · The card facts on the page do not match the shop.**
+The page says: 102 designs, "PVC, not metal", packs of 5 / 25 / 100 at ₹509 / ₹499 / ₹399 a card,
+free shipping over ₹999. The shop today sells **three products** — PVC ₹599, Customised PVC ₹699,
+and a **Metal card at ₹1,999** in four colours — with packs of 3 / 5 / 10 only (PVC pack of 10 =
+₹509 a card; there is no ₹399 tier), "free shipping across India", and "our team contacts you for
+your logo… you approve the design before print" rather than pick-one-of-102. `01` §2 also says
+"PVC only — there is no metal card", and `public/llms.txt` repeats it. Touches `the-card.tsx`,
+`three-layers.tsx`, the card tile in `pricing.tsx`, `llms.txt`, and `01` §2.
+*Done when:* Ankush says which is true, and every price, pack and material on the page matches
+the shop line for line.
+
+#### P1
+
+**W-16 · The personas section hard-codes dollars.** `components/personas.tsx:27` and `:35` say
+"$79/yr" and "$49/event" as plain strings, so an India visitor (`data-currency="inr"`) reads
+dollar prices one section above the ₹ pricing table. *Done when:* both lines follow the currency
+the same way `pricing.tsx` does.
+
+**W-17 · "A whole stack from the badge queue" implies badge scanning.** In How it works and on
+`/agents`. `01` §4 says visiting cards only, no badges. *Done when:* the phrase goes, or Tarun
+confirms what the badge queue is and it is described without implying badge capture.
+
+**W-18 · The page contradicts itself on whether follow-ups need approval.** How it works: "You
+approve the first batch". Chat demo, same page: "A personalised campaign runs automatically over
+the next 3 days". *Done when:* both say the same approve-first story. Fold into W-07.
+
+**W-19 · ChatGPT's status is stated three ways.** Connect says "live on Claude today; ChatGPT is
+next", then a paragraph later "ChatGPT works through custom connectors on paid plans", and the
+Partners strip lists ChatGPT beside live tools. *Done when:* one status, everywhere, labelled
+live or roadmap.
+
+**W-20 · The CRM wording overreaches.** Partners: "Your CRM". Connect: "Export to a sheet or
+CRM". Team plan: "Sheets & CRM export". `01` §4: no sync to any external CRM. *Done when:* it
+says exactly what happens (an export to a file or Sheet?), confirmed with Tarun.
+
+**W-21 · Three different language claims.** Hero: "many languages". Why Rizely: "Hindi, Gujarati,
+Marathi and plenty more". Footer: the three. *Done when:* one confirmed list (Tarun), used
+everywhere.
+
+**W-22 · Absolute claims about competitors, and the sanctioned line is reworded.** Why Rizely
+says "No CRM auto-sends a follow-up after a scan. No AI sales tool ingests a card." — absolute
+market claims, the same exposure class as "first". The allowed line also reads "We're the only
+**one** that does…" instead of the exact "the only **tool** that does…". *Done when:* the two
+absolutes are softened or dropped, and the sanctioned compound is word-for-word from `01` §6.
+
+**W-23 · Sales CTAs open the bot with the wrong message.** "Kitting out a team? Ask us", "Get an
+Event Pass" and "Ask about the Event Pass" all open `wa.me/918373978881` pre-filled with "I'd like
+to try Rizely on the cards from my last event". A buyer asking about 20 cards lands in a
+card-scanning bot. *Done when:* each has its own pre-filled message (in `lib/site.ts`), and
+someone confirms who answers it.
+
+#### P2
+
+**W-24 · "No card" is ambiguous on a site that sells a card.** "First 50 scans on us — no card,
+no app" (hero and pricing) means no payment card. Use "no payment details".
+
+**W-25 · Desktop hero particles run behind the subhead and the trust line.** Dots cross body
+text at 1440px. Part of the W-01/W-11 fix: keep a clear zone behind the copy.
+
+**W-26 · Partners strip icons sit on a slight diagonal.** At 1440px each logo is a few px lower
+than the last (WhatsApp → Your CRM). Probably the reveal offset not settling.
+
+**W-27 · Roadmap agents are labelled "Coming soon".** Keeper and Reviews. `01` §5 says *roadmap*,
+and "coming soon" reads like a date we have not promised.
+
+**W-28 · The §5 grep list is noisy.** On a clean build `847` hits six times inside `_next` chunk
+hashes and `first` hits 31 harmless uses ("approve the first batch"). Use word boundaries, skip
+`_next/`, and record the expected hits so a real one stands out.
+
+**W-29 · Handoff cross-references that are wrong.** `02` §5 points prototype pages at W-12 (it is
+W-05). §2 rows 2 and 8 above point the reveal stagger at W-05 (it is W-03). W-05 is half done
+already — both prototype pages carry `noindex` and neither is in the sitemap; only `robots.txt`
+is missing `/hero-anim`. §6's pack-ladder note (₹509 vs ₹549) no longer matches the shop (W-15).
+
+---
+
 ## 4. Decisions only Ankush can make
 
 | ID | Decision | Why it is blocking |
@@ -189,4 +288,7 @@ Listed so you recognise them and do not try to fix them:
 - **The shop's "no subscription, no app" line** sells against the agent we then have to sell.
   Separate job.
 - **The Shopify pack ladder** — pack-of-5 undercuts pack-of-10 (₹509 vs ₹549 a card). Not a
-  website fix.
+  website fix. *(Stale as of 26 Oct — see W-15.)*
+- **The shop's contact links** go to a different WhatsApp number from the agent's and to a
+  personal Telegram handle, and its header links to `profile.rizely.net` login and register.
+  Added by Dev, 26 Oct.
