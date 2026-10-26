@@ -10,16 +10,33 @@ You already know this format from `agag13/rizely-qa`. Same rules apply here.
 
 ---
 
-## The job, in four milestones
+## The job, in five milestones
 
 | # | Milestone | Done when |
 |---|---|---|
 | **M1** | **Understand Rizely** | You have answered the eight questions in [`04-QUESTIONS.md`](04-QUESTIONS.md) §1 and sent them back. No code yet. |
 | **M2** | **Audit the homepage yourself** | You have walked the preview at desktop and 375px and added your own findings to [`03-TRACKER.md`](03-TRACKER.md). Your eyes, not ours. |
 | **M3** | **Rebuild / finish the homepage, live on the preview** | `rizely-platform.netlify.app` carries your work and every check in `03-TRACKER.md` §5 passes. |
-| **M4** | **Go live on rizely.net** | Ankush says the word, and the branch is merged. **Not yours to trigger.** |
+| **M4** | **Go live on rizely.net** | Ankush says the word, and the branch is merged. **Not yours to trigger.** ⚠ See the deploy note below — the mechanics of this changed. |
+| **M5** | **The blog, live on rizely.net** | Second job, after the homepage. [`05-BLOG-AND-STRAPI.md`](05-BLOG-AND-STRAPI.md). Mostly already built — read §1 before touching anything. |
 
-M3 is the real deliverable. M4 is one deliberate merge that Ankush calls.
+M3 is the real deliverable. M4 is one deliberate merge that Ankush calls. M5 is a separate,
+smaller task you can pick up once the homepage is on the preview.
+
+### ⚠ The deploy picture changed, and it affects M4
+
+This folder was written on the understanding that `main` deploys to rizely.net via Netlify.
+**As of 26 Oct that is no longer true.** `rizely.net` is served by **nginx on the VPS**, from a
+copy of this site inside the `cardping-redev` monorepo. The Netlify project still builds from
+`main` and still serves `cardping.netlify.app` and `cardping.rankkking.com` — but **not
+rizely.net**.
+
+**So under the current setup, merging to `main` would not put your work on rizely.net.** Ankush
+has to decide which copy is the real site before M4 can happen.
+[`05-BLOG-AND-STRAPI.md`](05-BLOG-AND-STRAPI.md) §2 lays out the two options.
+
+**None of this changes what you do now** — keep working on `dev/homepage` in this repo. It is
+correct either way.
 
 ---
 
@@ -34,17 +51,21 @@ M3 is the real deliverable. M4 is one deliberate merge that Ankush calls.
    is missing. This is your worklist and you keep it current.
 4. **[`04-QUESTIONS.md`](04-QUESTIONS.md)** — what we need you to answer, and what you should
    ask us.
-5. **[`START-WITH-CLAUDE.md`](START-WITH-CLAUDE.md)** — the prompt to paste into Claude Code on
+5. **[`05-BLOG-AND-STRAPI.md`](05-BLOG-AND-STRAPI.md)** — your second job: the Strapi blog and
+   getting it live. Read it when you pick M5 up, not before — but read its §1 before you form
+   any opinion about how this site deploys.
+6. **[`START-WITH-CLAUDE.md`](START-WITH-CLAUDE.md)** — the prompt to paste into Claude Code on
    day one, and what must never go into a chat window.
 
 ---
 
 ## Five rules, none of them optional
 
-1. **Never push to `main`.** `main` *is* the live site — `rizely.net` rebuilds from it
-   automatically. There is no staging between `main` and the public. Every push to `main` is a
-   release to a commercial site. Work on `dev/homepage`. **Run
-   `git config core.hooksPath .githooks` in your clone** — it blocks the accident.
+1. **Never push to `main`.** `main` auto-deploys to a **live, public, commercial site**
+   (`cardping.rankkking.com` via the `cardping` Netlify project; see the deploy note above for
+   why that is no longer the same thing as rizely.net). There is no staging between `main` and
+   the public. Work on `dev/homepage`. **Run `git config core.hooksPath .githooks` in your
+   clone** — it blocks the accident.
 2. **Never touch the Netlify project called `cardping`.** That is rizely.net. Yours is
    `rizely-platform`.
 3. **No banned claims, ever.** `01-PRODUCT-AND-VISION.md` §6 lists them. Repeating one is the
