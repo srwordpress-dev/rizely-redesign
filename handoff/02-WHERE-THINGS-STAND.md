@@ -1,5 +1,17 @@
 # 2 — Where the website actually stands
 
+> ⚠️ **Correction, 26 Oct 2026 — the deployment map in §2 and §4 below is out of date.**
+> `rizely.net` is **no longer served by Netlify.** It resolves to `200.234.35.144` — our VPS,
+> the same box as `profile.rizely.net` — and answers with `Server: nginx/1.24.0 (Ubuntu)`,
+> serving a copy of this site from inside the `cardping-redev` monorepo. The `cardping` Netlify
+> project still builds from `main`, but it now serves `cardping.netlify.app` and
+> `cardping.rankkking.com`, **not rizely.net**.
+>
+> **So "going live = merging to `main`" (§4) does not currently reach rizely.net.** Rule 1 is
+> unchanged — a push to `main` still publishes to a live commercial URL — but where the final
+> site deploys has to be decided before M4. See
+> [`05-BLOG-AND-STRAPI.md`](05-BLOG-AND-STRAPI.md) §3 for the evidence.
+
 There are **three different Rizely homepages alive right now**. Knowing which is which is the
 single most important thing on this page, because one of them is the public commercial site and
 one push can change it.

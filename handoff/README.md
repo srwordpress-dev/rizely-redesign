@@ -18,10 +18,11 @@ You already know this format from `agag13/rizely-qa`. Same rules apply here.
 | **M2** | **Audit the homepage yourself** | You have walked the preview at desktop and 375px and added your own findings to [`03-TRACKER.md`](03-TRACKER.md). Your eyes, not ours. |
 | **M3** | **Rebuild / finish the homepage, live on the preview** | `rizely-platform.netlify.app` carries your work and every check in `03-TRACKER.md` §5 passes. |
 | **M4** | **Go live on rizely.net** | Ankush says the word, and the branch is merged. **Not yours to trigger.** ⚠ See the deploy note below — the mechanics of this changed. |
-| **M5** | **The blog, live on rizely.net** | Second job, after the homepage. [`05-BLOG-AND-STRAPI.md`](05-BLOG-AND-STRAPI.md). Mostly already built — read §1 before touching anything. |
+| **M5** | **The blog ships with the new site** | Not a later phase — a site that cannot publish a post is not finished. [`05-BLOG-AND-STRAPI.md`](05-BLOG-AND-STRAPI.md). The data layer carries over wholesale; you redesign the pages. **Its §2 is an architecture decision worth raising in M1.** |
 
-M3 is the real deliverable. M4 is one deliberate merge that Ankush calls. M5 is a separate,
-smaller task you can pick up once the homepage is on the preview.
+M3 is the real deliverable. M4 is one deliberate merge that Ankush calls. **M5 is not a separate
+project** — the blog is part of the site you are building, and three of its tasks can start on
+day one.
 
 ### ⚠ The deploy picture changed, and it affects M4
 
@@ -51,9 +52,10 @@ correct either way.
    is missing. This is your worklist and you keep it current.
 4. **[`04-QUESTIONS.md`](04-QUESTIONS.md)** — what we need you to answer, and what you should
    ask us.
-5. **[`05-BLOG-AND-STRAPI.md`](05-BLOG-AND-STRAPI.md)** — your second job: the Strapi blog and
-   getting it live. Read it when you pick M5 up, not before — but read its §1 before you form
-   any opinion about how this site deploys.
+5. **[`05-BLOG-AND-STRAPI.md`](05-BLOG-AND-STRAPI.md)** — the blog, which ships with the site
+   you are building. **Read §2 and §3 during M1, not later:** §2 is a static-export-versus-SSR
+   decision that is cheap now and expensive in three weeks, and §3 corrects the deploy map in
+   `02-WHERE-THINGS-STAND.md`.
 6. **[`START-WITH-CLAUDE.md`](START-WITH-CLAUDE.md)** — the prompt to paste into Claude Code on
    day one, and what must never go into a chat window.
 
