@@ -1,0 +1,30 @@
+#!/bin/sh
+# Refuse any push to main. `main` is the live site: the Netlify project
+# `cardping` builds it automatically, so every push to main is a release to
+# rizely.net with no approval step in between. Branch protection is not
+# available on this repo's plan, so this hook is the guard.
+#
+# Enable it once per clone:  git config core.hooksPath .githooks
+#
+# Going live is a deliberate merge that Ankush calls — see handoff/02.
+
+while read -r _local_ref _local_sha remote_ref _remote_sha; do
+  case "$remote_ref" in
+    refs/heads/main)
+      echo ""
+      echo "  ✋ Push to main blocked."
+      echo ""
+      echo "  main IS the live site — rizely.net rebuilds from it automatically."
+      echo "  Push your work to dev/homepage instead:"
+      echo ""
+      echo "      git push origin dev/homepage"
+      echo ""
+      echo "  Going live is a deliberate merge that Ankush calls."
+      echo "  See handoff/02-WHERE-THINGS-STAND.md section 4."
+      echo ""
+      exit 1
+      ;;
+  esac
+done
+
+exit 0

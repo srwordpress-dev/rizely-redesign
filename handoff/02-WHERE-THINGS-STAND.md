@@ -48,10 +48,16 @@ Work on **`dev/homepage`**, which is cut from `rizely-v3-platform`.
 ```bash
 git clone https://github.com/agag13/cardping-website.git
 cd cardping-website
+git config core.hooksPath .githooks   # do this first — it blocks pushes to main
 git checkout dev/homepage
 npm install
-npm run dev          # http://localhost:3000
+npm run dev                           # http://localhost:3000
 ```
+
+**Run that `core.hooksPath` line before anything else.** Git hooks do not come down with a
+clone, so until you set it the guard is not active. With it set, `git push origin main` is
+refused locally with an explanation. It is a seatbelt, not a lock — it only protects the
+accident, which is the case that actually happens.
 
 Node 22. Next.js 16 (App Router, **static export** — `output: "export"`), React 19,
 TypeScript, Tailwind CSS 4, shadcn/Radix, framer-motion, lucide.

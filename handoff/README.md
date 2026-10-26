@@ -43,7 +43,8 @@ M3 is the real deliverable. M4 is one deliberate merge that Ankush calls.
 
 1. **Never push to `main`.** `main` *is* the live site — `rizely.net` rebuilds from it
    automatically. There is no staging between `main` and the public. Every push to `main` is a
-   release to a commercial site. Work on `dev/homepage`.
+   release to a commercial site. Work on `dev/homepage`. **Run
+   `git config core.hooksPath .githooks` in your clone** — it blocks the accident.
 2. **Never touch the Netlify project called `cardping`.** That is rizely.net. Yours is
    `rizely-platform`.
 3. **No banned claims, ever.** `01-PRODUCT-AND-VISION.md` §6 lists them. Repeating one is the
