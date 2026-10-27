@@ -14,9 +14,9 @@ const before = [
 ];
 
 const after = [
-  "Each card becomes a clean lead in seconds, filed under the right event.",
-  "The personalised follow-up goes out the same night — in the lead's language.",
-  "Nothing gets left in the drawer. Every card gets worked, not lost.",
+  "Each card becomes a clean lead, filed under the right event.",
+  "A personalised follow-up is drafted the same night, in the lead's language — you approve it.",
+  "The stack gets worked while the conversations are still warm.",
 ];
 
 export default function Proof() {
