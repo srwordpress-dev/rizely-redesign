@@ -14,8 +14,8 @@ _Baseline taken 26 Oct 2026 against `rizely-platform.netlify.app` (deploy `6ad27
 | Homepage sections planned | **16** |
 | Homepage sections built | **16** — the structure is complete |
 | Supporting pages built | 6 of 6 (`/agents`, `/connect`, `/blogs`, `/privacy`, `/terms`, + home) |
-| Banned-claim scan on the preview | **clean** — zero hits |
-| Open work items | **32** (8 P0, 14 P1, 10 P2) — 13 from the baseline, 19 added by Dev (26–27 Oct). Fixed in code, 27 Oct: W-01 (awaiting a real-phone check), W-14, W-31; partly fixed: W-15, W-20, W-22, W-32 |
+| Banned-claim scan on the preview | **Page copy clean as of 27 Oct.** The text scan missed two places: the share image (fixed, W-31) and two Strapi blog posts (open, W-34) |
+| Open work items | **34** (9 P0, 15 P1, 10 P2) — 13 from the baseline, 21 added by Dev (26–27 Oct). Fixed in code, 27 Oct: W-01 (awaiting a real-phone check), W-07, W-14, W-16, W-17, W-18, W-19, W-20, W-22, W-27, W-31. Partly fixed, waiting on a decision: W-15, W-32, W-33. Still open: W-08 (Telegram) and W-21 (languages), both waiting on Tarun, and W-34 (blog, in Strapi) |
 | Decisions waiting on Ankush | **4** |
 | Live on rizely.net | **No** — rizely.net still serves the old page |
 
@@ -232,6 +232,18 @@ scans are free, then a paid plan or Event Pass), and Privacy no longer mentions 
 form providers.
 *Done when:* Ankush supplies the facts above, counsel reviews both pages, and the Draft banner
 comes off.
+
+**W-34 · Two blog posts repeat the banned stats.** The posts live in Strapi, not in this repo,
+so a code change cannot fix them. `first-48-hours-after-an-event` says "In our own measurements
+that moves card-to-pipeline from about six hours to roughly two seconds, first follow-up from
+about nine days to under a minute, and follow-up coverage from that 73% gap to every scanned
+lead", and uses the same 73% / nine days / six hours as industry facts.
+`indian-language-business-cards` repeats "six or more hours" and "roughly 73%". All three posts
+say the follow-up "goes out automatically" (approve-first, W-18), and they reword the sanctioned
+"only tool" line three times. `01` §6 bans these figures by name. Publishing any post rebuilds
+`main`, so this has to be fixed before the merge (`02` §4).
+*Done when:* the figures are deleted in Strapi, "automatically" becomes approve-first, the "only
+tool" line appears at most once and word for word, and the posts are republished.
 
 #### P1
 
