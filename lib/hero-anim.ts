@@ -36,14 +36,29 @@ export const T = {
 export type Safe = { cx: number; cy: number; w: number; h: number; dim: number };
 export type Mode = "stage" | "hero";
 
+/** On a phone the hero's text column fills the full width and nearly the full
+    height, so there is no clear air for the fields to meet behind it (W-01).
+    Instead the whole animation plays in its own band above the badge. CSS
+    pixels from the top of the hero; components/hero.tsx reserves exactly
+    `top + height` above the text, so the two must change together. */
+export const NARROW_STAGE = { top: 8, height: 170 } as const;
+const narrowStageEnd = NARROW_STAGE.top + NARROW_STAGE.height;
+
 /* "stage" is the prototype: one headline, lots of clear air.
    "hero" is the real page: a full text column — badge, headline, subhead,
    two CTAs, microcopy — so the protected band is much taller and the settled
    profile drops below the text instead of sitting behind it. */
-export const safeFor = (W: number, mode: Mode = "stage"): Safe =>
+export const safeFor = (W: number, H: number, mode: Mode = "stage"): Safe =>
   mode === "hero"
     ? W < 768
-      ? { cx: 0.5, cy: 0.42, w: 0.96, h: 0.72, dim: 0.86 }
+      ? // Everything below the stage band is text.
+        {
+          cx: 0.5,
+          cy: (narrowStageEnd + H) / 2 / H,
+          w: 1.02,
+          h: (H - narrowStageEnd) / H,
+          dim: 0.86,
+        }
       : { cx: 0.5, cy: 0.42, w: 0.64, h: 0.68, dim: 0.72 }
     : W < 768
     ? // On a phone the headline wraps to four lines and fills the width, so the
@@ -56,42 +71,55 @@ export const safeFor = (W: number, mode: Mode = "stage"): Safe =>
       { cx: 0.5, cy: 0.5, w: 0.66, h: 0.3, dim: 0.6 };
 
 /** Where each piece sits, as canvas fractions. Two layouts, one per breakpoint. */
-function layoutFor(W: number, mode: Mode) {
+function layoutFor(W: number, H: number, mode: Mode) {
   const narrow = W < 768;
   if (mode === "hero") {
+    if (narrow) {
+      // The whole story plays inside NARROW_STAGE: card left, agent right, the
+      // tap in the middle, then card · profile · agent with the follow-ups
+      // lifting off above the agent. Laid out in pixels (the band is a fixed
+      // height) and converted to fractions of whatever the hero's height is.
+      const y = (px: number) => (NARROW_STAGE.top + px) / H;
+      const mid = NARROW_STAGE.height / 2;
+      return {
+        fieldY: y(mid),
+        cardX: 0.2,
+        agentX: 0.8,
+        nearCardX: 0.36,
+        nearAgentX: 0.64,
+        profile: [0.5, y(mid)] as const,
+        // Three-quarter size and a steep stagger, or at 320–375px the three
+        // overlap into one strip.
+        bubbles: [
+          [0.68, y(26)],
+          [0.8, y(17)],
+          [0.92, y(8)],
+        ] as const,
+        bubbleScale: 0.75,
+        arcY: [y(NARROW_STAGE.height - 6), y(6)] as const,
+        scatterY: [y(10), y(NARROW_STAGE.height - 10)] as const,
+      };
+    }
     // Everything that must stay readable lives in the upper two thirds, so the
     // profile and the follow-ups settle along the bottom edge.
-    return narrow
-      ? {
-          fieldY: 0.44,
-          cardX: 0.2,
-          agentX: 0.8,
-          nearCardX: 0.37,
-          nearAgentX: 0.63,
-          profile: [0.5, 0.85] as const,
-          bubbles: [
-            [0.19, 0.9],
-            [0.3, 0.95],
-            [0.78, 0.92],
-          ] as const,
-          arcY: [0.97, 0.52] as const,
-        }
-      : {
-          fieldY: 0.46,
-          // Far enough in that a full-width card is never clipped by the
-          // viewport edge: half the card is ~0.13W at the hero's scale.
-          cardX: 0.16,
-          agentX: 0.84,
-          nearCardX: 0.31,
-          nearAgentX: 0.69,
-          profile: [0.5, 0.86] as const,
-          bubbles: [
-            [0.68, 0.93],
-            [0.78, 0.87],
-            [0.87, 0.8],
-          ] as const,
-          arcY: [0.98, 0.3] as const,
-        };
+    return {
+      fieldY: 0.46,
+      // Far enough in that a full-width card is never clipped by the
+      // viewport edge: half the card is ~0.13W at the hero's scale.
+      cardX: 0.16,
+      agentX: 0.84,
+      nearCardX: 0.31,
+      nearAgentX: 0.69,
+      profile: [0.5, 0.86] as const,
+      bubbles: [
+        [0.68, 0.93],
+        [0.78, 0.87],
+        [0.87, 0.8],
+      ] as const,
+      arcY: [0.98, 0.3] as const,
+      bubbleScale: 1,
+      scatterY: [0.12, 0.88] as const,
+    };
   }
   return narrow
     ? {
@@ -107,6 +135,8 @@ function layoutFor(W: number, mode: Mode) {
           [0.885, 0.64],
         ] as const,
         arcY: [0.92, 0.36] as const,
+        bubbleScale: 1,
+        scatterY: [0.12, 0.88] as const,
       }
     : {
         fieldY: 0.47,
@@ -123,6 +153,8 @@ function layoutFor(W: number, mode: Mode) {
           [0.84, 0.73],
         ] as const,
         arcY: [0.78, 0.12] as const,
+        bubbleScale: 1,
+        scatterY: [0.12, 0.88] as const,
       };
 }
 
@@ -334,6 +366,9 @@ export type Scene = {
   contact: Pt;
   /** the headline's protected rectangle for this canvas size */
   safe: Safe;
+  /** settled breathing amplitude in px — scaled with the shapes so a small
+      composition does not blur into its own wobble */
+  breathe: number;
 };
 
 /** Sunrise ramp + the teal "synced" accent. Index order matters: 0..3 warm, 4 teal. */
@@ -382,9 +417,15 @@ export function buildScene(
   const gap = density >= 0.7 ? 2 : 3; // line art needs tight sampling to read
   // Uniform scale off the design size, floored so the shapes stay readable on a
   // phone instead of shrinking into confetti.
-  const s = Math.max(Math.min(W / 1200, H / 620), W < 768 ? 0.46 : 0.3);
+  // In the phone hero the band, not the canvas, sets the size: tall enough
+  // that the settled profile (320 design px) fits inside it, narrow enough
+  // that card · profile · agent sit side by side without touching.
+  const s =
+    mode === "hero" && W < 768
+      ? Math.min(W / 850, (NARROW_STAGE.height - 24) / 320)
+      : Math.max(Math.min(W / 1200, H / 620), W < 768 ? 0.46 : 0.3);
 
-  const L = layoutFor(W, mode);
+  const L = layoutFor(W, H, mode);
   const contact: Pt = { x: W * 0.5, y: H * L.fieldY };
 
   // --- the two fields, formed then approaching
@@ -410,8 +451,9 @@ export function buildScene(
   );
 
   const bubblePts = bubbleShape(gap);
+  const bs = s * L.bubbleScale;
   const bubbleAt = L.bubbles.map(([bx, by], i) =>
-    shuffle(place(bubblePts, W * bx, H * by, 104 * s, 72 * s, -0.05 - i * 0.05)),
+    shuffle(place(bubblePts, W * bx, H * by, 104 * bs, 72 * bs, -0.05 - i * 0.05)),
   );
 
   const particles: Particle[] = [];
@@ -429,7 +471,7 @@ export function buildScene(
   ) => {
     // scatter origin: off the near edge, loosely clustered
     const sx = formed.x + side * W * (0.1 + Math.random() * 0.22);
-    const sy = H * (0.12 + Math.random() * 0.76);
+    const sy = H * lerp(L.scatterY[0], L.scatterY[1], Math.random());
 
     // role 0 drifts back out to where it formed, framing the new profile.
     let fx = formed.x;
@@ -501,15 +543,18 @@ export function buildScene(
 
   // Role mix. The card and agent must survive into the final frame — the static
   // composition has to show all three layers, not just the profile.
+  // The phone band has no room for the rising arc: packed into 170px the trail
+  // reads as noise over the profile, so those particles go to the shapes.
+  const trails = !(mode === "hero" && W < 768);
   const roleFor = (r: number, isAgent: boolean): Role => {
     if (isAgent) {
       if (r < 0.46) return 0;
       if (r < 0.68) return 1;
-      if (r < 0.84) return 2;
+      if (r < 0.84 || !trails) return 2;
       return 3;
     }
     if (r < 0.48) return 0;
-    if (r < 0.8) return 1;
+    if (r < 0.8 || !trails) return 1;
     return 3;
   };
 
@@ -524,7 +569,12 @@ export function buildScene(
     push(agentFormed[i], agentNear[i], 1, roleFor(Math.random(), true), 0);
   }
 
-  return { particles, contact, safe: safeFor(W, mode) };
+  return {
+    particles,
+    contact,
+    safe: safeFor(W, H, mode),
+    breathe: 3.2 * Math.min(1, s / 0.9),
+  };
 }
 
 /* ------------------------------------------------------------------ update */
@@ -628,8 +678,8 @@ export function update(
       // --- after 6.0: settle and breathe
       if (t > T.settled) {
         const b = t - T.settled;
-        x += Math.sin(b * 0.55 + p.wob) * 3.2;
-        y += Math.cos(b * 0.47 + p.wob * 1.3) * 3.2;
+        x += Math.sin(b * 0.55 + p.wob) * scene.breathe;
+        y += Math.cos(b * 0.47 + p.wob * 1.3) * scene.breathe;
       }
     }
 

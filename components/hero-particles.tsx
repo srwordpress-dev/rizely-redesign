@@ -75,7 +75,11 @@ export default function HeroParticles({
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
       // Fewer particles on small screens — same composition, coarser sampling.
-      const density = W < 768 ? 0.45 : W < 1100 ? 0.8 : 0.95;
+      // Except the phone hero: its shapes are drawn at under half size inside
+      // a 170px band, and split three ways once settled, so they need every
+      // sampled point to stay legible.
+      const density =
+        W < 768 ? (mode === "hero" ? 0.9 : 0.45) : W < 1100 ? 0.8 : 0.95;
       dot = W < 768 ? 1.5 : 1.9;
 
       scene = buildScene(W, H, density, mode);

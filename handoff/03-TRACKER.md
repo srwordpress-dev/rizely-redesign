@@ -15,7 +15,7 @@ _Baseline taken 26 Oct 2026 against `rizely-platform.netlify.app` (deploy `6ad27
 | Homepage sections built | **16** — the structure is complete |
 | Supporting pages built | 6 of 6 (`/agents`, `/connect`, `/blogs`, `/privacy`, `/terms`, + home) |
 | Banned-claim scan on the preview | **clean** — zero hits |
-| Open work items | **29** (6 P0, 14 P1, 9 P2) — 13 from the baseline, 16 added in Dev's audit (26 Oct) |
+| Open work items | **30** (6 P0, 14 P1, 10 P2) — 13 from the baseline, 17 added by Dev (26–27 Oct). W-01 fixed in code, awaiting a real-phone check |
 | Decisions waiting on Ankush | **4** |
 | Live on rizely.net | **No** — rizely.net still serves the old page |
 
@@ -63,6 +63,21 @@ AI — and on a phone it currently does nothing at all.
 *Done when:* at 375px a visitor sees the card form, the agent form, and the two meet. 60fps on
 a mid-range Android. `prefers-reduced-motion` still renders the settled frame with no loop
 started. Logic is in `lib/hero-anim.ts` (scale factor at line 385, narrow branch at line 60).
+
+> **Fixed in code, 27 Oct — needs a check on a real phone once it is on the preview.**
+> *Cause:* at 375px the text column fills the full width and almost the full height, so the
+> card and agent formed directly behind the subhead, where `safeFor` dimmed them by 86%. They
+> were there, just invisible. Tuning could not fix that: there was no clear air to play in.
+> *Fix (option chosen by Dev):* below 768px the animation plays in its own 170px band above
+> the badge (`NARROW_STAGE` in `lib/hero-anim.ts`; `components/hero.tsx` reserves the space
+> with a container query, so CSS and canvas switch at the same width). In the band: denser
+> sampling, no rising-arc trail (it read as noise), smaller staggered follow-up bubbles.
+> Desktop (≥768px) is unchanged.
+> *Measured on a production build:* card forms → meets the agent with the ripple → card ·
+> profile · agent + three follow-ups, legible at 320 / 375 / 414 / 767. Reduced motion draws
+> the settled frame, zero rAF calls; canvas still `aria-hidden`. With the CPU throttled 6×:
+> 62–71fps, p95 frame 21ms (the throttle approximates a mid-range Android, it is not one).
+> *Cost:* the H1 moves down ~98px on phones; page height 23,382 → 23,480px (W-02).
 
 **W-02 · The page is far too long on a phone.**
 Measured: **23,382px on mobile** — about 29 screen-heights — against 14,492px on desktop. The
@@ -126,6 +141,10 @@ for a preview that we do not want indexed under those URLs.
 
 **W-11 · Desktop hero particles read as scattered dots.** Even where they render, the
 silhouettes are not legible as a card and an agent. Secondary to W-01 but the same fix.
+*Note, 27 Oct:* on a production build at 1440px the card and agent read clearly at 1.6s and
+settle cleanly. Dev-mode hydration can lag by seconds, and screenshots timed from page load then
+catch the scatter phase, which may be what this was. Re-check on the preview before working it.
+What does reproduce at 1440 is W-25, and at 768px the shapes still sit behind the subhead.
 
 **W-12 · Delete `NEXT-SESSION-PROMPT.md` from the repo root.** It is stale, contradicts this
 handoff, and repeats banned claims as approved copy. It will mislead the next person.
@@ -231,6 +250,12 @@ hashes and `first` hits 31 harmless uses ("approve the first batch"). Use word b
 W-05). §2 rows 2 and 8 above point the reveal stagger at W-05 (it is W-03). W-05 is half done
 already — both prototype pages carry `noindex` and neither is in the sitemap; only `robots.txt`
 is missing `/hero-anim`. §6's pack-ladder note (₹509 vs ₹549) no longer matches the shop (W-15).
+
+**W-30 · The navbar's WhatsApp CTA is clipped at tablet widths.** Found 27 Oct while checking
+W-01. `components/navbar.tsx` switches to the full desktop nav at `sm` (640px), but six links
+plus the CTA do not fit until roughly 900px. At 767 and 768px "Start free on WhatsApp" is cut
+off at the right edge. *Done when:* nothing in the nav is clipped at any width from 640 to
+1024px. Either keep the hamburger up to `lg`, or tighten the link spacing.
 
 ---
 

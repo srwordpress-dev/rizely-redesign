@@ -3,6 +3,7 @@ import Link from "next/link";
 import { WHATSAPP_URL, SHOP_URL } from "@/lib/site";
 import { Check } from "lucide-react";
 import HeroParticles from "@/components/hero-particles";
+import { NARROW_STAGE } from "@/lib/hero-anim";
 
 /*
   The hero leads with the three layers — card, profile, agent — because all
@@ -34,7 +35,7 @@ const chips = [
 
 export default function Hero() {
   return (
-    <div className="relative overflow-hidden">
+    <div className="@container relative overflow-hidden">
       {/* The shot: a card from the left, the agent from the right, the tap in
           the middle. Decorative — the H1 carries the meaning, and under
           prefers-reduced-motion this renders one composed still frame. */}
@@ -42,7 +43,15 @@ export default function Hero() {
         <HeroParticles mode="hero" />
       </div>
 
-      <section className="max-w-(--breakpoint-xl) mx-auto px-4 pt-20 pb-28 md:pt-28 md:pb-40 md:px-8 flex flex-col justify-center items-center">
+      {/* Below 768px the animation gets its own band above the text (W-01).
+          A container query, not md:, because the canvas switches layout on its
+          own width — the two must agree even when a scrollbar narrows it. */}
+      <section className="max-w-(--breakpoint-xl) mx-auto px-4 pt-0 pb-28 @min-[768px]:pt-28 md:pb-40 md:px-8 flex flex-col justify-center items-center">
+        <div
+          aria-hidden="true"
+          className="w-full @min-[768px]:hidden"
+          style={{ height: NARROW_STAGE.top + NARROW_STAGE.height }}
+        />
         <div className="flex flex-col justify-center items-center space-y-6 max-w-3xl mx-auto text-center">
           <span className="w-fit text-xs sm:text-sm bg-card/80 backdrop-blur-sm px-3 py-1 border border-border rounded-full text-muted-foreground">
             NFC card · digital profile · AI agent
