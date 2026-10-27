@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import ConnectPageContent from "@/components/connect-page-content";
 import Footer from "@/components/footer";
+import { OG_IMAGE } from "@/lib/site";
+
+const OG_TITLE = "Run your pipeline from inside Claude";
+const OG_DESCRIPTION =
+  "Rizely connects to the AI assistant you already use — manage your event leads in plain language. Live on Claude today.";
 
 export const metadata: Metadata = {
   title: "Connect — run Rizely from inside Claude",
@@ -11,10 +16,16 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://rizely.net/connect",
     siteName: "Rizely",
-    title: "Run your pipeline from inside Claude",
-    description:
-      "Rizely connects to the AI assistant you already use — manage your event leads in plain language. Live on Claude today.",
+    title: OG_TITLE,
+    description: OG_DESCRIPTION,
     locale: "en_IN",
+    images: [OG_IMAGE],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: OG_TITLE,
+    description: OG_DESCRIPTION,
+    images: [OG_IMAGE],
   },
 };
 

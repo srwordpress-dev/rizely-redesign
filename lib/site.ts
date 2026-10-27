@@ -25,3 +25,7 @@ export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURICo
 // The NFC card store. Shopify handles checkout, GST invoices, the pack ladder
 // and shipping — the marketing site never duplicates any of it (PRD v4 D2).
 export const SHOP_URL = "https://shop.rizely.net";
+
+// The share image (app/opengraph-image.png, rendered from scripts/og/). A page that sets its own
+// `openGraph` replaces the root one and loses the image, so pass this explicitly.
+export const OG_IMAGE = "/opengraph-image.png";

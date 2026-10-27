@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Footer from "@/components/footer";
 import { PostCard } from "@/components/blog/post-list";
-import { BRAND, SITE_URL } from "@/lib/site";
+import { BRAND, OG_IMAGE, SITE_URL } from "@/lib/site";
 import { getArticles } from "@/lib/strapi";
 
 const TITLE = `Blog — ${BRAND}`;
@@ -19,8 +19,9 @@ export const metadata: Metadata = {
     title: TITLE,
     description: DESCRIPTION,
     locale: "en_IN",
+    images: [OG_IMAGE],
   },
-  twitter: { card: "summary_large_image", title: TITLE, description: DESCRIPTION },
+  twitter: { card: "summary_large_image", title: TITLE, description: DESCRIPTION, images: [OG_IMAGE] },
 };
 
 export default async function BlogIndex() {

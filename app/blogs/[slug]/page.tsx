@@ -5,7 +5,7 @@ import { ChevronDown } from "lucide-react";
 import Footer from "@/components/footer";
 import BlocksRenderer from "@/components/blog/blocks-renderer";
 import { PostCard } from "@/components/blog/post-list";
-import { BRAND, SITE_URL } from "@/lib/site";
+import { BRAND, OG_IMAGE, SITE_URL } from "@/lib/site";
 import {
   getArticles,
   getArticleBySlug,
@@ -77,13 +77,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       locale: "en_IN",
       publishedTime: articleDate(post) ?? undefined,
       modifiedTime: post.updatedAt ?? undefined,
-      ...(cover ? { images: [{ url: cover }] } : {}),
+      images: [{ url: cover ?? OG_IMAGE }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      ...(cover ? { images: [cover] } : {}),
+      images: [cover ?? OG_IMAGE],
     },
   };
 }
