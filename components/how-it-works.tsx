@@ -14,7 +14,7 @@ const steps = [
     icon: Sparkles,
     step: "02",
     title: "Rizely files it",
-    desc: "The agent reads the card — Hindi, Gujarati and Marathi too, not just English — sorts the details into a clean lead, and drops it into your pipeline. That's where most scanners quietly give up.",
+    desc: "The agent reads the card — Hindi, Gujarati and Marathi too, not just English — sorts the details into a clean lead, and drops it into your pipeline. No retyping at midnight.",
   },
   {
     icon: Send,

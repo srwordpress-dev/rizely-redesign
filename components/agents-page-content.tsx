@@ -34,7 +34,7 @@ const agents: Agent[] = [
     name: "The Card Agent",
     icon: ScanLine,
     status: "live",
-    body: "Photograph a business card in WhatsApp or Telegram. It reads the card (Indian-language cards too, not just English), turns it into a clean lead with name, company, role, phone, email and event, and files it into your pipeline. Then it drafts a personalised follow-up for each person and sends it on WhatsApp or Telegram — you approve the first batch, and it keeps asking until you tell it to run on its own. It's the part your CRM never gets to: capture and follow-up, in one motion.",
+    body: "Photograph a business card in WhatsApp or Telegram. It reads the card (Indian-language cards too, not just English), turns it into a clean lead with name, company, role, phone, email and event, and files it into your pipeline. Then it drafts a personalised follow-up for each person and sends it on WhatsApp or Telegram — you approve the first batch, and it keeps asking until you tell it to run on its own. It's the part that usually gets dropped: capture and follow-up, in one motion.",
     limits:
       "Honest limits: a badly printed or damaged card can still need a human glance, and when it's unsure it flags the lead rather than guessing.",
   },
@@ -163,7 +163,7 @@ export default function AgentsPageContent() {
       {/* Closing block */}
       <section className="max-w-2xl mx-auto px-4 py-16 md:px-8 text-center">
         <h2 className="text-2xl font-heading font-bold sm:text-3xl tracking-tight text-balance">
-          Start with the one that pays for itself first.
+          Start with the one that&apos;s live.
         </h2>
         <p className="mt-4 text-muted-foreground">
           The Card Agent is live now, your first 50 scans are free, and it works inside the WhatsApp

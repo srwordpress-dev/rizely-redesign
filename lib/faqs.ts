@@ -12,7 +12,7 @@ export const faqs = [
   },
   {
     q: "Will it read a Hindi or Gujarati card, or only English?",
-    a: "Indian-language cards too — Hindi, Gujarati and Marathi, not just English. This is exactly where most scanners quietly fall over. It's not magic: a badly printed or coffee-stained card can still trip it up, and when it's unsure it flags the lead for a quick human check rather than guessing.",
+    a: "Indian-language cards too — Hindi, Gujarati and Marathi, not just English. It's not magic: a badly printed or coffee-stained card can still trip it up, and when it's unsure it flags the lead for a quick human check rather than guessing.",
   },
   {
     q: "Does it send the follow-ups on its own, or do I approve them first?",
@@ -36,7 +36,7 @@ export const faqs = [
   },
   {
     q: "Why annual plans and not monthly?",
-    a: "Because of how recurring payments work in India. RBI e-mandates require a 24-hour pre-debit notice with an opt-out before every single charge, which turns a monthly subscription into a monthly chance to cancel — for you and for us. Every Indian competitor prices annually for the same reason. If you don't want a year, the Event Pass covers one show.",
+    a: "Because of how recurring payments work in India. RBI e-mandates require a 24-hour pre-debit notice with an opt-out before every single charge, which turns a monthly subscription into a monthly chance to cancel — for you and for us. That's why annual pricing is the norm in India. If you don't want a year, the Event Pass covers one show.",
   },
   {
     q: "Whose data is it, and is it safe?",

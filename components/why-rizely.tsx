@@ -7,12 +7,12 @@ const points = [
   {
     icon: Repeat2,
     title: "Capture and follow-up",
-    desc: "No CRM auto-sends a follow-up after a scan, and most scanners stop once the contact is saved. Rizely reads the card and drafts the follow-up in one step.",
+    desc: "No CRM auto-sends a follow-up after a scan. Rizely reads the card and drafts the follow-up in one step.",
   },
   {
     icon: Languages,
     title: "Reads cards in your language, not just English",
-    desc: "Hindi, Gujarati, Marathi and plenty more — most scanners admit, in their own docs, that they “work best with English.” A coffee-stained card at 11pm can still stump it — we’d rather tell you that than pretend.",
+    desc: "Hindi, Gujarati, Marathi and plenty more — some scanners say in their own docs that they “work best with English.” A coffee-stained card at 11pm can still stump it — we’d rather tell you that than pretend.",
   },
   {
     icon: MessageCircle,
@@ -38,7 +38,7 @@ export default function WhyRizely() {
           className="flex flex-col gap-3 text-center mb-14 max-w-2xl mx-auto"
         >
           <h2 className="text-3xl font-heading font-bold sm:text-4xl tracking-tight">
-            Most tools stop at the scan. Rizely keeps going.
+            Scanning is the easy part. Rizely keeps going.
           </h2>
           <p className="text-muted-foreground text-lg">
             {/* The sanctioned positioning line, word for word as handoff/01 §6 writes it:

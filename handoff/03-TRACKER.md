@@ -297,8 +297,12 @@ absolutes are softened or dropped, and the sanctioned compound is word-for-word 
 > Getgabs, Querygen and Karo all do). "No CRM auto-sends a follow-up after a scan" stays, since
 > `01` §6 lists it as defensible. Card 1 now reads "…and most scanners stop once the contact is
 > saved. Rizely reads the card and drafts the follow-up in one step." The intro says "the only
-> **tool** that…" word for word. **Still open (Medium):** the H2 "Most tools stop at the scan"
-> and "most scanners admit… 'work best with English'", which is sourced to Karo alone.
+> **tool** that…" word for word.
+> **The rest fixed in code, 27 Oct.** Every "most scanners" / "most tools" / "every Indian
+> competitor" / "your CRM never gets to" line is gone or scoped: the Why Rizely H2 is "Scanning
+> is the easy part", the Karo quote says "some scanners", and How it works, the FAQ and `/agents`
+> talk about the user's problem instead of rivals. `/agents` "pays for itself first" (an ROI claim)
+> became "Start with the one that's live".
 
 **W-23 · Sales CTAs open the bot with the wrong message.** "Kitting out a team? Ask us", "Get an
 Event Pass" and "Ask about the Event Pass" all open `wa.me/918373978881` pre-filled with "I'd like
