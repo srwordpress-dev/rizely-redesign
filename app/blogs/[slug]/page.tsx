@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ChevronDown } from "lucide-react";
 import Footer from "@/components/footer";
 import BlocksRenderer from "@/components/blog/blocks-renderer";
+import { PostCard } from "@/components/blog/post-list";
 import { BRAND, SITE_URL } from "@/lib/site";
 import {
   getArticles,
@@ -14,6 +16,14 @@ import {
   mediaUrl,
   type Article,
 } from "@/lib/strapi";
+
+/** Wrap each raw-HTML table so it scrolls inside itself on a narrow screen
+    rather than widening the page. `.blog-prose .blog-table` styles the box. */
+function wrapTables(html: string): string {
+  return html
+    .replace(/<table\b/gi, '<div class="blog-table"><table')
+    .replace(/<\/table>/gi, "</table></div>");
+}
 
 // Static export: every post URL must be known at build time, and nothing
 // outside this list should be reachable.
@@ -140,44 +150,50 @@ export default async function BlogPost({ params }: Props) {
   if (!post) notFound();
 
   const cover = mediaUrl(post.cover?.url);
-  const date = formatDate(articleDate(post));
+  const iso = articleDate(post);
+  const date = formatDate(iso);
   const tags = parseTags(post.tags);
   const profile = post.authorProfile;
   const authorName = profile?.name || post.author;
   const avatar = mediaUrl(profile?.avatar?.url ?? post.authorAvatar?.url);
+  const more = (await getArticles()).filter((p) => p.slug !== post.slug).slice(0, 2);
 
   return (
     <main className="flex min-h-dvh flex-col">
       <PostSchema post={post} />
 
-      <article className="mx-auto w-full max-w-3xl px-4 pt-16 pb-24 md:px-8">
-        <Link
-          href="/blogs"
-          className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-        >
-          ← All posts
-        </Link>
+      <article className="mx-auto w-full max-w-3xl px-4 pt-14 pb-20 md:px-8 md:pt-20">
+        <nav aria-label="Breadcrumb">
+          <ol className="flex flex-wrap items-center gap-x-2 text-sm text-muted-foreground">
+            <li>
+              <Link href="/blogs" className="transition-colors hover:text-foreground">
+                Blog
+              </Link>
+            </li>
+            {post.category ? (
+              <>
+                <li aria-hidden>/</li>
+                <li className="font-medium text-primary">{post.category}</li>
+              </>
+            ) : null}
+          </ol>
+        </nav>
 
-        <header className="mt-6 flex flex-col gap-4">
-          {post.category ? (
-            <span className="w-fit rounded-full border border-border px-2.5 py-0.5 text-xs text-primary">
-              {post.category}
-            </span>
-          ) : null}
-          <h1 className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
+        <header className="mt-6 flex flex-col gap-5">
+          <h1 className="text-3xl font-bold leading-[1.1] tracking-tight text-balance sm:text-5xl">
             {post.title}
           </h1>
           {post.excerpt ? (
-            <p className="text-lg leading-relaxed text-muted-foreground text-balance">
+            <p className="text-lg leading-relaxed text-muted-foreground text-pretty sm:text-xl">
               {post.excerpt}
             </p>
           ) : null}
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted-foreground">
-            {authorName ? <span>{authorName}</span> : null}
+            {authorName ? <span className="text-foreground">{authorName}</span> : null}
             {authorName && date ? <span aria-hidden>·</span> : null}
-            {date ? <time dateTime={articleDate(post) ?? undefined}>{date}</time> : null}
+            {date ? <time dateTime={iso ?? undefined}>{date}</time> : null}
             <span aria-hidden>·</span>
-            <span>{readingTime(post)} min read</span>
+            <span className="whitespace-nowrap">{readingTime(post)} min read</span>
           </div>
         </header>
 
@@ -185,38 +201,44 @@ export default async function BlogPost({ params }: Props) {
           <img
             src={cover}
             alt={post.cover?.alternativeText ?? ""}
-            className="mt-8 h-auto w-full rounded-xl border border-border"
+            className="mt-10 h-auto w-full rounded-xl border border-border"
           />
         ) : null}
 
-        <div className="mt-10">
-          {post.contentHtml ? (
-            // Migrated/raw HTML wins over blocks — the blocks format has no
-            // table node, so posts with tables have to come through here.
-            <div
-              className="legal-prose flex flex-col gap-6 text-muted-foreground"
-              dangerouslySetInnerHTML={{ __html: post.contentHtml }}
-            />
-          ) : (
+        {post.contentHtml ? (
+          // Migrated/raw HTML wins over blocks — the blocks format has no
+          // table node, so posts with tables have to come through here. Both
+          // paths share .blog-prose, so they read the same.
+          <div
+            className="blog-prose mt-12"
+            dangerouslySetInnerHTML={{ __html: wrapTables(post.contentHtml) }}
+          />
+        ) : (
+          <div className="blog-prose mt-12">
             <BlocksRenderer content={post.content} />
-          )}
-        </div>
+          </div>
+        )}
 
         {post.faqs?.length ? (
-          <section className="mt-14">
-            <h2 className="text-2xl font-semibold tracking-tight text-foreground">
+          <section className="mt-16">
+            <h2 className="text-2xl font-bold tracking-tight text-foreground">
               Frequently asked
             </h2>
-            <div className="mt-5 flex flex-col gap-3">
+            {/* Same native <details> pattern as the homepage FAQ: answers are in
+                the HTML with JS off, and match the FAQPage schema above. */}
+            <div className="mt-4 divide-y divide-border">
               {post.faqs.map((f, i) => (
-                <details
-                  key={f.id ?? i}
-                  className="rounded-lg border border-border bg-card/40 px-4 py-3"
-                >
-                  <summary className="cursor-pointer text-base font-medium text-foreground">
+                <details key={f.id ?? i} className="group py-1">
+                  <summary className="faq-summary flex cursor-pointer items-center justify-between gap-4 py-4 text-left font-medium text-foreground">
                     {f.question}
+                    <ChevronDown
+                      aria-hidden="true"
+                      className="faq-chevron size-4 shrink-0 text-muted-foreground"
+                    />
                   </summary>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{f.answer}</p>
+                  <p className="pb-4 pr-8 text-base leading-relaxed text-muted-foreground">
+                    {f.answer}
+                  </p>
                 </details>
               ))}
             </div>
@@ -266,6 +288,21 @@ export default async function BlogPost({ params }: Props) {
               ) : null}
             </div>
           </aside>
+        ) : null}
+
+        {more.length ? (
+          <section className="mt-16 border-t border-border pt-12">
+            <h2 className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
+              Keep reading
+            </h2>
+            <ul className="mt-6 grid gap-6 sm:grid-cols-2">
+              {more.map((p) => (
+                <li key={p.documentId ?? p.slug} className="flex">
+                  <PostCard post={p} heading="h3" />
+                </li>
+              ))}
+            </ul>
+          </section>
         ) : null}
       </article>
 

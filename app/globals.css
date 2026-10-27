@@ -358,6 +358,211 @@ details[open] > summary .faq-chevron {
   font-weight: 600;
 }
 
+/*
+  Blog post cards (components/blog/post-list.tsx). Hover is feedback that the
+  card is a link, seen a handful of times a visit, so it stays small and fast:
+  a 3px lift, a warmer border, the arrow nudging forward, the cover easing in.
+  Transform-only motion; gated to real pointers because a tap fires a false
+  hover on touch; under reduced motion only the colour changes remain.
+*/
+.post-card {
+  --card-ease: cubic-bezier(0.23, 1, 0.32, 1);
+  transition:
+    transform 200ms var(--card-ease),
+    border-color 200ms ease,
+    background-color 200ms ease;
+}
+.post-card-arrow,
+.post-card-cover {
+  transition: transform 200ms var(--card-ease);
+}
+@media (hover: hover) and (pointer: fine) {
+  .post-card:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in oklab, var(--primary) 45%, var(--border));
+    background-color: color-mix(in oklab, var(--card) 80%, transparent);
+  }
+  .post-card:hover .post-card-arrow {
+    transform: translateX(3px);
+  }
+  .post-card:hover .post-card-cover {
+    transform: scale(1.03);
+  }
+}
+.post-card:active {
+  transform: translateY(-1px) scale(0.99);
+  transition-duration: 120ms;
+}
+.post-card:focus-visible {
+  border-color: var(--primary);
+}
+@media (prefers-reduced-motion: reduce) {
+  .post-card,
+  .post-card-arrow,
+  .post-card-cover {
+    transition-property: border-color, background-color;
+  }
+  .post-card:hover,
+  .post-card:active,
+  .post-card:hover .post-card-arrow,
+  .post-card:hover .post-card-cover {
+    transform: none;
+  }
+}
+
+/*
+  Blog post body. One stylesheet for both ways a post arrives — Strapi blocks
+  (components/blog/blocks-renderer.tsx emits bare elements) and raw
+  `contentHtml` — so a table post and a blocks post read the same. Tables only
+  ever come through contentHtml (blocks has no table node); the post page wraps
+  each one in .blog-table so it scrolls inside itself on a phone instead of
+  widening the page.
+*/
+.blog-prose {
+  max-width: 68ch;
+  color: var(--muted-foreground);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  overflow-wrap: break-word;
+}
+.blog-prose > * + * {
+  margin-top: 1.25em;
+}
+.blog-prose > :first-child {
+  margin-top: 0;
+}
+.blog-prose h2,
+.blog-prose h3,
+.blog-prose h4 {
+  color: var(--foreground);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  scroll-margin-top: 6rem;
+}
+.blog-prose h2 {
+  font-size: 1.5rem;
+  line-height: 1.25;
+  margin-top: 2.4em;
+}
+.blog-prose h3 {
+  font-size: 1.25rem;
+  line-height: 1.3;
+  margin-top: 2em;
+}
+.blog-prose h4 {
+  font-size: 1.0625rem;
+  line-height: 1.4;
+  margin-top: 1.75em;
+}
+.blog-prose > :is(h2, h3, h4) + * {
+  margin-top: 0.6em;
+}
+.blog-prose ul,
+.blog-prose ol {
+  padding-inline-start: 1.4em;
+}
+.blog-prose ul {
+  list-style: disc;
+}
+.blog-prose ol {
+  list-style: decimal;
+}
+.blog-prose li + li {
+  margin-top: 0.5em;
+}
+.blog-prose li::marker {
+  color: var(--primary);
+}
+.blog-prose a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-decoration-thickness: from-font;
+  text-underline-offset: 0.2em;
+  transition: text-decoration-color 0.15s ease;
+}
+.blog-prose a:hover {
+  text-decoration-color: transparent;
+}
+.blog-prose strong {
+  color: var(--foreground);
+  font-weight: 600;
+}
+.blog-prose blockquote {
+  border-inline-start: 2px solid var(--primary);
+  padding-inline-start: 1.1em;
+  color: var(--foreground);
+}
+.blog-prose code {
+  font-size: 0.875em;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.3rem;
+  padding: 0.1em 0.35em;
+}
+.blog-prose pre {
+  overflow-x: auto;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 1em;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+.blog-prose pre code {
+  font-size: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+}
+.blog-prose img {
+  height: auto;
+  max-width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+}
+.blog-prose figcaption {
+  margin-top: 0.5em;
+  font-size: 0.875rem;
+}
+.blog-prose hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin-block: 2.5em;
+}
+.blog-prose .blog-table {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+}
+.blog-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+}
+.blog-prose th,
+.blog-prose td {
+  /* A floor per column, not per table: a wide comparison table scrolls on a
+     phone instead of crushing its first column to one word a line, while a
+     two-column table still fits without scrolling. */
+  min-width: 7.5rem;
+  padding: 0.65em 0.9em;
+  text-align: start;
+  vertical-align: top;
+  border-bottom: 1px solid var(--border);
+}
+.blog-prose tr:last-child > td {
+  border-bottom: 0;
+}
+.blog-prose th {
+  color: var(--foreground);
+  font-weight: 600;
+  background: var(--card);
+  white-space: nowrap;
+}
+
 /* Hero animation — the headline reveal in the gap between the two particle
    fields (storyboard variant A). Under reduced motion it is simply present. */
 .hero-head-late {
