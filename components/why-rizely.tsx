@@ -7,7 +7,7 @@ const points = [
   {
     icon: Repeat2,
     title: "Capture and follow-up",
-    desc: "No CRM auto-sends a follow-up after a scan. No AI sales tool ingests a card. Rizely lives in that gap — and that gap is the whole product.",
+    desc: "No CRM auto-sends a follow-up after a scan, and most scanners stop once the contact is saved. Rizely reads the card and drafts the follow-up in one step.",
   },
   {
     icon: Languages,
@@ -41,12 +41,11 @@ export default function WhyRizely() {
             Most tools stop at the scan. Rizely keeps going.
           </h2>
           <p className="text-muted-foreground text-lg">
-            {/* The sanctioned positioning line, used as CORRECTIONS.md writes it.
-                "only one" is defensible only in the Indian-language framing —
-                the verifiable gap (Karo "works best with English", Freshsales
-                English-only). Broadening it to "your language" would quietly
-                turn a supported claim into an unsupported one. */}
-            We&apos;re not the first to scan a card on WhatsApp. We&apos;re the only one that
+            {/* The sanctioned positioning line, word for word as handoff/01 §6 writes it:
+                "the only tool that does capture and follow-up, in Indian languages, priced
+                per event". It is defensible only as that exact compound (Karo "works best
+                with English", Freshsales English-only). Do not reword or broaden it. */}
+            We&apos;re not the first to scan a card on WhatsApp. We&apos;re the only tool that
             does capture <em className="not-italic text-foreground font-medium">and</em>{" "}
             follow-up, in Indian languages, priced per event.
           </p>

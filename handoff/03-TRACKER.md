@@ -250,6 +250,12 @@ says "No CRM auto-sends a follow-up after a scan. No AI sales tool ingests a car
 market claims, the same exposure class as "first". The allowed line also reads "We're the only
 **one** that does…" instead of the exact "the only **tool** that does…". *Done when:* the two
 absolutes are softened or dropped, and the sanctioned compound is word-for-word from `01` §6.
+> **Fixed in code, 27 Oct.** "No AI sales tool ingests a card" is gone (it was false: GRID AI,
+> Getgabs, Querygen and Karo all do). "No CRM auto-sends a follow-up after a scan" stays, since
+> `01` §6 lists it as defensible. Card 1 now reads "…and most scanners stop once the contact is
+> saved. Rizely reads the card and drafts the follow-up in one step." The intro says "the only
+> **tool** that…" word for word. **Still open (Medium):** the H2 "Most tools stop at the scan"
+> and "most scanners admit… 'work best with English'", which is sourced to Karo alone.
 
 **W-23 · Sales CTAs open the bot with the wrong message.** "Kitting out a team? Ask us", "Get an
 Event Pass" and "Ask about the Event Pass" all open `wa.me/918373978881` pre-filled with "I'd like
