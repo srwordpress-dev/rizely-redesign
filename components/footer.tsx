@@ -62,15 +62,19 @@ const Footer = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-8 sm:gap-12 lg:flex lg:gap-24">
+          {/* Spans the two grid columns beside the brand blurb on desktop; as a
+              flex row squeezed into one third, each list wrapped a word a line. */}
+          <div className="grid grid-cols-2 gap-8 sm:gap-12 lg:col-span-2 lg:grid-cols-3">
             <div className="space-y-3">
               <h3 className="text-sm font-semibold">Explore</h3>
-              <div className="flex flex-col gap-2">
+              {/* The links' own height is the spacing: 32px rows sit close to the
+                  plain lists beside them, 40px on touch so a tap still lands. */}
+              <div className="flex flex-col">
                 {footerLinks.map((item) => (
                   <Link
                     key={item.name}
                     href={item.href}
-                    className="inline-flex min-h-11 items-center text-sm text-muted-foreground transition-colors hover:text-foreground"
+                    className="inline-flex min-h-8 items-center text-sm text-muted-foreground transition-colors hover:text-foreground pointer-coarse:min-h-10"
                   >
                     {item.name}
                   </Link>
