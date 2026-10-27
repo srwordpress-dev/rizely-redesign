@@ -177,6 +177,14 @@ not copied the details anywhere.
 obviously fake (an `example.com` email, a dummy number), or Ankush confirms in writing that both
 people agreed. The live rizely.net copy is Ankush's call (§6).
 
+> **Fixed in code, 27 Oct.** Both cards are now made up: Meera Desai / Desai Spice Traders
+> (bilingual, so the "Hindi + English" tag is true) and Arjun Mehta / Mehta Furnishings (tag now
+> "English"), with `example.com` emails and `+91 90000` numbers. The event names were also real
+> (one is a real Hong Kong conference), so they became "Trade Fair 2026" and "Home Expo 2026".
+> The swap covers both photos, `chat-demo.tsx`, `scan-lead.tsx` (including its embedded image) and
+> both `demo-src` sources. **Still open:** the old photos remain in git history, and live
+> rizely.net still shows one of them.
+
 **W-15 · The card facts on the page do not match the shop.**
 The page says: 102 designs, "PVC, not metal", packs of 5 / 25 / 100 at ₹509 / ₹499 / ₹399 a card,
 free shipping over ₹999. The shop today sells **three products** — PVC ₹599, Customised PVC ₹699,

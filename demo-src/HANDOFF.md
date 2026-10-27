@@ -43,8 +43,10 @@ as recognisable logos inside the integrations row and the chat/scanner mockups �
 1. **chat-demo** (`components/chat-demo.tsx`) — a guided 5-step tour (left) beside two synced, scrollable phones
    (right): iPhone/WhatsApp + Samsung/Telegram, **100% real chat UI**, verified Rizely seal, "no app to install"
    headline. Steps: Snap the card → AI reads it → Filed under the event → Voice note transcribed → **Follow-up
-   campaign scheduled (runs over the next 3 days)**. Uses cleared real cards (Adarsh Thapa/Harvest Heaven on
-   WhatsApp, Amit Kumar/Recliners on Telegram). Auto-advances + Play/Pause/Prev/Next + clickable steps.
+   campaign scheduled (runs over the next 3 days)**. Uses two made-up cards (Meera Desai/Desai Spice Traders,
+   bilingual Hindi + English, on WhatsApp; Arjun Mehta/Mehta Furnishings on Telegram) with `example.com` emails and
+   `+91 90000` numbers. The photos of real people's cards that used to be here were removed (W-14) — never put a
+   real person's card back. Auto-advances + Play/Pause/Prev/Next + clickable steps.
 2. **scan-lead** (`components/scan-lead.tsx`) — popl.co-style "universal scanner": six input objects **side by side**
    (real card photo, printed website QR, LinkedIn QR, WhatsApp QR, Telegram QR, event badge with ATTENDEE/EXHIBITOR/VIP
    tiers), converging flow lighting the active one, auto-cycling into one resolving lead. All shown as capabilities.
@@ -53,6 +55,12 @@ as recognisable logos inside the integrations row and the chat/scanner mockups �
 
 ## Architecture of the 3 demos (important)
 Each demo component is **auto-generated** — do not hand-edit the `.tsx`. Instead:
+
+> ⚠️ **27 Oct: the sources have drifted.** `components/chat-demo.tsx` and `scan-lead.tsx` were edited by hand
+> after their last build, so they no longer match `demo-src/*.src.html` (the colours and the intro line differ).
+> Re-running `build-demos.js` today would silently undo that work. Before the next rebuild, copy the hand edits
+> back into the `.src.html` files and confirm the regenerated `.tsx` diff contains only your change. On Windows,
+> make sure the `.src.html` files have LF line endings first, or the build bakes `\r\n` into every string.
 - **Edit the source HTML** in `demo-src/`: `chat-demo.src.html`, `scan-lead.src.html`, `walkthrough.src.html`
   (self-contained: `<style>` + markup + `<script>`, Google-Fonts only, one embedded card photo in scan-lead).
 - **Regenerate:** `node demo-src/build-demos.js` — this scopes each demo's CSS (chat under `.cpc-chat`, walkthrough
