@@ -34,7 +34,7 @@ const agents: Agent[] = [
     name: "The Card Agent",
     icon: ScanLine,
     status: "live",
-    body: "Photograph a business card in WhatsApp or Telegram — one at a time, or a whole stack from the badge queue. It reads the card (Indian-language cards too, not just English), turns it into a clean lead with name, company, role, phone, email and event, and files it into your pipeline. Then it drafts a personalised follow-up for each person and sends it on WhatsApp or Telegram — you approve the first batch, and it keeps asking until you tell it to run on its own. It's the part your CRM never gets to: capture and follow-up, in one motion.",
+    body: "Photograph a business card in WhatsApp or Telegram. It reads the card (Indian-language cards too, not just English), turns it into a clean lead with name, company, role, phone, email and event, and files it into your pipeline. Then it drafts a personalised follow-up for each person and sends it on WhatsApp or Telegram — you approve the first batch, and it keeps asking until you tell it to run on its own. It's the part your CRM never gets to: capture and follow-up, in one motion.",
     limits:
       "Honest limits: a badly printed or damaged card can still need a human glance, and when it's unsure it flags the lead rather than guessing.",
   },

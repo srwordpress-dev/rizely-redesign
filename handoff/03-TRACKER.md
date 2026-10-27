@@ -243,6 +243,9 @@ the same way `pricing.tsx` does.
 **W-17 · "A whole stack from the badge queue" implies badge scanning.** In How it works and on
 `/agents`. `01` §4 says visiting cards only, no badges. *Done when:* the phrase goes, or Tarun
 confirms what the badge queue is and it is described without implying badge capture.
+> **Fixed in code, 27 Oct.** The phrase is deleted in both places, with nothing in its place:
+> sending several cards at once is not confirmed either. If Tarun describes a real batch
+> feature, add it back in his words.
 
 **W-18 · The page contradicts itself on whether follow-ups need approval.** How it works: "You
 approve the first batch". Chat demo, same page: "A personalised campaign runs automatically over

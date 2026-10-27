@@ -8,7 +8,7 @@ const steps = [
     icon: ScanLine,
     step: "01",
     title: "Snap it",
-    desc: "Photograph the card inside WhatsApp or Telegram — the apps already open on your phone. Or work a whole stack from the badge queue. Nothing to download, no typing, no 'please enter your email' form.",
+    desc: "Photograph the card inside WhatsApp or Telegram — the apps already open on your phone. Nothing to download, no typing, no 'please enter your email' form.",
   },
   {
     icon: Sparkles,
