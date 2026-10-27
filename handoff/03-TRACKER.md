@@ -302,6 +302,12 @@ than the last (WhatsApp → Your CRM). Probably the reveal offset not settling.
 
 **W-27 · Roadmap agents are labelled "Coming soon".** Keeper and Reviews. `01` §5 says *roadmap*,
 and "coming soon" reads like a date we have not promised.
+> **Fixed in code, 27 Oct.** Keeper and Reviews are "On the roadmap" on the homepage and
+> `/agents`, and the `soon` status is gone. The orbit chips only carry a dot, so a Live / On the
+> roadmap legend now sits under the orbit, with screen-reader labels on each chip. The orbit
+> heading no longer says the agents "do the work", Vision's three "On the way:" lines say
+> "Roadmap:", the `/agents` intro no longer offers calls and reviews as things to switch on,
+> and the Exploring card dropped broadcasts, the marketplace and the "date attached" promise.
 
 **W-28 · The §5 grep list is noisy.** On a clean build `847` hits six times inside `_next` chunk
 hashes and `first` hits 31 harmless uses ("approve the first batch"). Use word boundaries, skip

@@ -7,7 +7,7 @@ import { WHATSAPP_URL } from "@/lib/site";
 import { ScanLine, RefreshCw, Star, PhoneCall } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
-type Status = "live" | "soon" | "roadmap";
+type Status = "live" | "roadmap";
 
 type Agent = {
   name: string;
@@ -29,14 +29,14 @@ const agents: Agent[] = [
     name: "The Keeper",
     short: "Keeper",
     icon: RefreshCw,
-    status: "soon",
-    desc: "Keeps your contacts from going stale — enriches each lead and quietly updates the record when someone changes company or role. A CRM that maintains itself.",
+    status: "roadmap",
+    desc: "Keeps your contacts from going stale — enriches each lead and quietly updates the record when someone changes company or role. A CRM that maintains itself. Early enrichment already runs today inside the Card Agent.",
   },
   {
     name: "The Reviews Agent",
     short: "Reviews",
     icon: Star,
-    status: "soon",
+    status: "roadmap",
     desc: "For local businesses: turns genuinely happy customers into real Google reviews, the honest way. No fake reviews, no gating — those get you banned, and we won't build them.",
   },
   {
@@ -50,19 +50,16 @@ const agents: Agent[] = [
 
 const statusStyles: Record<Status, string> = {
   live: "bg-brand-teal/15 text-brand-teal border-brand-teal/30",
-  soon: "bg-brand-amber/15 text-brand-amber border-brand-amber/30",
   roadmap: "bg-muted text-muted-foreground border-border",
 };
 
 const statusLabel: Record<Status, string> = {
   live: "Live",
-  soon: "Coming soon",
   roadmap: "On the roadmap",
 };
 
 const statusDot: Record<Status, string> = {
   live: "bg-brand-teal",
-  soon: "bg-brand-amber",
   roadmap: "bg-muted-foreground",
 };
 
@@ -97,7 +94,8 @@ function OrbitChip({
             }`}
           />
           <span className="text-xs font-medium">{agent.short}</span>
-          <span className={`size-1.5 rounded-full ${statusDot[agent.status]}`} />
+          <span aria-hidden="true" className={`size-1.5 rounded-full ${statusDot[agent.status]}`} />
+          <span className="sr-only">({statusLabel[agent.status].toLowerCase()})</span>
         </div>
       </div>
     </div>
@@ -164,12 +162,12 @@ export default function AgentsOrbit() {
           The hive
         </span>
         <h2 className="text-3xl font-heading font-bold sm:text-4xl tracking-tight">
-          You&apos;re at the centre. The agents orbit and do the work.
+          You&apos;re at the centre. Each agent owns one job.
         </h2>
         <p className="text-muted-foreground text-lg">
           Rizely isn&apos;t one big app that does everything badly. It&apos;s a set of focused AI
           micro-agents — each owns a single job. Today one is live and working. The rest are on
-          the way. We&apos;d rather ship one agent that works than five that sort of do.
+          the roadmap. We&apos;d rather ship one agent that works than four that sort of do.
         </p>
       </motion.div>
 
@@ -180,9 +178,18 @@ export default function AgentsOrbit() {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: "easeOut" }}
-          className="flex justify-center order-1 lg:order-none py-6"
+          className="flex flex-col items-center gap-4 order-1 lg:order-none py-6"
         >
           <OrbitVisual />
+          {/* The chips only carry a dot, so the legend is what labels roadmap agents as roadmap (01 §5). */}
+          <div className="flex items-center gap-4 text-xs text-muted-foreground" aria-hidden="true">
+            {(Object.keys(statusLabel) as Status[]).map((s) => (
+              <span key={s} className="flex items-center gap-1.5">
+                <span className={`size-1.5 rounded-full ${statusDot[s]}`} />
+                {statusLabel[s]}
+              </span>
+            ))}
+          </div>
         </motion.div>
 
         {/* the honest agent list */}

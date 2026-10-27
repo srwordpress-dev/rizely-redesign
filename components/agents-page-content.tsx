@@ -7,18 +7,16 @@ import { WHATSAPP_URL } from "@/lib/site";
 import { ScanLine, RefreshCw, Star, PhoneCall, Sparkles } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
-type Status = "live" | "soon" | "roadmap" | "exploring";
+type Status = "live" | "roadmap" | "exploring";
 
 const statusStyles: Record<Status, string> = {
   live: "bg-brand-teal/15 text-brand-teal border-brand-teal/30",
-  soon: "bg-brand-amber/15 text-brand-amber border-brand-amber/30",
   roadmap: "bg-muted text-muted-foreground border-border",
   exploring: "bg-muted text-muted-foreground border-border",
 };
 
 const statusLabel: Record<Status, string> = {
   live: "Live",
-  soon: "Coming soon",
   roadmap: "On the roadmap",
   exploring: "Exploring",
 };
@@ -43,13 +41,13 @@ const agents: Agent[] = [
   {
     name: "The Keeper",
     icon: RefreshCw,
-    status: "soon",
+    status: "roadmap",
     body: "Keeps your contacts from going stale. It enriches each lead, fills the gaps the card left blank, and updates the record when someone switches company or role — a CRM that maintains itself instead of nagging you to. Early enrichment already runs today inside the Card Agent; the Keeper turns it into an agent of its own.",
   },
   {
     name: "The Reviews Agent",
     icon: Star,
-    status: "soon",
+    status: "roadmap",
     body: "For local businesses — clinics, showrooms, neighbourhood shops. It turns genuinely happy customers into real Google reviews, the honest way. No fake reviews, no review-gating, no “we'll remove the bad ones” — those break Google's rules and India's consumer-protection rules, so we won't build them. Just more of the real reviews you've earned.",
   },
   {
@@ -62,7 +60,7 @@ const agents: Agent[] = [
     name: "More on the way",
     icon: Sparkles,
     status: "exploring",
-    body: "Broadcasts and campaigns, a partner/referral agent, and an agent marketplace where the right agent shows up for the right job. Directional, not promised. When one graduates from “exploring” to “live,” it gets its own card above with a date attached.",
+    body: "Partner channels and a referral agent. Directional, not promised — when one is real, it gets its own card above.",
   },
 ];
 
@@ -94,9 +92,9 @@ export default function AgentsPageContent() {
         <div className="rounded-2xl border border-border bg-card/40 p-6 sm:p-8 text-center">
           <p className="text-muted-foreground leading-relaxed">
             Most software asks you to learn a big dashboard and do the work yourself. Rizely flips
-            that. Instead of one bloated app, you get focused agents you can switch on one at a
-            time — scan the cards, keep the contacts fresh, grow the reviews, make the call. Turn
-            on the one you need this week; add another when you&apos;re ready. One agent is live and
+            that. Instead of one bloated app, you get focused agents, each with one job. Today
+            that&apos;s scanning the cards; keeping contacts fresh, growing reviews and making calls
+            come next. One agent is live and
             doing real work today. The rest are on the roadmap — we ship them when they actually
             work, not before.
           </p>

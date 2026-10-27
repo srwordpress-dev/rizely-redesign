@@ -26,7 +26,7 @@ const stages: Stage[] = [
     title: "Acquisition — get the lead, with consent",
     line: "Events, business cards, review tags for local shops, partner channels — different ways to stand next to a consented opt-in and feed one pipeline.",
     now: "Live today: event cards on WhatsApp & Telegram.",
-    next: "On the way: review tags and partner channels.",
+    next: "Roadmap: review tags and partner channels.",
   },
   {
     n: "02",
@@ -34,7 +34,7 @@ const stages: Stage[] = [
     title: "Management — a CRM that maintains itself",
     line: "Every lead lands in one place and keeps itself current — enriching from public signals, filling the blanks the card left, and flagging who's worth your time.",
     now: "Live today: managed pipeline + web enrichment written back to the lead.",
-    next: "On the way: the self-updating, self-qualifying CRM.",
+    next: "Roadmap: the self-updating, self-qualifying CRM.",
   },
   {
     n: "03",
@@ -42,7 +42,7 @@ const stages: Stage[] = [
     title: "Agentic — agents that do the work",
     line: "Small AI agents that capture, follow up, and eventually carry the conversation — and that you can run from the assistant you already use.",
     now: "Live today: the Card Agent's follow-ups, and Connect on Claude.",
-    next: "On the way: the Keeper, the Reviews Agent, and the Caller.",
+    next: "Roadmap: the Keeper, the Reviews Agent, and the Caller.",
   },
 ];
 
