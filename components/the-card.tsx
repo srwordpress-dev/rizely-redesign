@@ -27,7 +27,7 @@ const facts = [
   ["102 designs", "Pick one and we print it. Your details, your logo."],
   ["Light, durable PVC", "It goes through an airport without a fuss."],
   ["Works on any modern phone", "Tap to open. No app on their side, ever."],
-  ["Profile included", "Free with the card, and it stays free. No subscription to read it."],
+  ["Profile included", "Free with the card. No subscription to read it."],
 ];
 
 export default function TheCard() {
@@ -53,7 +53,7 @@ export default function TheCard() {
           <p className="text-muted-foreground text-lg">
             One tap and they have everything — saved to their phone, not scribbled on the back of
             someone else&apos;s card. It costs ₹599 once, there is nothing to renew, and the
-            profile behind it is free for good.
+            profile behind it comes free.
           </p>
 
           <dl className="mt-2 grid gap-4 sm:grid-cols-2">

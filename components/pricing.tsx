@@ -220,7 +220,7 @@ export default function Pricing() {
         <div className="rounded-2xl border border-border bg-card/40 p-6">
           <h3 className="font-heading text-lg font-semibold">The NFC card</h3>
           <p className="mt-1 text-sm text-muted-foreground">
-            A one-off purchase, not a plan. Your profile is included, free forever.
+            A one-off purchase, not a plan. Your profile is included free.
           </p>
           <div className="mt-3 flex items-baseline tabular-nums">
             <span className="text-3xl font-bold">₹599</span>

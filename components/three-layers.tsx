@@ -38,10 +38,10 @@ const layers: Layer[] = [
     n: "02",
     icon: Smartphone,
     title: "The profile",
-    body: "Where the tap lands: your name, company, what you do, and every way to reach you — phone, email, WhatsApp, website — with one button to save you straight into their contacts. It comes with the card and stays free.",
+    body: "Where the tap lands: your name, company, what you do, and every way to reach you — phone, email, WhatsApp, website — with one button to save you straight into their contacts. It comes free with the card.",
     // TODO(profile): link here once profile.rizely.net is fixed — see
     // workstreams/08-website/profile-rizely-audit/FINDINGS-public.md
-    meta: "Included with every card · free, forever",
+    meta: "Included free with every card",
   },
   {
     n: "03",
@@ -74,7 +74,7 @@ export default function ThreeLayers() {
         </h2>
         <p className="text-muted-foreground text-lg">
           Handing your details over and getting theirs back are the same problem from two
-          directions. Rizely does both ends, and all three pieces work today.
+          directions. Rizely does both ends, and all three pieces exist today.
         </p>
       </motion.div>
 

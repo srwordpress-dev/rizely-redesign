@@ -28,7 +28,7 @@ export const faqs = [
   },
   {
     q: "Is the profile really free, or free-for-now?",
-    a: "Free, and it stays free. It comes with the card, there's no subscription to read it, and nobody has to install anything to open it. The paid thing is the follow-up agent, which is a separate decision you can make later or never.",
+    a: "Free — it comes with the card, there's no subscription to read it, and nobody has to install anything to open it. The paid thing is the follow-up agent, which is a separate decision you can make later or never.",
   },
   {
     q: "Do you ship the card outside India?",
