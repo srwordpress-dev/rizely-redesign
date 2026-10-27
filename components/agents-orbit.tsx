@@ -23,7 +23,7 @@ const agents: Agent[] = [
     short: "Cards",
     icon: ScanLine,
     status: "live",
-    desc: "Scans event business cards, builds your lead pipeline, and sends personalised WhatsApp and Telegram follow-ups. This is the one doing real work today.",
+    desc: "Scans event business cards, builds your lead pipeline, and drafts personalised WhatsApp and Telegram follow-ups for you to approve. This is the one doing real work today.",
   },
   {
     name: "The Keeper",

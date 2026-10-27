@@ -121,6 +121,9 @@ It appears on the page as a feature chip. Three of our own sources describe the 
 behaviour three different ways. We should not publish a specific cadence we have not confirmed.
 *Done when:* Ankush or Tarun confirms exactly what the agent sends and over what period, and
 the chip matches it — or the chip loses the number.
+> **Fixed in code, 27 Oct: the number is gone.** The chip is now "Follow-ups you approve first",
+> and the demo no longer says "3 days" anywhere. Once Tarun confirms the real cadence, it can
+> come back as a fact.
 
 **W-08 · Confirm Telegram's status wording.**
 Mission control calls the Telegram bot live but mid-migration. The page implies both channels
@@ -244,6 +247,11 @@ confirms what the badge queue is and it is described without implying badge capt
 **W-18 · The page contradicts itself on whether follow-ups need approval.** How it works: "You
 approve the first batch". Chat demo, same page: "A personalised campaign runs automatically over
 the next 3 days". *Done when:* both say the same approve-first story. Fold into W-07.
+> **Fixed in code, 27 Oct (with W-07).** Every place that said the follow-up "sends" or "goes
+> out" automatically now says it is drafted for you to approve: hero, Three layers, the orbit,
+> `/agents`, Personas, the site description and the JSON-LD. The chat demo's step 5, bubbles,
+> banner and chip now say "Follow-up drafted" and "Waiting for your approval", and its message
+> no longer promises "the deck I mentioned". The FAQ and How it works already had it right.
 
 **W-19 · ChatGPT's status is stated three ways.** Connect says "live on Claude today; ChatGPT is
 next", then a paragraph later "ChatGPT works through custom connectors on paid plans", and the

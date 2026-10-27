@@ -47,7 +47,7 @@ const layers: Layer[] = [
     n: "03",
     icon: Bot,
     title: "The agent",
-    body: "The other direction: the cards you collect. Photograph them in WhatsApp or Telegram and the agent reads each one — Indian-language cards too — files the lead, and sends a personalised follow-up while you're still shaking the next hand.",
+    body: "The other direction: the cards you collect. Photograph them in WhatsApp or Telegram and the agent reads each one — Indian-language cards too — files the lead, and drafts a personalised follow-up for you to approve while you're still shaking the next hand.",
     meta: "Live on WhatsApp & Telegram · first 50 scans free",
     cta: { label: "Start free on WhatsApp", href: WHATSAPP_URL, external: true },
   },

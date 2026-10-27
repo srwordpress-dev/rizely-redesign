@@ -21,7 +21,7 @@ const SITE_GRAPH = {
       name: "Rizely",
       url: SITE_URL,
       description:
-        "Rizely is a platform of WhatsApp- and Telegram-native AI micro-agents for sales and event teams. The first one scans event business cards, builds a lead pipeline, and sends automatic follow-ups in many languages. Works worldwide.",
+        "Rizely is a platform of WhatsApp- and Telegram-native AI micro-agents for sales and event teams. The first one scans event business cards, builds a lead pipeline, and drafts follow-ups you approve, in many languages. Works worldwide.",
     },
     {
       "@type": "WebSite",
@@ -44,7 +44,7 @@ const HOME_GRAPH = {
       operatingSystem: "WhatsApp, Telegram, Web",
       url: SITE_URL,
       description:
-        "Scan the business cards you collect at events inside WhatsApp or Telegram, build a managed lead pipeline, and send personalised follow-ups automatically — in many languages, priced per event or per year.",
+        "Scan the business cards you collect at events inside WhatsApp or Telegram, build a managed lead pipeline, and draft personalised follow-ups you approve — in many languages, priced per event or per year.",
       /* INR only, deliberately. The page itself switches currency per visitor
          (PRD v4 §5) but this markup is served identically to everyone, so it
          states one unambiguous set rather than two competing ones.

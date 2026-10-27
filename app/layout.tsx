@@ -19,7 +19,7 @@ const inter = Inter({
 });
 
 const DESCRIPTION =
-  "Rizely is a platform of AI micro-agents for sales and event teams. The first one scans the business cards you collect at events, builds a managed lead pipeline, and sends the follow-up automatically — inside WhatsApp and Telegram, in many languages, priced per event. Works worldwide.";
+  "Rizely is a platform of AI micro-agents for sales and event teams. The first one scans the business cards you collect at events, builds a managed lead pipeline, and drafts the follow-up for you to approve — inside WhatsApp and Telegram, in many languages, priced per event. Works worldwide.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

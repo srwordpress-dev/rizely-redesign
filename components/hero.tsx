@@ -65,8 +65,8 @@ export default function Hero() {
           <p className="max-w-2xl text-base sm:text-lg mx-auto text-muted-foreground text-balance">
             Hand over a Rizely card and your profile opens on their phone — no app, nothing to
             type. Point the same Rizely at the cards <em className="not-italic font-medium text-foreground">you</em>{" "}
-            collected and the agent reads them, files every lead, and sends each person a
-            personalised WhatsApp or Telegram follow-up in their language.
+            collected and the agent reads them, files every lead, and drafts each person a
+            personalised WhatsApp or Telegram follow-up in their language, for you to approve.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center gap-3 w-full justify-center pt-2">
