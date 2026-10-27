@@ -50,7 +50,7 @@ export const faqs = [
   },
   {
     q: "Can I use Rizely from Claude or ChatGPT?",
-    a: "Yes — Rizely connects to Claude today (web, desktop and Code). You can add and find contacts, organise events, pull an event's leads, export leads and top up, all in plain language. ChatGPT works through custom connectors on paid plans in developer mode (some tiers are read-only). It's a window onto your pipeline, so you'll still need a Rizely account with WhatsApp or Telegram linked.",
+    a: "Yes — Rizely connects to Claude today (web, desktop and Code). You can add and find contacts, organise events, pull an event's leads, export leads and top up, all in plain language. ChatGPT is next. It's a window onto your pipeline, so you'll still need a Rizely account with WhatsApp or Telegram linked.",
   },
 ];
 

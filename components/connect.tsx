@@ -106,8 +106,8 @@ export default function Connect() {
               Live on Claude
             </span>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Works today in Claude — web, desktop and Code. ChatGPT works through custom
-              connectors on paid plans in developer mode (some tiers are read-only). It&apos;s a
+              Works today in Claude — web, desktop and Code. ChatGPT is next.
+              It&apos;s a
               window onto your pipeline, not a separate product: you&apos;ll still need a Rizely
               account with WhatsApp or Telegram linked.
             </p>

@@ -260,6 +260,10 @@ the next 3 days". *Done when:* both say the same approve-first story. Fold into 
 next", then a paragraph later "ChatGPT works through custom connectors on paid plans", and the
 Partners strip lists ChatGPT beside live tools. *Done when:* one status, everywhere, labelled
 live or roadmap.
+> **Fixed in code, 27 Oct.** ChatGPT is "next" everywhere: the "works through custom connectors
+> in developer mode" sentences are gone from `/connect`, the homepage Connect section, the FAQ
+> and the JSON-LD, and the Partners strip tags it `next`. If Rizely is ever tested and supported
+> in ChatGPT, change all of them together.
 
 **W-20 · The CRM wording overreaches.** Partners: "Your CRM". Connect: "Export to a sheet or
 CRM". Team plan: "Sheets & CRM export". `01` §4: no sync to any external CRM. *Done when:* it

@@ -158,8 +158,7 @@ export default function ConnectPageContent() {
               <span className="size-2 rounded-full bg-muted-foreground/50" /> ChatGPT — next
             </h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Works today through custom connectors on paid plans in developer mode; some tiers are
-              read-only. We&apos;ll make it first-class as the platform opens up.
+              Not supported yet. We&apos;ll add it once it works as well as Claude does.
             </p>
           </div>
         </div>
