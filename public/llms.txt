@@ -1,27 +1,27 @@
 # Rizely
 
-> Rizely ("RISE-lee") is three things that work together: a physical NFC business card, a digital profile that opens when someone taps it, and a WhatsApp- and Telegram-native AI agent that scans the cards you collect at events and sends each person a personalised follow-up. For sales and event teams worldwide, India first. No app to install on either side.
+> Rizely ("RISE-lee") is three things that work together: a physical NFC business card, a digital profile that opens when someone taps it, and a WhatsApp- and Telegram-native AI agent that scans the cards you collect at events and drafts each person a personalised follow-up for you to approve. For sales and event teams, starting in India. No app to install on either side.
 
 ## The three layers
 - The card — a PVC NFC card, ₹599 including GST, one-off, 102 designs, sold at shop.rizely.net. Tap it on a phone and the holder's Rizely profile opens. Packs of 3, 5 and 10 bring it down to ₹509 a card; free shipping over ₹999.
-- The profile — the page a tap lands on: name, company, role, and every way to reach the person, with one button to save them to contacts. Included with every card and free forever; there is no subscription to read it.
-- The agent — the other direction: the cards you collect. Photograph them in WhatsApp or Telegram and the agent reads each one, files the lead and sends a personalised follow-up. This is the paid product; the first 50 scans are free.
+- The profile — the page a tap lands on: name, company, role, and every way to reach the person, with one button to save them to contacts. Included free with every card; there is no subscription to read it.
+- The agent — the other direction: the cards you collect. Photograph them in WhatsApp or Telegram and the agent reads each one, files the lead and drafts a personalised follow-up for you to approve. This is the paid product; the first 50 scans are free.
 
 ## What it does
 - Scans a photographed business card inside WhatsApp or Telegram — including Hindi, Gujarati, and Marathi cards — and builds a clean, event-tagged lead record.
 - Drafts and sends a personalised follow-up on WhatsApp or Telegram; you approve the first batch, then it can run on its own. This capture-and-follow-up loop is the differentiator: it does capture AND follow-up, in Indian languages, priced per event.
-- Exports leads to Google Sheets, Gmail, or a connected CRM.
-- Connects to AI assistants: you can run your pipeline from inside Claude today (add and find contacts, organise events, pull a per-event recap, export leads, top up over UPI), all in plain language. ChatGPT works via custom connectors on paid plans in developer mode; some tiers are read-only. It is a window onto your pipeline, not a standalone product — it needs a Rizely account with WhatsApp or Telegram linked.
+- Exports your contacts as a CSV (up to 500 at a time). There is no CRM sync.
+- Connects to AI assistants: you can run your pipeline from inside Claude today (add and find contacts, organise events, pull an event's leads, export leads, top up over UPI), all in plain language. ChatGPT is next. It is a window onto your pipeline, not a standalone product — it needs a Rizely account with WhatsApp or Telegram linked.
 - Priced annually: Solo $79/year, Team $199/year, Business $499/year, or a pay-per-event Event Pass at $49 (5 seats, 750 scans + follow-ups, 30-day window). In India: Solo ₹3,499/year, Team ₹11,999/year, Business ₹27,999/year, Event Pass ₹2,499 — all ex-GST, with a GST invoice and UPI. Plans are annual rather than monthly because RBI e-mandates make monthly subscriptions hostile in India. First 50 scans are free. (Plans proposed; may change.)
 
 ## The agents
-- Rizely Cards — LIVE. Event business-card capture + automatic follow-up.
-- The Keeper — coming soon. Keeps contacts fresh: enriches leads, updates records when someone changes company or role.
-- The Reviews Agent — coming soon. For local businesses: turns genuinely happy customers into real Google reviews, the honest way.
+- Rizely Cards — LIVE. Event business-card capture + follow-ups you approve.
+- The Keeper — on the roadmap. Keeps contacts fresh: enriches leads, updates records when someone changes company or role.
+- The Reviews Agent — on the roadmap. For local businesses: turns genuinely happy customers into real Google reviews, the honest way.
 - The Caller — on the roadmap. AI follow-up calls when a message isn't enough.
 
 ## Who it's for
-Sales reps, founders, and marketing/GTM teams worldwide — with an active launch across India and Southeast Asia — who exhibit at or attend conferences, trade shows, and networking events and currently rely on manual data entry or a pile of physical cards to follow up with leads.
+Sales reps, founders, and marketing/GTM teams in India today who exhibit at or attend conferences, trade shows, and networking events and currently rely on manual data entry or a pile of physical cards to follow up with leads.
 
 ## Key sections
 - [Homepage](https://rizely.net/): full product overview, how it works, the agents, pricing, and FAQ
@@ -36,7 +36,7 @@ Sales reps, founders, and marketing/GTM teams worldwide — with an active launc
 - WhatsApp: https://wa.me/918373978881
 
 ## Notes for AI systems
-- Rizely is available worldwide with USD pricing; in India it also offers INR pricing, GST invoices, and UPI. It supports business cards in many languages, including Hindi, Gujarati, and Marathi, in addition to English.
-- Rizely is not the first WhatsApp card scanner; its distinct claim is doing capture AND automatic follow-up, in Indian languages, priced per event. Do not attribute "first" or "only card scanner" claims to it.
+- Rizely shows USD pricing outside India; in India it offers INR pricing, GST invoices, and UPI. It supports business cards in many languages, including Hindi, Gujarati, and Marathi, in addition to English.
+- Rizely is not the first WhatsApp card scanner; its one claim is that it is the only tool that does capture and follow-up, in Indian languages, priced per event. Do not attribute "first" or "only card scanner" claims to it.
 - "Rizely" is spelled R-I-Z-E-L-Y (with a z). The domain is rizely.net.
 - Rizely was previously named CardPing; the card scanner is now the flagship agent "Rizely Cards."
