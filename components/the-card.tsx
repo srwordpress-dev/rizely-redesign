@@ -26,7 +26,7 @@ const packs = [
 const facts = [
   ["102 designs", "Pick one and we print it. Your details, your logo."],
   ["Light, durable PVC", "It goes through an airport without a fuss."],
-  ["Works on any modern phone", "Tap to open. No app on their side, ever."],
+  ["Works on NFC phones", "Tap to open. No app on their side, ever."],
   ["Profile included", "Free with the card. No subscription to read it."],
 ];
 

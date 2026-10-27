@@ -8,11 +8,11 @@ export const faqs = [
   },
   {
     q: "Do I need to download an app?",
-    a: "No. Rizely Cards lives inside WhatsApp and Telegram — apps already open on your phone. Nothing to install, nothing for your leads to install either. (A companion mobile app is in the works, but you'll never be forced onto it to get value.)",
+    a: "No. Rizely Cards lives inside WhatsApp and Telegram — apps already open on your phone. Nothing to install, nothing for your leads to install either.",
   },
   {
     q: "Will it read a Hindi or Gujarati card, or only English?",
-    a: "Indian-language cards too — Hindi, Gujarati and Marathi, not just English. It's not magic: a badly printed or coffee-stained card can still trip it up, and when it's unsure it flags the lead for a quick human check rather than guessing.",
+    a: "Indian-language cards too — Hindi, Gujarati and Marathi, not just English. It's not magic: a badly printed or coffee-stained card can still trip it up, so check the details before the follow-up goes out.",
   },
   {
     q: "Does it send the follow-ups on its own, or do I approve them first?",
@@ -44,7 +44,7 @@ export const faqs = [
   },
   {
     q: "Is Rizely just a card scanner, or a whole platform?",
-    a: "It's a platform of AI micro-agents — each owns one job. The Card Agent is live today (scan, file, follow up). Others, like the Keeper and the Reviews Agent, are on the roadmap. You turn on what you need and pay for what you use, rather than buying one bloated app.",
+    a: "It's a platform of AI micro-agents — each owns one job. The Card Agent is live today (scan, file, follow up). Others, like the Keeper and the Reviews Agent, are on the roadmap. You turn on what you need, rather than buying one bloated app.",
   },
   {
     q: "Can I use Rizely from Claude or ChatGPT?",

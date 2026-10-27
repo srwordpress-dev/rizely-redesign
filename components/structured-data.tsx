@@ -35,7 +35,7 @@ const SITE_GRAPH = {
       name: "Rizely",
       url: SITE_URL,
       description:
-        "Rizely is a platform of WhatsApp- and Telegram-native AI micro-agents for sales and event teams. The first one scans event business cards, builds a lead pipeline, and drafts follow-ups you approve, in many languages. Works worldwide.",
+        "Rizely is a platform of WhatsApp- and Telegram-native AI micro-agents for sales and event teams. The first one scans event business cards, builds a lead pipeline, and drafts follow-ups you approve, in many languages.",
     },
     {
       "@type": "WebSite",
