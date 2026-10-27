@@ -2,7 +2,10 @@
 
 import { motion } from "framer-motion";
 
-type Tool = { name: string; svg: React.ReactNode };
+// Only what Rizely really works with today. No Gmail and no CRM: neither integration exists
+// (handoff/01 §4), and the export is a CSV file, not a Sheets connection. `note` marks
+// anything that is not live yet, so it never reads as a shipped integration.
+type Tool = { name: string; note?: string; svg: React.ReactNode };
 
 const cls = "h-[22px] w-[22px] shrink-0";
 
@@ -35,36 +38,6 @@ const tools: Tool[] = [
     ),
   },
   {
-    name: "Google Sheets",
-    svg: (
-      <svg viewBox="0 0 48 48" className={cls} aria-hidden="true">
-        <path
-          fill="#0F9D58"
-          d="M11 2a3 3 0 0 0-3 3v38a3 3 0 0 0 3 3h26a3 3 0 0 0 3-3V13L29 2z"
-        />
-        <path fill="#0C7C43" d="M29 2l11 11H29z" />
-        <path fill="#fff" d="M15.5 21.5h17v16.5h-17z" />
-        <path
-          fill="#0F9D58"
-          d="M17 23h6.2v3.2H17zm7.8 0H31v3.2h-6.2zM17 27.9h6.2v3.2H17zm7.8 0H31v3.2h-6.2zM17 32.8h6.2V36H17zm7.8 0H31V36h-6.2z"
-        />
-      </svg>
-    ),
-  },
-  {
-    name: "Gmail",
-    svg: (
-      <svg viewBox="0 0 48 48" className={cls} aria-hidden="true">
-        <path fill="#fff" d="M6 11.5h36v27a1.5 1.5 0 0 1-1.5 1.5h-33A1.5 1.5 0 0 1 6 38.5z" />
-        <path fill="#4285F4" d="M45 16.2l-5 2.75-5 4.75V40h7a3 3 0 0 0 3-3z" />
-        <path fill="#34A853" d="M3 16.2l3.61 1.71L13 23.7V40H6a3 3 0 0 1-3-3z" />
-        <path fill="#EA4335" d="M35 11.2L24 19.45 13 11.2 12 17l1 6.7 11 8.25 11-8.25 1-6.7z" />
-        <path fill="#FBBC04" d="M3 12.3v3.9l10 7.5V11.2L9.88 8.86A4.3 4.3 0 0 0 3 12.3z" />
-        <path fill="#C5221F" d="M45 12.3v3.9l-10 7.5V11.2l3.12-2.34A4.3 4.3 0 0 1 45 12.3z" />
-      </svg>
-    ),
-  },
-  {
     // Neutral mark, not the official logo — text-only claim (Anthropic badge not yet approved).
     name: "Claude",
     svg: (
@@ -74,8 +47,29 @@ const tools: Tool[] = [
     ),
   },
   {
-    // Neutral mark, not the official logo.
+    name: "CSV export",
+    svg: (
+      <svg
+        viewBox="0 0 24 24"
+        className={cls}
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={1.7}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" />
+        <path d="M14 3v5h5" />
+        <path d="M12 11v6" />
+        <path d="m9 14 3 3 3-3" />
+      </svg>
+    ),
+  },
+  {
+    // Neutral mark, not the official logo. Not live yet — "next" on /connect too.
     name: "ChatGPT",
+    note: "next",
     svg: (
       <svg
         viewBox="0 0 24 24"
@@ -91,25 +85,6 @@ const tools: Tool[] = [
       </svg>
     ),
   },
-  {
-    name: "Your CRM",
-    svg: (
-      <svg
-        viewBox="0 0 24 24"
-        className={cls}
-        fill="none"
-        stroke="currentColor"
-        strokeWidth={1.7}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden="true"
-      >
-        <ellipse cx="12" cy="6" rx="8" ry="3" />
-        <path d="M4 6v6c0 1.66 3.58 3 8 3s8-1.34 8-3V6" />
-        <path d="M4 12v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6" />
-      </svg>
-    ),
-  },
 ];
 
 export default function Partners() {
@@ -122,7 +97,7 @@ export default function Partners() {
         transition={{ duration: 0.5, type: "spring", bounce: 0 }}
         className="text-sm uppercase tracking-widest text-muted-foreground"
       >
-        Plugs into the tools you already use
+        Works where you already are
       </motion.p>
       <div className="w-full flex flex-wrap justify-center items-center gap-x-8 gap-y-4">
         {tools.map((tool, index) => (
@@ -136,6 +111,11 @@ export default function Partners() {
           >
             {tool.svg}
             <span className="text-sm font-medium">{tool.name}</span>
+            {tool.note && (
+              <span className="rounded-full border border-border px-2 py-0.5 text-xs">
+                {tool.note}
+              </span>
+            )}
           </motion.div>
         ))}
       </div>

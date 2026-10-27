@@ -33,7 +33,7 @@ Legend: ✅ built and good · ◐ built, needs work · ✗ missing
 |---|---|---|---|---|
 | 1 | Hero — three layers | `hero.tsx` + `hero-particles.tsx` | ◐ | Copy and CTAs right. **Animation does not read on mobile — W-01.** |
 | 2 | The three layers | `three-layers.tsx` | ◐ | Card / profile / agent, one panel each. Reveal stagger — W-05. |
-| 3 | Partners | `partners.tsx` | ✅ | "Plugs into the tools you already use", Claude included. |
+| 3 | Partners | `partners.tsx` | ✅ | "Works where you already are": only real channels, ChatGPT marked `next`. |
 | 4 | How it works | `how-it-works.tsx` | ✅ | Snap it → Rizely files it → It follows up. Strong. |
 | 5 | Chat demo | `chat-demo.tsx` | ✅ | WhatsApp + Telegram phones with a real card. The best thing on the page. |
 | 6 | The card, up close | `the-card.tsx` | ✅ | ₹599, pack ladder, free shipping over ₹999. All CTAs → shop. |
@@ -235,6 +235,11 @@ live or roadmap.
 **W-20 · The CRM wording overreaches.** Partners: "Your CRM". Connect: "Export to a sheet or
 CRM". Team plan: "Sheets & CRM export". `01` §4: no sync to any external CRM. *Done when:* it
 says exactly what happens (an export to a file or Sheet?), confirmed with Tarun.
+> **Partners fixed in code, 27 Oct.** The strip is now "Works where you already are":
+> WhatsApp · Telegram · Claude · CSV export · ChatGPT (`next`). Gmail and "Your CRM" are gone
+> (neither integration exists), and the Sheets logo became "CSV export", which is what the
+> `export_contacts` tool returns. **Still open:** Connect ("Export to a sheet or CRM", "a
+> one-way push into your CRM") and the Team plan ("Sheets & CRM export").
 
 **W-21 · Three different language claims.** Hero: "many languages". Why Rizely: "Hindi, Gujarati,
 Marathi and plenty more". Footer: the three. *Done when:* one confirmed list (Tarun), used
