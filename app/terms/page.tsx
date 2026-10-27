@@ -52,7 +52,7 @@ export default function TermsPage() {
       <p>
         Paid plans are billed in the currency shown at checkout — US Dollars (USD) by default, or
         Indian Rupees (INR) with GST for customers in India. Plans are billed annually, or as a
-        one-off Event Pass for a single event; a free tier is available. Prices shown on the site are being finalised and may
+        one-off Event Pass for a single event; your first 50 scans are free, then a paid plan or Event Pass. Prices shown on the site are being finalised and may
         change before general availability — the price and inclusions confirmed at checkout apply.
         A GST invoice is provided on Indian plans.
       </p>

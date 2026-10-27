@@ -15,7 +15,7 @@ _Baseline taken 26 Oct 2026 against `rizely-platform.netlify.app` (deploy `6ad27
 | Homepage sections built | **16** — the structure is complete |
 | Supporting pages built | 6 of 6 (`/agents`, `/connect`, `/blogs`, `/privacy`, `/terms`, + home) |
 | Banned-claim scan on the preview | **clean** — zero hits |
-| Open work items | **30** (6 P0, 14 P1, 10 P2) — 13 from the baseline, 17 added by Dev (26–27 Oct). W-01 fixed in code, awaiting a real-phone check |
+| Open work items | **32** (8 P0, 14 P1, 10 P2) — 13 from the baseline, 19 added by Dev (26–27 Oct). Fixed in code, 27 Oct: W-01 (awaiting a real-phone check), W-14, W-31; partly fixed: W-15, W-20, W-22, W-32 |
 | Decisions waiting on Ankush | **4** |
 | Live on rizely.net | **No** — rizely.net still serves the old page |
 
@@ -211,6 +211,24 @@ It was a hand-made PNG with no source, so it outlived the copy it came from.
 > **Fixed in code, 27 Oct.** It is now rendered from `scripts/og/og.html` (the hero headline,
 > no numbers) by `scripts/og/render.mjs`. Edit the HTML and re-render; never hand-edit the PNG.
 > Check the preview with a link-preview tool once it is deployed, since platforms cache it.
+
+**W-32 · The legal pages are not ready to launch.** `/privacy` and `/terms` both show "Draft for
+review… have it reviewed by legal counsel" (`components/legal-layout.tsx:25`), and that banner
+should stay until counsel signs off. What they are missing needs facts only Ankush has:
+- the legal entity's name and registered address, and a support email (today the only contact
+  is the WhatsApp number);
+- a named grievance contact for India's DPDP Act;
+- a refund and cancellation policy for annual plans and the Event Pass;
+- coverage of the card and shop orders, `app.rizely.net`, the Android app, and Connect on
+  Claude (contact data passing to Anthropic), plus any cross-border transfer to AI providers;
+- a liability cap that makes sense for annual and one-off plans (today "the three months
+  before the claim", `terms:78`), and a city or seat for "laws of India".
+
+27 Oct, fixed in code: Terms no longer says "a free tier is available" (it now says the first 50
+scans are free, then a paid plan or Event Pass), and Privacy no longer mentions a waitlist or
+form providers.
+*Done when:* Ankush supplies the facts above, counsel reviews both pages, and the Draft banner
+comes off.
 
 #### P1
 

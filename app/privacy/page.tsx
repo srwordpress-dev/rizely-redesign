@@ -22,7 +22,7 @@ export default function PrivacyPage() {
       <h2>1. Information we collect</h2>
       <ul>
         <li>
-          <strong>Details you give us.</strong> When you join the waitlist or contact us, we
+          <strong>Details you give us.</strong> When you sign up or contact us, we
           collect your phone number and any message you send. When you use the Service, we
           collect your WhatsApp/Telegram identifier and account details.
         </li>
@@ -42,7 +42,7 @@ export default function PrivacyPage() {
       <h2>2. How we use it</h2>
       <ul>
         <li>To provide the Service — scan cards, build your lead pipeline, and send follow-ups.</li>
-        <li>To respond to waitlist sign-ups and support requests.</li>
+        <li>To respond to sign-ups and support requests.</li>
         <li>To operate, secure, and improve the product.</li>
         <li>To comply with legal obligations, including under the DPDP Act.</li>
       </ul>
@@ -50,7 +50,7 @@ export default function PrivacyPage() {
       <h2>3. How we share it</h2>
       <p>
         We do not sell your personal data. We share it only with service providers who help us run
-        the Service — for example, hosting and form providers, and the messaging platforms
+        the Service — for example, hosting providers, and the messaging platforms
         (WhatsApp/Meta and Telegram) and AI processing services used to read cards and draft
         follow-ups. These providers process data on our instructions. We may also disclose data if
         required by law.
