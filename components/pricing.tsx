@@ -224,7 +224,8 @@ export default function Pricing() {
           </p>
           <div className="mt-3 flex items-baseline tabular-nums">
             <span className="text-3xl font-bold">₹599</span>
-            <span className="ml-1 text-sm text-muted-foreground">incl. GST</span>
+            <span className="ml-1 text-sm text-muted-foreground" data-price="inr">incl. GST</span>
+            <span className="ml-1 text-sm text-muted-foreground" data-price="usd">· ships within India</span>
           </div>
           <p className="mt-1 text-xs text-muted-foreground/80">
             102 designs · packs down to ₹509 a card · free shipping over ₹999

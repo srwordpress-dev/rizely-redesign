@@ -110,8 +110,9 @@ export default function TheCard() {
           </p>
 
           <p className="mt-5 text-xs text-muted-foreground">
-            Prices include GST. Packs, designs and checkout all live on the store — this page
-            just points you at it.
+            <span data-price="inr">Prices include GST. </span>
+            <span data-price="usd">Prices are in ₹ and the card ships within India. </span>
+            Packs, designs and checkout all live on the store — this page just points you at it.
           </p>
 
           <Button asChild variant="outline" className="mt-5 h-11 w-full">

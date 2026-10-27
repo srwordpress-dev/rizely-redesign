@@ -99,7 +99,7 @@ const Footer = () => {
             <div className="space-y-3">
               <h3 className="text-sm font-semibold">Built for India</h3>
               <ul className="flex flex-col gap-2 text-sm text-muted-foreground">
-                <li>GST invoice on every plan</li>
+                <li>GST invoice on Indian plans</li>
                 <li>Hindi, Gujarati &amp; Marathi capture</li>
                 <li>Handled with DPDP in mind</li>
               </ul>

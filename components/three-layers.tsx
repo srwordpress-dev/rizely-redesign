@@ -21,7 +21,7 @@ type Layer = {
   icon: LucideIcon;
   title: string;
   body: string;
-  meta: string;
+  meta: React.ReactNode;
   cta?: { label: string; href: string; external: boolean };
 };
 
@@ -31,7 +31,13 @@ const layers: Layer[] = [
     icon: CreditCard,
     title: "The card",
     body: "A PVC card with a chip in it. Hold it near a phone and your profile opens — no app on their side, no typing, nothing to spell out across a loud hall. 102 designs; pick one and we print it.",
-    meta: "₹599 incl. GST · one-off · free shipping over ₹999",
+    // GST only belongs in the ₹ view (01 §2); the card is sold in ₹ to everyone.
+    meta: (
+      <>
+        <span data-price="inr">₹599 incl. GST · one-off · free shipping over ₹999</span>
+        <span data-price="usd">₹599 · one-off · ships within India</span>
+      </>
+    ),
     cta: { label: "Choose your card", href: SHOP_URL, external: true },
   },
   {

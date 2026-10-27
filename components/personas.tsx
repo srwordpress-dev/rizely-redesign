@@ -14,7 +14,8 @@ type Persona = {
   tag: string;
   title: string;
   body: string;
-  fit: string;
+  // Prices follow the ₹/$ toggle like the pricing section (data-price). [PRICING PROPOSED]
+  fit: { inr: string; usd: string };
   cta: string;
 };
 
@@ -24,7 +25,10 @@ const personas: Persona[] = [
     tag: "You attend the event",
     title: "Field sales & BD",
     body: "Conferences, expos, networking meetups — you're collecting cards in conversations all day. Snap each one in WhatsApp as you go, and Rizely files the lead and drafts the follow-up in their language, so it's ready to send before you've even landed home.",
-    fit: "Best fit: Solo — $79/yr if you work events often, or a one-off Event Pass — $49 for a single show.",
+    fit: {
+      inr: "Best fit: Solo — ₹3,499/yr if you work events often, or a one-off Event Pass — ₹2,499 for a single show. (proposed)",
+      usd: "Best fit: Solo — $79/yr if you work events often, or a one-off Event Pass — $49 for a single show. (proposed)",
+    },
     cta: "Start free on WhatsApp",
   },
   {
@@ -32,7 +36,10 @@ const personas: Persona[] = [
     tag: "You run the booth",
     title: "Exhibitors & booth teams",
     body: "Two days, hundreds of scans, several people on the stand — and normally the leads end up scattered across everyone's phones. Your whole team captures into one shared pipeline tagged to the show, follow-ups are drafted the same day, and you pull every lead from the show before you pack down.",
-    fit: "Best fit: Event Pass — $49/event for 5 seats, or Team / Business if you exhibit all year.",
+    fit: {
+      inr: "Best fit: Event Pass — ₹2,499/event for 5 seats, or Team / Business if you exhibit all year. (proposed)",
+      usd: "Best fit: Event Pass — $49/event for 5 seats, or Team / Business if you exhibit all year. (proposed)",
+    },
     cta: "Get an Event Pass",
   },
 ];
@@ -85,7 +92,8 @@ export default function Personas() {
               <p className="text-sm text-muted-foreground leading-relaxed">{p.body}</p>
 
               <div className="mt-4 rounded-xl border border-primary/20 bg-primary/5 p-3 text-sm text-foreground/90">
-                {p.fit}
+                <span data-price="inr">{p.fit.inr}</span>
+                <span data-price="usd">{p.fit.usd}</span>
               </div>
 
               <div className="mt-5 flex flex-wrap gap-3">

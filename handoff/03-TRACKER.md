@@ -239,6 +239,10 @@ comes off.
 "$79/yr" and "$49/event" as plain strings, so an India visitor (`data-currency="inr"`) reads
 dollar prices one section above the ₹ pricing table. *Done when:* both lines follow the currency
 the same way `pricing.tsx` does.
+> **Fixed in code, 27 Oct.** Both lines switch with `data-price` (₹3,499 / ₹2,499 or $79 / $49)
+> and carry "(proposed)". The same pass hid "incl. GST" from the $ view on the pricing card box,
+> Three Layers and The Card (they show "ships within India" instead), and the footer says "GST
+> invoice on Indian plans".
 
 **W-17 · "A whole stack from the badge queue" implies badge scanning.** In How it works and on
 `/agents`. `01` §4 says visiting cards only, no badges. *Done when:* the phrase goes, or Tarun
