@@ -196,6 +196,12 @@ your logo… you approve the design before print" rather than pick-one-of-102. `
 *Done when:* Ankush says which is true, and every price, pack and material on the page matches
 the shop line for line.
 
+> **Packs fixed in code, 27 Oct.** `the-card.tsx` now shows the store's PVC packs exactly:
+> 1 / 3 / 5 / 10 at ₹599 / ₹1,707 / ₹2,695 / ₹5,091 (checked against `/products.json` that day),
+> plus "Ordering more than 10? Ask us on WhatsApp". `pricing.tsx` now says "down to ₹509 a
+> card". **Still open:** metal vs "PVC, not metal", 102 designs vs the custom-design flow, the
+> shipping line, the PVC line in `llms.txt` (its pack price is fixed), and the "₹399/card at 100" line in `01` §2.
+
 **W-31 · The social share image carried the banned stats.** `app/opengraph-image.png`, which
 every share of the homepage shows, read "Scan the card. Send the follow-up. Automatically.",
 "India-first", and the `01` §6 strip "6 hours → 2 seconds · 9 days → 60 seconds · 73% → 100%".

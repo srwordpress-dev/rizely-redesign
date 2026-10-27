@@ -10,16 +10,17 @@ import { SHOP_URL, WHATSAPP_URL } from "@/lib/site";
   handles checkout, GST invoices, the pack ladder and shipping; a second copy
   of any of that is a second thing to get out of sync. Every CTA leaves.
 
-  Every figure below is read off shop.rizely.net (verified 16 Oct, see
-  FORECAST-card-to-agent-funnel.md §1). Re-verify before launch — and do not
-  add a price here that the store does not show.
+  Every figure below is read off shop.rizely.net (PVC NFC Business Card,
+  verified 27 Oct via /products.json). Re-verify before launch — and do not
+  add a price here that the store does not show. The store's biggest pack is
+  10; anything larger is quoted on WhatsApp.
 */
 
 const packs = [
   { qty: "1 card", price: "₹599", each: "" },
-  { qty: "5 cards", price: "₹2,545", each: "₹509 each" },
-  { qty: "25 cards", price: "₹12,475", each: "₹499 each" },
-  { qty: "100 cards", price: "₹39,900", each: "₹399 each" },
+  { qty: "3 cards", price: "₹1,707", each: "₹569 each" },
+  { qty: "5 cards", price: "₹2,695", each: "₹539 each" },
+  { qty: "10 cards", price: "₹5,091", each: "₹509 each" },
 ];
 
 const facts = [
@@ -103,6 +104,10 @@ export default function TheCard() {
               </li>
             ))}
           </ul>
+
+          <p className="mt-4 text-sm text-muted-foreground">
+            Ordering more than 10? Ask us on WhatsApp for a team price.
+          </p>
 
           <p className="mt-5 text-xs text-muted-foreground">
             Prices include GST. Packs, designs and checkout all live on the store — this page

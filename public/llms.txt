@@ -3,7 +3,7 @@
 > Rizely ("RISE-lee") is three things that work together: a physical NFC business card, a digital profile that opens when someone taps it, and a WhatsApp- and Telegram-native AI agent that scans the cards you collect at events and sends each person a personalised follow-up. For sales and event teams worldwide, India first. No app to install on either side.
 
 ## The three layers
-- The card — a PVC NFC card, ₹599 including GST, one-off, 102 designs, sold at shop.rizely.net. Tap it on a phone and the holder's Rizely profile opens. Packs bring it down to ₹399 a card at 100; free shipping over ₹999. PVC only — there is no metal or wooden card.
+- The card — a PVC NFC card, ₹599 including GST, one-off, 102 designs, sold at shop.rizely.net. Tap it on a phone and the holder's Rizely profile opens. Packs of 3, 5 and 10 bring it down to ₹509 a card; free shipping over ₹999. PVC only — there is no metal or wooden card.
 - The profile — the page a tap lands on: name, company, role, and every way to reach the person, with one button to save them to contacts. Included with every card and free forever; there is no subscription to read it.
 - The agent — the other direction: the cards you collect. Photograph them in WhatsApp or Telegram and the agent reads each one, files the lead and sends a personalised follow-up. This is the paid product; the first 50 scans are free.
 

@@ -227,7 +227,7 @@ export default function Pricing() {
             <span className="ml-1 text-sm text-muted-foreground">incl. GST</span>
           </div>
           <p className="mt-1 text-xs text-muted-foreground/80">
-            102 designs · packs down to ₹399 a card · free shipping over ₹999
+            102 designs · packs down to ₹509 a card · free shipping over ₹999
           </p>
           <Button asChild variant="outline" className="mt-4 h-11 w-full">
             <Link href={SHOP_URL} target="_blank" rel="noopener noreferrer">
