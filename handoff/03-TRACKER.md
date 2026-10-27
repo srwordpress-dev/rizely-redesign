@@ -264,8 +264,14 @@ says exactly what happens (an export to a file or Sheet?), confirmed with Tarun.
 > **Partners fixed in code, 27 Oct.** The strip is now "Works where you already are":
 > WhatsApp · Telegram · Claude · CSV export · ChatGPT (`next`). Gmail and "Your CRM" are gone
 > (neither integration exists), and the Sheets logo became "CSV export", which is what the
-> `export_contacts` tool returns. **Still open:** Connect ("Export to a sheet or CRM", "a
-> one-way push into your CRM") and the Team plan ("Sheets & CRM export").
+> `export_contacts` tool returns.
+> **Connect and pricing fixed in code, 27 Oct.** Checked against the tool schemas: the export is
+> "Export to CSV" (the whole contact list, up to 500 rows, no CRM push) on `/connect` and the
+> homepage, and the Team plan says "CSV export". The same pass removed "87 cards at one event"
+> and the per-event "recap" (no tool returns one; it is now "pull every lead from one event",
+> also in the meta, FAQ, JSON-LD and Personas), "enriches it, no scan charge", "Every action is
+> attributed" and the real event name "Blockchain Week". The search filters (event, tag,
+> channel, date) are real and stayed.
 
 **W-21 · Three different language claims.** Hero: "many languages". Why Rizely: "Hindi, Gujarati,
 Marathi and plenty more". Footer: the three. *Done when:* one confirmed list (Tarun), used

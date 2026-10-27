@@ -21,17 +21,17 @@ const capabilities: Capability[] = [
   {
     icon: UserPlus,
     title: "Add & update contacts",
-    desc: "Paste a card photo or describe a contact in the chat — Rizely extracts the details, files the lead and enriches it. Editing a lead only changes the fields you name; nothing else is touched.",
+    desc: "Share a card photo and Claude reads it and adds the contact, or describe someone in your own words. Editing a lead only changes the fields you name; nothing else is touched.",
   },
   {
     icon: Search,
     title: "Find & segment your pipeline",
-    desc: "Ask for a slice by free text, event, tag, capture channel or date range — or only the leads that have a WhatsApp number or an email. Get the shortlist without opening a dashboard.",
+    desc: "Ask for a slice by free text, event, tag, capture channel or date range — or only the leads that have a phone number or an email. Get the shortlist without opening a dashboard.",
   },
   {
     icon: CalendarDays,
-    title: "Organise events & pull a recap",
-    desc: "Create or close an event, list what's open, and pull a per-event recap — leads captured and follow-ups sent. This is the “87 cards at one event” story, on demand.",
+    title: "Organise events",
+    desc: "Create or close an event, list what's open, and pull every lead from one event.",
   },
   {
     icon: ListChecks,
@@ -40,8 +40,8 @@ const capabilities: Capability[] = [
   },
   {
     icon: Download,
-    title: "Export to a sheet or CRM",
-    desc: "Send a filtered set of leads out as a CSV for a spreadsheet or a one-way push into your CRM. Great for a hand-off; it's an export, not a two-way sync.",
+    title: "Export to CSV",
+    desc: "Get your contacts as a CSV (up to 500 at a time) to open in a spreadsheet or import anywhere. It's an export, not a sync.",
   },
   {
     icon: Wallet,
@@ -64,16 +64,16 @@ const steps = [
   {
     n: "3",
     title: "Just ask",
-    desc: "“Add this card,” “show me leads from the Blockchain Week event,” “export them to a sheet.” Every action Rizely takes is attributed — you'll see it was done via Claude.",
+    desc: "“Add this card,” “show me leads from the Home Expo,” “export them to a sheet.” Contacts you add from Claude are tagged as added via Claude.",
   },
 ];
 
 const limits = [
-  "A pipeline search returns a focused shortlist, not your entire database — for the full set, ask for an export.",
-  "Export is one-way: it copies leads out to a sheet or CRM. It isn't a live two-way sync.",
+  "A pipeline search returns a focused shortlist, not your entire database — an export gives you up to 500 contacts at a time; the dashboard exports the rest.",
+  "Export is one-way: a CSV copy of your contacts. It isn't a live sync.",
   "Payments always complete in your browser over UPI — never inside the chat.",
   "It's a window onto your pipeline, not a standalone product — you'll need a Rizely account with WhatsApp or Telegram linked.",
-  "Scanning a photo or QR straight from the chat is on the way; today capture runs through the WhatsApp/Telegram bot.",
+  "Rizely's own card scanning runs in the WhatsApp/Telegram bot; in Claude, Claude reads the photo and adds the details itself.",
 ];
 
 export default function ConnectPageContent() {
@@ -90,7 +90,7 @@ export default function ConnectPageContent() {
           </h1>
           <p className="mt-6 max-w-2xl mx-auto text-base sm:text-lg text-muted-foreground text-balance">
             Rizely connects to the AI assistant you already use. Add and find contacts, organise
-            events, pull a recap, export your leads and top up — all in plain language, without
+            events, pull an event's leads, export your leads and top up — all in plain language, without
             learning a dashboard. Live on Claude now; ChatGPT is next.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">

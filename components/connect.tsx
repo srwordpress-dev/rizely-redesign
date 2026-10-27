@@ -22,7 +22,7 @@ const capabilities: Capability[] = [
   {
     icon: UserPlus,
     title: "Add & update contacts",
-    desc: "Paste a card photo or just describe someone — Rizely files the lead and enriches it, no scan charge.",
+    desc: "Share a card photo and Claude reads it and adds the contact, or just describe someone.",
   },
   {
     icon: Search,
@@ -31,13 +31,13 @@ const capabilities: Capability[] = [
   },
   {
     icon: CalendarDays,
-    title: "Organise events & recaps",
-    desc: "Open or close an event, then pull a per-event recap — leads captured and follow-ups sent.",
+    title: "Organise events",
+    desc: "Open or close an event, then pull every lead captured there.",
   },
   {
     icon: Download,
-    title: "Export to a sheet or CRM",
-    desc: "Send a filtered set of leads out to a spreadsheet or your CRM in one line.",
+    title: "Export to CSV",
+    desc: "Get your contacts as a CSV for a spreadsheet, in one line.",
   },
   {
     icon: Wallet,
@@ -67,7 +67,7 @@ export default function Connect() {
         </h2>
         <p className="text-muted-foreground text-lg">
           Rizely plugs into the AI assistant you already have open. Connect your account once and
-          work your whole pipeline in plain language — no dashboard to learn. It&apos;s live on
+          add, find, organise and export your leads in plain language. It&apos;s live on
           Claude today; ChatGPT is next.
         </p>
       </motion.div>

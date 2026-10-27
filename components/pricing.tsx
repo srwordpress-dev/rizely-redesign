@@ -55,7 +55,7 @@ const plans: Plan[] = [
       "3 seats",
       "2,000 scans / month",
       "1,000 auto follow-ups / month",
-      "Sheets & CRM export · Connect to Claude",
+      "CSV export · Connect to Claude",
     ],
   },
   {

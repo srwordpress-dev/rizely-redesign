@@ -31,7 +31,7 @@ const personas: Persona[] = [
     icon: Store,
     tag: "You run the booth",
     title: "Exhibitors & booth teams",
-    body: "Two days, hundreds of scans, several people on the stand — and normally the leads end up scattered across everyone's phones. Your whole team captures into one shared pipeline tagged to the show, follow-ups are drafted the same day, and you pull a clean recap — leads captured, follow-ups sent — before you pack down.",
+    body: "Two days, hundreds of scans, several people on the stand — and normally the leads end up scattered across everyone's phones. Your whole team captures into one shared pipeline tagged to the show, follow-ups are drafted the same day, and you pull every lead from the show before you pack down.",
     fit: "Best fit: Event Pass — $49/event for 5 seats, or Team / Business if you exhibit all year.",
     cta: "Get an Event Pass",
   },
