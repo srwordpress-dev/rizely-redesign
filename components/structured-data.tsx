@@ -1,4 +1,5 @@
 import { SITE_URL } from "@/lib/site";
+import { faqs } from "@/lib/faqs";
 
 /* Split into two graphs on purpose (kept from main, 9 Sep).
  *
@@ -12,6 +13,19 @@ import { SITE_URL } from "@/lib/site";
  * content. Worse, a blog post carrying its own FAQs emitted two competing
  * FAQPage nodes. So HOME_GRAPH is rendered by app/page.tsx alone.
  */
+const offer = (name: string, price: string) => ({
+  "@type": "Offer",
+  name,
+  price,
+  priceCurrency: "INR",
+  priceSpecification: {
+    "@type": "UnitPriceSpecification",
+    price,
+    priceCurrency: "INR",
+    valueAddedTaxIncluded: false,
+  },
+});
+
 const SITE_GRAPH = {
   "@context": "https://schema.org",
   "@graph": [
@@ -48,83 +62,23 @@ const HOME_GRAPH = {
       /* INR only, deliberately. The page itself switches currency per visitor
          (PRD v4 §5) but this markup is served identically to everyone, so it
          states one unambiguous set rather than two competing ones.
-         [PRICING PROPOSED] — see PRD v4 D3. */
+         [PRICING PROPOSED] — see PRD v4 D3. Prices are ex-GST (01 §2), so each offer says so. */
       offers: [
-        { "@type": "Offer", name: "Solo (annual)", price: "3499", priceCurrency: "INR" },
-        { "@type": "Offer", name: "Team (annual)", price: "11999", priceCurrency: "INR" },
-        { "@type": "Offer", name: "Business (annual)", price: "27999", priceCurrency: "INR" },
-        { "@type": "Offer", name: "Event Pass (per event)", price: "2499", priceCurrency: "INR" },
+        offer("Solo (annual)", "3499"),
+        offer("Team (annual)", "11999"),
+        offer("Business (annual)", "27999"),
+        offer("Event Pass (per event)", "2499"),
       ],
     },
     {
       "@type": "FAQPage",
       "@id": `${SITE_URL}/#faq`,
-      mainEntity: [
-        {
-          "@type": "Question",
-          name: "What does Rizely actually do right now?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "Rizely Cards is live: photograph a business card in WhatsApp or Telegram, and it reads the card, files the lead into your pipeline, and drafts a personalised follow-up ready to send. The other agents are on the roadmap — we'll say clearly when each one ships.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "Do I need to download an app?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "No. Rizely Cards lives inside WhatsApp and Telegram — apps already open on your phone. Nothing to install, nothing for your leads to install either.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "Will it read a Hindi or Gujarati card, or only English?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "Indian-language cards too — Hindi, Gujarati and Marathi, not just English. This is exactly where most scanners quietly fall over. When it's unsure about a badly printed card, it flags the lead for a quick human check rather than guessing.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "Does it send the follow-ups on its own, or do I approve them first?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "You're in control. You review and approve the first batch so it sounds like you. After that you can let it run automatically, or keep approving each batch — your call, changeable any time.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "What happens after the 50 free scans?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "You move to an annual plan when you're ready, or buy a one-off Event Pass for a single show. In India that is \u20b93,499/year ex-GST with a GST invoice and UPI; elsewhere it is $79/year. Plans are annual rather than monthly because RBI e-mandates make monthly subscriptions genuinely painful in India. You won't be charged the moment the free scans run out.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "Whose data is it, and is it safe?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "The leads are yours — export them any time, no ransom fee to get your own data out. We're building to India's DPDP rules and only act on contacts you've collected with consent. We won't scrape lists or blast strangers on your behalf.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "Is Rizely just a card scanner, or a whole platform?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "It's a platform of AI micro-agents — each owns one job. The Card Agent is live today (scan, file, follow up). Others, like the Keeper and the Reviews Agent, are on the roadmap. You turn on what you need rather than buying one bloated app.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "Can I use Rizely from Claude or ChatGPT?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "Yes — Rizely connects to Claude today (web, desktop and Code): add and find contacts, organise events, pull an event's leads, export leads and top up, all in plain language. ChatGPT is next. You'll need a Rizely account with WhatsApp or Telegram linked.",
-          },
-        },
-      ],
+      // Built from the same list the FAQ section renders, so the two cannot drift apart.
+      mainEntity: faqs.map((f) => ({
+        "@type": "Question",
+        name: f.q,
+        acceptedAnswer: { "@type": "Answer", text: f.a },
+      })),
     },
   ],
 };
