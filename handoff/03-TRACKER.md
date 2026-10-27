@@ -310,6 +310,18 @@ to try Rizely on the cards from my last event". A buyer asking about 20 cards la
 card-scanning bot. *Done when:* each has its own pre-filled message (in `lib/site.ts`), and
 someone confirms who answers it.
 
+**W-33 · The plan details are as unconfirmed as the prices.** The plan cards list seats (1 / 3 / 10),
+allowances ("500 scans / month", "200 follow-ups / month", and up), "Unlimited scans" and
+"Priority support", and the Event Pass says "5 seats · 750 scans · 750 follow-ups · 30-day
+window". None of it is in `01` §2, and the comment in `pricing.tsx` cites a research file that is
+not in this repo. The allowances are also monthly on yearly plans.
+27 Oct, in code: each plan card now says "Plan details are proposed and may change.", and
+"auto follow-ups" became "follow-ups" (approve-first, W-18). No numbers were changed.
+*Ankush to decide:* do scans and follow-ups reset monthly, or come as a yearly pool? Are the seat
+counts and the Event Pass limits right? Are "Unlimited scans" and "Priority support" real? Is
+Connect to Claude Team-and-up (as the plan cards say) or open to every plan (as `/connect`
+implies)? *Done when:* every figure on the cards is confirmed or removed.
+
 #### P2
 
 **W-24 · "No card" is ambiguous on a site that sells a card.** "First 50 scans on us — no card,

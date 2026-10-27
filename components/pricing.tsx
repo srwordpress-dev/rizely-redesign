@@ -39,7 +39,7 @@ const plans: Plan[] = [
     features: [
       "1 seat",
       "500 scans / month",
-      "200 auto follow-ups / month",
+      "200 follow-ups / month",
       "Multilingual card capture",
       "WhatsApp & Telegram",
     ],
@@ -54,7 +54,7 @@ const plans: Plan[] = [
       "Everything in Solo",
       "3 seats",
       "2,000 scans / month",
-      "1,000 auto follow-ups / month",
+      "1,000 follow-ups / month",
       "CSV export · Connect to Claude",
     ],
   },
@@ -68,7 +68,7 @@ const plans: Plan[] = [
       "Everything in Team",
       "10 seats",
       "Unlimited scans",
-      "5,000 auto follow-ups / month",
+      "5,000 follow-ups / month",
       "Priority support",
     ],
   },
@@ -178,6 +178,10 @@ export default function Pricing() {
                     </li>
                   ))}
                 </ul>
+                {/* Seats and allowances are as unconfirmed as the price (W-33), so the marker covers them too. */}
+                <p className="mt-4 text-xs text-muted-foreground/80">
+                  Plan details are proposed and may change.
+                </p>
               </CardContent>
 
               <CardFooter className="p-4 pt-0 sm:p-6 sm:pt-0">
