@@ -188,6 +188,14 @@ your logo… you approve the design before print" rather than pick-one-of-102. `
 *Done when:* Ankush says which is true, and every price, pack and material on the page matches
 the shop line for line.
 
+**W-31 · The social share image carried the banned stats.** `app/opengraph-image.png`, which
+every share of the homepage shows, read "Scan the card. Send the follow-up. Automatically.",
+"India-first", and the `01` §6 strip "6 hours → 2 seconds · 9 days → 60 seconds · 73% → 100%".
+It was a hand-made PNG with no source, so it outlived the copy it came from.
+> **Fixed in code, 27 Oct.** It is now rendered from `scripts/og/og.html` (the hero headline,
+> no numbers) by `scripts/og/render.mjs`. Edit the HTML and re-render; never hand-edit the PNG.
+> Check the preview with a link-preview tool once it is deployed, since platforms cache it.
+
 #### P1
 
 **W-16 · The personas section hard-codes dollars.** `components/personas.tsx:27` and `:35` say

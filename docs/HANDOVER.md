@@ -158,7 +158,7 @@ app/
   page.tsx              homepage + homepage-only product/FAQ JSON-LD
   sitemap.ts            generated sitemap, includes blog posts
   icon.png              favicon (the Rizely mark)
-  opengraph-image.png   1200x630 social card, brand baked into pixels
+  opengraph-image.png   1200x630 social card, rendered from scripts/og/og.html
   blogs/                blog listing and posts
   privacy/, terms/      legal pages
 components/
