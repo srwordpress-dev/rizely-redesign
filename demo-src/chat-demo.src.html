@@ -98,8 +98,8 @@
     font-size: 0.82rem; color: var(--muted); font-weight: 500;
   }
   .device-label svg { width: 16px; height: 16px; }
-  .device-label .wa { color: #fff; }
-  .device-label .tg { color: #fff; }
+  .device-label .wa { color: #25d366; }
+  .device-label .tg { color: #29a9eb; }
   .device-label .dev { color: var(--muted); font-family: var(--mono); font-size: 0.72rem; }
 
   /* ---------- Phone frames ---------- */
@@ -228,6 +228,17 @@
   .wa-app .b { color: var(--wa-text); border-radius: 8px; }
   .wa-app .b.inb { background: var(--wa-in); border-top-left-radius: 2px; }
   .wa-app .b.outb { background: var(--wa-out); border-top-right-radius: 2px; }
+  .msg { font-size: 0.78rem; line-height: 1.45; }
+  .msg p { margin: 0; }
+  .msg p + p { margin-top: 0.45em; }
+  .quote { display: flex; align-items: center; gap: 8px; border-left: 3px solid #06cf9c; background: rgba(0,0,0,0.05); border-radius: 6px; padding: 4px 7px; margin-bottom: 5px; font-size: 0.68rem; line-height: 1.3; }
+  .quote .qx { display: flex; flex-direction: column; min-width: 0; }
+  .quote .qn { font-weight: 600; color: #06a37f; }
+  .quote .qt { color: var(--wa-sub); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .quote img { width: 34px; height: 26px; object-fit: cover; border-radius: 3px; margin-left: auto; flex: none; }
+  .tg-app .quote { border-left-color: var(--tg-link); }
+  .tg-app .quote .qn { color: var(--tg-link); }
+  .tg-app .quote .qt { color: var(--tg-sub); }
   .tg-app .b { color: var(--tg-text); border-radius: 13px; }
   .tg-app .b.inb { background: var(--tg-in); border-bottom-left-radius: 4px; }
   .tg-app .b.outb { background: var(--tg-out); border-bottom-right-radius: 4px; }
@@ -431,7 +442,6 @@
   @media (max-width: 939px) {
     .frame { width: min(300px, 45vw); }
     .screen { height: 540px; }
-    .controls { justify-content: center; }
   }
   @media (max-width: 560px) {
     .frame { width: min(320px, 86vw); }
@@ -443,7 +453,7 @@
   <div class="head">
     <span class="eyebrow">See it work</span>
     <h1 class="title">The same flow on WhatsApp <em style="font-style:normal;color:var(--muted)">&amp;</em> Telegram.</h1>
-    <p class="lede"><b>No new app to install.</b> The Rizely AI agent already lives inside the WhatsApp and Telegram you use every day — snap a card and watch it become a followed-up lead.</p>
+    <p class="lede"><b>No new app to install.</b> The Rizely agent already lives inside the WhatsApp and Telegram you use every day — snap a card and watch it become a followed-up lead.</p>
   </div>
 
   <div class="demo">
@@ -451,22 +461,22 @@
       <ol class="steps" id="steps">
         <li class="step is-active" data-tour="1">
           <span class="s-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z"/><circle cx="12" cy="13" r="3.2"/></svg></span>
-          <span class="s-body"><span class="s-t">Snap the card</span><span class="s-d">Photograph any card right inside the chat — even Hindi, Gujarati or Marathi.</span></span>
+          <span class="s-body"><span class="s-t">Snap the card</span><span class="s-d">Send one card or several at once, right inside the chat — even Hindi, Gujarati or Marathi.</span></span>
           <span class="s-bar" aria-hidden="true"><i></i></span>
         </li>
         <li class="step" data-tour="2">
           <span class="s-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/><circle cx="12" cy="12" r="3.2"/></svg></span>
-          <span class="s-body"><span class="s-t">The AI reads it</span><span class="s-d">Name, company, role, phone &amp; email — read straight off the card.</span></span>
+          <span class="s-body"><span class="s-t">The AI reads it</span><span class="s-d">Name, company, designation, phone, email, website and QR code — read straight off the card.</span></span>
           <span class="s-bar" aria-hidden="true"><i></i></span>
         </li>
         <li class="step" data-tour="3">
           <span class="s-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h6l2 3h8v11a1 1 0 0 1-1 1H4z"/></svg></span>
-          <span class="s-body"><span class="s-t">Filed under the event</span><span class="s-d">The lead lands under the right show automatically — no folders, no fuss.</span></span>
+          <span class="s-body"><span class="s-t">Filed under the event</span><span class="s-d">The lead lands under the right show automatically — no folders, no expiry.</span></span>
           <span class="s-bar" aria-hidden="true"><i></i></span>
         </li>
         <li class="step" data-tour="4">
           <span class="s-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span>
-          <span class="s-body"><span class="s-t">Add a voice note</span><span class="s-d">Reply with a voice note — it's transcribed straight onto the contact.</span></span>
+          <span class="s-body"><span class="s-t">Add a voice note</span><span class="s-d">Reply to the card with a voice note — it's transcribed straight onto the contact.</span></span>
           <span class="s-bar" aria-hidden="true"><i></i></span>
         </li>
         <li class="step" data-tour="5">
@@ -490,6 +500,7 @@ Lead captured — a personalised follow-up is drafted for your approval.
     <!-- ===================== iPhone / WhatsApp ===================== -->
     <div class="device iphone">
       <div class="frame wa-app" data-app="whatsapp">
+        <div class="island"></div>
         <div class="screen">
           <div class="statusbar">
             <span>10:24</span>
@@ -511,45 +522,46 @@ Lead captured — a personalised follow-up is drafted for your approval.
           <div class="cbody" data-body>
             <span class="daypill">TODAY</span>
 
-            <div class="b inb" data-step="1" data-tour="1">
-              <div class="menu-q">👋 What would you like to do?</div>
-              <div class="menu">
-                <span class="mbtn pick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 9h4M7 13h7"/></svg> Scan a Business Card</span>
-                <span class="mbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg> Set an Event</span>
-                <span class="mbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 3 3 5-6"/></svg> View Dashboard</span>
+            <div class="b outb" data-step="1" data-tour="1">
+              <span class="msg">Hi</span>
+              <span class="meta">10:24<svg viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="tk"><path d="M1 6.5 4.2 10 11 2.5"/><path d="M7 10 13.8 2.5"/></svg></span>
+            </div>
+
+            <div class="b inb" data-step="2" data-tour="1" style="max-width:92%">
+              <div class="msg">
+                <p>Hi 👋 What would you like to do?</p>
+                <p>📸 Send a photo of a business card anytime — or several at once — and I'll scan it.</p>
+                <p>📁 Event: <b>Trade Fair 2026</b> — change it: <span class="link">app.rizely.net/l/…</span></p>
+                <p>🏠 Dashboard: <span class="link">app.rizely.net/l/…</span></p>
+                <p>🪙 Buy credits: <span class="link">app.rizely.net/l/…</span></p>
+                <p>⚙️ Settings: <span class="link">app.rizely.net/l/…</span></p>
               </div>
               <span class="meta">10:24</span>
             </div>
 
-            <div class="b outb photo" data-step="2" data-tour="1">
+            <div class="b outb photo" data-step="3" data-tour="1">
               <img src="./card_wa.jpg" alt="Photo of Meera Desai's business card, Desai Spice Traders (example)" />
               <span class="pmeta">10:24<svg viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="tk"><path d="M1 6.5 4.2 10 11 2.5"/><path d="M7 10 13.8 2.5"/></svg></span>
             </div>
 
-            <div class="b inb" data-step="3" data-tour="2">
-              <span class="proc"><span class="spin"></span> Got it — processing your card now…</span>
-            </div>
-
             <div class="b inb" data-step="4" data-tour="2" style="max-width:92%">
-              <div class="ex-head"><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span> Card read <span class="tag">Hindi + English</span></div>
-              <div class="frow" data-f="1"><span class="k">Name</span><span class="v">Meera Desai</span></div>
-              <div class="frow" data-f="2"><span class="k">Business</span><span class="v">Desai Spice Traders</span></div>
-              <div class="frow" data-f="3"><span class="k">Role</span><span class="v">Founder</span></div>
-              <div class="frow" data-f="4"><span class="k">Email</span><span class="v link">meera@example.com</span></div>
-              <div class="frow" data-f="5"><span class="k">Phone</span><span class="v link">+91 90000 12345</span></div>
+              <div class="quote"><span class="qx"><span class="qn">You</span><span class="qt">📷 Photo</span></span><img src="./card_wa.jpg" alt="" /></div>
+              <div class="msg">
+                <p>Name: <b>Meera Desai</b><br>Business: <b>Desai Spice Traders</b><br>Designation: <b>Founder</b><br>Email: <span class="link">meera@example.com</span><br>Website: <span class="link">www.example.com</span><br>Contact: <span class="link"><b>+91 90000 12345</b></span><br>QR code: <span class="link">drive.google.com/…</span></p>
+              </div>
               <span class="meta">10:24</span>
             </div>
 
             <div class="b inb" data-step="5" data-tour="3" style="max-width:92%">
-              <div class="ccard">
-                <div class="top"><span class="ca">MD</span><span class="cn">Meera Desai</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span></div>
-                <div class="row2"><span>Message</span><span>Add contact</span></div>
+              <div class="msg">
+                <p>📁 Added to <b>Trade Fair 2026</b> — no expiry</p>
+                <p>🎙️ Reply to this message with a voice note to add notes. Send another photo anytime.</p>
               </div>
-              <div class="added" style="margin-top:7px"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h6l2 3h8v11a1 1 0 0 1-1 1H4z"/></svg></span> Added to <b>Trade Fair 2026</b></div>
               <span class="meta">10:24</span>
             </div>
 
             <div class="b outb" data-step="6" data-tour="4">
+              <div class="quote"><span class="qx"><span class="qn">Rizely</span><span class="qt">Name: Meera Desai · Desai Spice Traders…</span></span></div>
               <div class="voice">
                 <span class="pl"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
                 <span class="wave" aria-hidden="true"><i style="height:5px"></i><i style="height:9px"></i><i style="height:14px"></i><i style="height:8px"></i><i style="height:17px"></i><i style="height:11px"></i><i style="height:6px"></i><i style="height:13px"></i><i style="height:9px"></i><i style="height:16px"></i><i style="height:7px"></i><i style="height:12px"></i><i style="height:5px"></i><i style="height:10px"></i></span>
@@ -559,7 +571,7 @@ Lead captured — a personalised follow-up is drafted for your approval.
             </div>
 
             <div class="b inb" data-step="7" data-tour="4">
-              <span class="added"><span class="ck" style="color:#1fa855;display:inline-flex"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span> <b>Transcript successfully created</b></span>
+              <span class="msg">Transcript successfully created ✅</span>
               <span class="meta">10:25</span>
             </div>
 
@@ -581,8 +593,9 @@ Lead captured — a personalised follow-up is drafted for your approval.
     </div>
 
     <!-- ===================== Samsung / Telegram ===================== -->
-    <div class="device iphone">
+    <div class="device samsung">
       <div class="frame tg-app" data-app="telegram">
+        <div class="punch"></div>
         <div class="screen">
           <div class="statusbar">
             <span>10:24</span>
@@ -604,45 +617,46 @@ Lead captured — a personalised follow-up is drafted for your approval.
           <div class="cbody" data-body>
             <span class="daypill">TODAY</span>
 
-            <div class="b inb" data-step="1" data-tour="1">
-              <div class="menu-q">👋 What would you like to do?</div>
-              <div class="menu">
-                <span class="mbtn pick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 9h4M7 13h7"/></svg> Scan a Business Card</span>
-                <span class="mbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg> Set an Event</span>
-                <span class="mbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 3 3 5-6"/></svg> View Dashboard</span>
+            <div class="b outb" data-step="1" data-tour="1">
+              <span class="msg">Hi</span>
+              <span class="meta">10:24<svg viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="tk"><path d="M1 6.5 4.2 10 11 2.5"/><path d="M7 10 13.8 2.5"/></svg></span>
+            </div>
+
+            <div class="b inb" data-step="2" data-tour="1" style="max-width:92%">
+              <div class="msg">
+                <p>Hi 👋 What would you like to do?</p>
+                <p>📸 Send a photo of a business card anytime — or several at once — and I'll scan it.</p>
+                <p>📁 Event: <b>Home Expo 2026</b> — change it: <span class="link">app.rizely.net/l/…</span></p>
+                <p>🏠 Dashboard: <span class="link">app.rizely.net/l/…</span></p>
+                <p>🪙 Buy credits: <span class="link">app.rizely.net/l/…</span></p>
+                <p>⚙️ Settings: <span class="link">app.rizely.net/l/…</span></p>
               </div>
               <span class="meta">10:24</span>
             </div>
 
-            <div class="b outb photo" data-step="2" data-tour="1">
+            <div class="b outb photo" data-step="3" data-tour="1">
               <img src="./card_tg.jpg" alt="Photo of Arjun Mehta's business card, Mehta Furnishings (example)" />
               <span class="pmeta">10:24<svg viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="tk"><path d="M1 6.5 4.2 10 11 2.5"/><path d="M7 10 13.8 2.5"/></svg></span>
             </div>
 
-            <div class="b inb" data-step="3" data-tour="2">
-              <span class="proc"><span class="spin"></span> Got it — processing your card now…</span>
-            </div>
-
             <div class="b inb" data-step="4" data-tour="2" style="max-width:92%">
-              <div class="ex-head"><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span> Card read <span class="tag">English</span></div>
-              <div class="frow" data-f="1"><span class="k">Name</span><span class="v">Arjun Mehta</span></div>
-              <div class="frow" data-f="2"><span class="k">Business</span><span class="v">Mehta Furnishings</span></div>
-              <div class="frow" data-f="3"><span class="k">Role</span><span class="v">Sales Head</span></div>
-              <div class="frow" data-f="4"><span class="k">Email</span><span class="v link">arjun@example.com</span></div>
-              <div class="frow" data-f="5"><span class="k">Phone</span><span class="v link">+91 90000 67890</span></div>
+              <div class="quote"><span class="qx"><span class="qn">You</span><span class="qt">📷 Photo</span></span><img src="./card_tg.jpg" alt="" /></div>
+              <div class="msg">
+                <p>Name: <b>Arjun Mehta</b><br>Business: <b>Mehta Furnishings</b><br>Designation: <b>Sales Head</b><br>Email: <span class="link">arjun@example.com</span><br>Website: <span class="link">www.example.com</span><br>Contact: <span class="link"><b>+91 90000 67890</b></span><br>QR code: <span class="link">drive.google.com/…</span></p>
+              </div>
               <span class="meta">10:24</span>
             </div>
 
             <div class="b inb" data-step="5" data-tour="3" style="max-width:92%">
-              <div class="ccard">
-                <div class="top"><span class="ca">AM</span><span class="cn">Arjun Mehta</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span></div>
-                <div class="row2"><span>Message</span><span>Add contact</span></div>
+              <div class="msg">
+                <p>📁 Added to <b>Home Expo 2026</b> — no expiry</p>
+                <p>🎙️ Reply to this message with a voice note to add notes. Send another photo anytime.</p>
               </div>
-              <div class="added" style="margin-top:7px"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h6l2 3h8v11a1 1 0 0 1-1 1H4z"/></svg></span> Added to <b>Home Expo 2026</b></div>
               <span class="meta">10:24</span>
             </div>
 
             <div class="b outb" data-step="6" data-tour="4">
+              <div class="quote"><span class="qx"><span class="qn">Rizely</span><span class="qt">Name: Arjun Mehta · Mehta Furnishings…</span></span></div>
               <div class="voice">
                 <span class="pl"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
                 <span class="wave" aria-hidden="true"><i style="height:5px"></i><i style="height:9px"></i><i style="height:14px"></i><i style="height:8px"></i><i style="height:17px"></i><i style="height:11px"></i><i style="height:6px"></i><i style="height:13px"></i><i style="height:9px"></i><i style="height:16px"></i><i style="height:7px"></i><i style="height:12px"></i><i style="height:5px"></i><i style="height:10px"></i></span>
@@ -653,7 +667,7 @@ Lead captured — a personalised follow-up is drafted for your approval.
             </div>
 
             <div class="b inb" data-step="7" data-tour="4">
-              <span class="added"><span class="ck" style="color:#1fa855;display:inline-flex"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span> <b>Transcript successfully created</b></span>
+              <span class="msg">Transcript successfully created ✅</span>
               <span class="meta">10:25</span>
             </div>
 
