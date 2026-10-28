@@ -160,7 +160,7 @@ export default function Pricing() {
                       /year
                     </span>
                   </div>
-                  <p className="mt-1 text-xs text-muted-foreground/80">
+                  <p className="mt-1 text-xs text-muted-foreground">
                     billed annually · [PRICING PROPOSED]
                   </p>
                 </div>
@@ -179,7 +179,7 @@ export default function Pricing() {
                   ))}
                 </ul>
                 {/* Seats and allowances are as unconfirmed as the price (W-33), so the marker covers them too. */}
-                <p className="mt-4 text-xs text-muted-foreground/80">
+                <p className="mt-4 text-xs text-muted-foreground">
                   Plan details are proposed and may change.
                 </p>
               </CardContent>
@@ -217,7 +217,7 @@ export default function Pricing() {
             </span>
             <span className="ml-1 text-sm text-muted-foreground">/event</span>
           </div>
-          <p className="mt-1 text-xs text-muted-foreground/80">
+          <p className="mt-1 text-xs text-muted-foreground">
             5 seats · 750 scans · 750 follow-ups · 30-day window · [PRICING PROPOSED]
           </p>
           <Button asChild variant="outline" className="mt-4 h-11 w-full">
@@ -237,7 +237,7 @@ export default function Pricing() {
             <span className="ml-1 text-sm text-muted-foreground" data-price="inr">incl. GST</span>
             <span className="ml-1 text-sm text-muted-foreground" data-price="usd">· ships within India</span>
           </div>
-          <p className="mt-1 text-xs text-muted-foreground/80">
+          <p className="mt-1 text-xs text-muted-foreground">
             102 designs · packs down to ₹509 a card · free shipping over ₹999
           </p>
           <Button asChild variant="outline" className="mt-4 h-11 w-full">

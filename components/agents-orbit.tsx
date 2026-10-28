@@ -49,7 +49,7 @@ const agents: Agent[] = [
 ];
 
 const statusStyles: Record<Status, string> = {
-  live: "bg-brand-teal/15 text-brand-teal border-brand-teal/30",
+  live: "bg-brand-teal/15 text-brand-teal-text border-brand-teal/30",
   roadmap: "bg-muted text-muted-foreground border-border",
 };
 
@@ -158,7 +158,7 @@ export default function AgentsOrbit() {
         transition={{ duration: 0.6, type: "spring", bounce: 0 }}
         className="flex flex-col gap-3 text-center mb-14 max-w-2xl mx-auto"
       >
-        <span className="mx-auto w-fit text-xs font-semibold uppercase tracking-widest text-primary">
+        <span className="mx-auto w-fit text-xs font-semibold uppercase tracking-widest text-primary-text">
           The hive
         </span>
         <h2 className="text-3xl font-heading font-bold sm:text-4xl tracking-tight">

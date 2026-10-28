@@ -74,7 +74,7 @@ export default function ThreeLayers() {
         transition={{ duration: 0.6, type: "spring", bounce: 0 }}
         className="flex flex-col gap-3 text-center mb-12 max-w-2xl mx-auto"
       >
-        <span className="mx-auto w-fit text-xs font-semibold uppercase tracking-widest text-primary">
+        <span className="mx-auto w-fit text-xs font-semibold uppercase tracking-widest text-primary-text">
           Three layers
         </span>
         <h2 className="text-3xl font-heading font-bold sm:text-4xl tracking-tight">
@@ -102,7 +102,7 @@ export default function ThreeLayers() {
                 <div className="grid size-11 place-items-center rounded-xl bg-sunrise text-white shadow-[0_0_30px_-8px_rgba(240,81,0,0.55)]">
                   <Icon aria-hidden="true" className="size-5" />
                 </div>
-                <span className="font-heading text-2xl font-bold text-muted-foreground/40 tabular-nums">
+                <span className="font-heading text-2xl font-bold text-muted-foreground/60 tabular-nums">
                   {layer.n}
                 </span>
               </div>
@@ -121,7 +121,7 @@ export default function ThreeLayers() {
                     {...(layer.cta.external
                       ? { target: "_blank", rel: "noopener noreferrer" }
                       : {})}
-                    className="inline-flex min-h-11 items-center gap-1 text-sm font-medium text-primary transition-colors hover:text-brand-orange"
+                    className="inline-flex min-h-11 items-center gap-1 text-sm font-medium text-primary-text transition-colors hover:text-brand-orange"
                   >
                     {layer.cta.label}
                     <span aria-hidden="true">→</span>

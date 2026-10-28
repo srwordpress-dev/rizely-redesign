@@ -39,7 +39,7 @@ export default function CardToAgent() {
         className="mx-auto max-w-4xl rounded-2xl border border-border bg-card/40 p-8 sm:p-10"
       >
         <div className="max-w-2xl">
-          <span className="w-fit text-xs font-semibold uppercase tracking-widest text-primary">
+          <span className="w-fit text-xs font-semibold uppercase tracking-widest text-primary-text">
             Already have the card?
           </span>
           <h2 className="mt-3 text-2xl font-heading font-bold sm:text-3xl tracking-tight">

@@ -54,7 +54,7 @@ export default function Personas() {
         transition={{ duration: 0.6, type: "spring", bounce: 0 }}
         className="flex flex-col gap-3 text-center mb-14 max-w-2xl mx-auto"
       >
-        <span className="mx-auto w-fit text-xs font-semibold uppercase tracking-widest text-primary">
+        <span className="mx-auto w-fit text-xs font-semibold uppercase tracking-widest text-primary-text">
           Use cases
         </span>
         <h2 className="text-3xl font-heading font-bold sm:text-4xl tracking-tight">

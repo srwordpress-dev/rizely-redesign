@@ -59,7 +59,7 @@ export default function Connect() {
         transition={{ duration: 0.6, type: "spring", bounce: 0 }}
         className="flex flex-col gap-3 text-center mb-14 max-w-2xl mx-auto"
       >
-        <span className="mx-auto w-fit text-xs font-semibold uppercase tracking-widest text-primary">
+        <span className="mx-auto w-fit text-xs font-semibold uppercase tracking-widest text-primary-text">
           Connect
         </span>
         <h2 className="text-3xl font-heading font-bold sm:text-4xl tracking-tight">
@@ -102,7 +102,7 @@ export default function Connect() {
           className="rounded-2xl border border-brand-teal/30 bg-brand-teal/5 p-5 flex flex-col justify-between"
         >
           <div>
-            <span className="inline-block rounded-full border border-brand-teal/30 bg-brand-teal/15 px-2 py-0.5 text-[11px] font-medium text-brand-teal mb-3">
+            <span className="inline-block rounded-full border border-brand-teal/30 bg-brand-teal/15 px-2 py-0.5 text-[11px] font-medium text-brand-teal-text mb-3">
               Live on Claude
             </span>
             <p className="text-sm text-muted-foreground leading-relaxed">

@@ -67,7 +67,7 @@ export default function Proof() {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="rounded-2xl border-2 border-primary/40 bg-primary/5 p-6 sm:p-8"
         >
-          <h3 className="mb-5 text-sm font-semibold uppercase tracking-widest text-primary">
+          <h3 className="mb-5 text-sm font-semibold uppercase tracking-widest text-primary-text">
             With Rizely
           </h3>
           <ul className="space-y-4">

@@ -26,6 +26,8 @@
   --color-brand-amber: #f99c00;
   --color-brand-amber-hi: #fcbb00;
   --color-brand-teal: #009588;
+  /* Teal as small text (the "Live" badges): same hue, lighter, Lc 60 on its badge. */
+  --color-brand-teal-text: #53c7b9;
 }
 
 @layer utilities {
@@ -60,6 +62,8 @@
   --popover-foreground: #171717;
   --primary: #c2703f; /* terracotta */
   --primary-foreground: #ffffff;
+  --primary-text: #a3532a; /* terracotta as text on light (not the default render) */
+  --primary-solid: #b1602f;
   --secondary: #f5f5f5;
   --secondary-foreground: #171717;
   --muted: #f5f5f5;
@@ -89,12 +93,19 @@
   --card-foreground: #ededed;
   --popover: #161311;
   --popover-foreground: #ededed;
-  --primary: #c2703f; /* terracotta — stays the CTA colour */
+  --primary: #c2703f; /* terracotta — icons, borders, accents */
   --primary-foreground: #ffffff;
+  /* Terracotta as small text (eyebrows, text links): same hue, lighter. #c2703f
+     measured APCA Lc 37 on the page; this is Lc 60.5 (WCAG 8.8). */
+  --primary-text: #f49e6d;
+  /* Terracotta as a button fill under white text: #c2703f was WCAG 3.7:1, this is 4.58:1. */
+  --primary-solid: #b1602f;
   --secondary: #221d19;
   --secondary-foreground: #ededed;
   --muted: #201b18;
-  --muted-foreground: #a6a09b;
+  /* Secondary text. #a6a09b measured APCA Lc 51 on the page and cards, under the
+     body-text minimum of 75; this is Lc 76 (WCAG 10.9), same warm hue. */
+  --muted-foreground: #d4cec9;
   --accent: #241c16; /* warm tint for hover surfaces */
   --accent-foreground: #ffffff;
   --destructive: #ff5a4d;
@@ -117,6 +128,8 @@
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+  --color-primary-text: var(--primary-text);
+  --color-primary-solid: var(--primary-solid);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
@@ -206,7 +219,8 @@
    button people actually click. Inner top-highlight + a motion-gated hover sheen. */
 .cta-sunrise {
   /* terracotta -> orange (kept out of amber so white label stays legible). */
-  background-image: linear-gradient(120deg, #a85a2e 0%, #c2703f 42%, #f05100 100%);
+  /* Every stop keeps white labels at WCAG AA: #c2703f and #f05100 were 3.7 and 3.57:1. */
+  background-image: linear-gradient(120deg, #a85a2e 0%, #b1602f 42%, #db3c00 100%);
   color: #fff;
   position: relative;
   overflow: hidden;
