@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { CreditCard, Smartphone, Bot } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { WHATSAPP_URL, SHOP_URL } from "@/lib/site";
+import { WHATSAPP_URL, SHOP_URL, DASHBOARD_URL } from "@/lib/site";
 
 /*
   The three shipped layers (PRD v4 D1). This section owns the word "layers";
@@ -45,9 +45,11 @@ const layers: Layer[] = [
     icon: Smartphone,
     title: "The profile",
     body: "Where the tap lands: your name, company, what you do, and every way to reach you — phone, email, WhatsApp, website — with one button to save you straight into their contacts. It comes free with the card.",
-    // TODO(profile): link here once profile.rizely.net is fixed — see
-    // workstreams/08-website/profile-rizely-audit/FINDINGS-public.md
+    // TODO(profile): link to the public profile page once profile.rizely.net is
+    // fixed — see workstreams/08-website/profile-rizely-audit/FINDINGS-public.md.
+    // The CTA below goes to the dashboard (app.rizely.net), not the profile site.
     meta: "Included free with every card",
+    cta: { label: "Edit your profile", href: `${DASHBOARD_URL}/login`, external: true },
   },
   {
     n: "03",
