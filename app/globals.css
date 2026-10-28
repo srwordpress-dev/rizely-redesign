@@ -462,6 +462,51 @@ details[open] > summary .faq-chevron {
 .hover-card:not([data-slot="card"]) {
   background-color: color-mix(in oklab, var(--card) 60%, transparent);
 }
+/*
+  "Works where you already are" chips (components/partners.tsx). Not links, so no
+  lift: at rest every icon is the same muted grey; hover warms the ring, brightens
+  the label, and fades the icon into its brand colour (--brand, set per chip) with
+  a small 1.1 scale. Touch screens have no hover, so they show brand colours at rest.
+*/
+.partner-chip {
+  box-shadow: 0 0 0 1px oklch(1 0 0 / 0.08);
+  background-color: color-mix(in oklab, var(--card) 40%, transparent);
+  transition:
+    box-shadow 200ms ease,
+    background-color 200ms ease,
+    color 200ms ease;
+}
+.partner-chip .partner-icon {
+  color: var(--muted-foreground);
+  transition:
+    color 200ms ease,
+    scale 200ms var(--ease-out);
+}
+@media (hover: none) {
+  .partner-chip .partner-icon {
+    color: var(--brand);
+  }
+}
+@media (hover: hover) and (pointer: fine) {
+  .partner-chip:hover {
+    box-shadow: 0 0 0 1px color-mix(in oklab, var(--primary) 45%, var(--border));
+    background-color: color-mix(in oklab, var(--card) 80%, transparent);
+    color: var(--foreground);
+  }
+  .partner-chip:hover .partner-icon {
+    color: var(--brand);
+    scale: 1.1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .partner-chip .partner-icon {
+    transition-property: color;
+  }
+  .partner-chip:hover .partner-icon {
+    scale: none;
+  }
+}
+
 @media (hover: hover) and (pointer: fine) {
   .hover-card:hover {
     box-shadow: 0 0 0 1px color-mix(in oklab, var(--primary) 45%, var(--border));
