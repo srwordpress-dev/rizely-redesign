@@ -56,11 +56,12 @@ as recognisable logos inside the integrations row and the chat/scanner mockups �
 ## Architecture of the 3 demos (important)
 Each demo component is **auto-generated** — do not hand-edit the `.tsx`. Instead:
 
-> ⚠️ **27 Oct: the sources have drifted.** `components/chat-demo.tsx` and `scan-lead.tsx` were edited by hand
-> after their last build, so they no longer match `demo-src/*.src.html` (the colours and the intro line differ).
-> Re-running `build-demos.js` today would silently undo that work. Before the next rebuild, copy the hand edits
-> back into the `.src.html` files and confirm the regenerated `.tsx` diff contains only your change. On Windows,
-> make sure the `.src.html` files have LF line endings first, or the build bakes `\r\n` into every string.
+> **28 Oct: `chat-demo` is back in sync.** Its six hand edits were copied into `chat-demo.src.html`, and a rebuild
+> from source reproduces `components/chat-demo.tsx` exactly. Edit the `.src.html` and re-run the build.
+> `walkthrough.tsx` has still drifted from its source (it is not used on any page), so restore it with
+> `git checkout -- components/walkthrough.tsx` after a rebuild. On Windows, make sure the `.src.html` files have
+> LF line endings first, or the build bakes `\r\n` into every string (`scan-lead.src.html` is CRLF in a Windows
+> checkout, which is why a rebuild shows a noisy `scan-lead.tsx` diff; restore it the same way).
 - **Edit the source HTML** in `demo-src/`: `chat-demo.src.html`, `scan-lead.src.html`, `walkthrough.src.html`
   (self-contained: `<style>` + markup + `<script>`, Google-Fonts only, one embedded card photo in scan-lead).
 - **Regenerate:** `node demo-src/build-demos.js` — this scopes each demo's CSS (chat under `.cpc-chat`, walkthrough

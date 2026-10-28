@@ -411,6 +411,11 @@ Two things already decided, so you do not need to re-open them:
 - **Contrast pass:** secondary text is `#d4cec9`, accent text `#f49e6d`, and button fills are
   darker (`#b1602f`, gradient ending `#db3c00`) so white labels pass WCAG AA. Values and
   measurements are in comments in `app/globals.css`.
+- **The chat demo follows the real bot** (screenshots 28 Oct): text menu, read-back with
+  website and QR code, "no expiry", "several at once", voice-note transcript. It still ends on
+  **"Follow-up drafted"**, at Dev's request, although the agent does not send follow-ups today.
+  The hero says "An agent that follows up" too. Ankush to decide whether the page may show
+  follow-ups before they ship. The QR line also contradicts `01` §4 ("does not scan QR codes").
 
 ---
 
