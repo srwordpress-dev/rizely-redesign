@@ -51,7 +51,9 @@ export default function WhyRizely() {
           </p>
         </motion.div>
 
-        <div className="grid gap-5 sm:grid-cols-2 max-w-4xl mx-auto">
+        {/* auto-rows-fr: every row is as tall as the tallest card, so all four
+            cards are the same size at every width. Stacked like Three Layers. */}
+        <div className="grid gap-5 sm:grid-cols-2 auto-rows-fr max-w-4xl mx-auto">
           {points.map((p, index) => (
             <motion.div
               key={p.title}
@@ -59,15 +61,18 @@ export default function WhyRizely() {
               whileInView={{ y: 0, opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.08 }}
-              className="hover-card flex gap-4 rounded-2xl border border-border bg-background/60 p-6"
+              className="hover-card flex flex-col gap-4 rounded-2xl border border-border bg-background/60 p-6"
             >
-              <div className="grid size-11 shrink-0 place-items-center rounded-xl bg-primary/10 border border-primary/20">
-                <p.icon aria-hidden="true" className="size-5 text-primary" />
+              <div className="flex items-center justify-between">
+                <div className="grid size-11 shrink-0 place-items-center rounded-xl bg-primary/10 border border-primary/20">
+                  <p.icon aria-hidden="true" className="size-5 text-primary" />
+                </div>
+                <span className="font-heading text-2xl font-bold text-muted-foreground/60 tabular-nums">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
               </div>
-              <div className="space-y-1.5">
-                <h3 className="font-heading font-semibold text-lg">{p.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{p.desc}</p>
-              </div>
+              <h3 className="font-heading font-semibold text-lg leading-snug">{p.title}</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">{p.desc}</p>
             </motion.div>
           ))}
         </div>
