@@ -192,8 +192,10 @@ export default function Pricing() {
                   variant={plan.isMostPop ? "default" : "outline"}
                   className={`w-full h-11 ${plan.isMostPop ? "cta-sunrise" : ""}`}
                 >
-                  <Link href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-                    Start free on WhatsApp
+                  {/* Site owner's call (28 Oct): plan CTAs go to the shop. The shop sells
+                      cards, not plans; plans still start on WhatsApp after the free scans. */}
+                  <Link href={SHOP_URL} target="_blank" rel="noopener noreferrer">
+                    Shop now
                   </Link>
                 </Button>
               </CardFooter>
