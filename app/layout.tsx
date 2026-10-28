@@ -62,7 +62,11 @@ export default function RootLayout({
       className="dark"
       data-currency="usd"
     >
-      <head>
+      <body className={`${jakarta.variable} ${inter.variable} antialiased`}>
+        {/* These sit at the top of <body>, not in <head>: Netlify injects an HTML comment into
+            <head> on some sites, and React then finds that comment where it expected this script,
+            fails hydration (#418) and re-renders the document, which drops data-currency. At the
+            top of <body> they still run before any content paints. */}
         {/* Currency, decided before first paint so prices never shift or flash
             (PRD v4 §5). Precedence: the visitor's own choice > the Netlify edge
             function's geo read > this timezone guess > the USD default already
@@ -85,8 +89,6 @@ export default function RootLayout({
         <noscript>
           <style>{`[style*="opacity:0"]{opacity:1!important;transform:none!important}`}</style>
         </noscript>
-      </head>
-      <body className={`${jakarta.variable} ${inter.variable} antialiased`}>
         <StructuredData />
         <Providers>
           <NavBar />
