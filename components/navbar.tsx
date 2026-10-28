@@ -68,7 +68,7 @@ export default function NavBar() {
           </div>
 
           <Link href="/" aria-label="Rizely home">
-            <RizelyLogo />
+            <RizelyLogo priority />
           </Link>
 
           <div className="hidden sm:flex items-center space-x-6">

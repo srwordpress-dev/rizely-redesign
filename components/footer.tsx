@@ -53,7 +53,7 @@ const Footer = () => {
         <div className="grid gap-8 sm:grid-cols-2 sm:gap-10 lg:grid-cols-3 pt-10">
           <div className="space-y-3">
             <Link href="/" aria-label="Rizely home" className="inline-flex">
-              <RizelyLogo markClassName="h-6 w-6" wordClassName="text-xl" />
+              <RizelyLogo className="h-6 w-auto" />
             </Link>
             <p className="max-w-xs text-sm leading-relaxed text-muted-foreground">
               An NFC card, a digital profile and an AI agent that follows up. Hand your details
