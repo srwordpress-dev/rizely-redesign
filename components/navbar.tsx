@@ -67,7 +67,14 @@ export default function NavBar() {
             </Button>
           </div>
 
-          <Link href="/" aria-label="Rizely home">
+          {/* On phones the hamburger sits left and the right slot is empty, so
+              justify-between left the logo 18px right of centre. Pin it to the
+              middle there; from sm up it rejoins the flex row. */}
+          <Link
+            href="/"
+            aria-label="Rizely home"
+            className="absolute left-1/2 -translate-x-1/2 sm:static sm:translate-x-0"
+          >
             <RizelyLogo priority />
           </Link>
 
