@@ -247,12 +247,21 @@
   outline-offset: 2px;
 }
 /* The shine is hover-only decoration: real pointers only, since a tap on touch
-   fires a false hover. */
+   fires a false hover. It plays once per hover: the transition lives only on the
+   :hover state, so leaving resets the band instantly instead of sweeping it back.
+   Orange (sunrise) buttons get a white band; outline buttons a warm terracotta
+   one that matches their border. */
 @media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
-  .cta-sunrise::after {
+  [data-slot="button"][data-variant="outline"] {
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-sunrise::after,
+  [data-slot="button"][data-variant="outline"]::after {
     content: "";
     position: absolute;
     inset: 0;
+    pointer-events: none;
     background: linear-gradient(
       120deg,
       transparent 30%,
@@ -260,10 +269,20 @@
       transparent 70%
     );
     transform: translateX(-130%);
-    transition: transform 600ms var(--ease-out);
+    transition: none;
   }
-  .cta-sunrise:hover::after {
+  [data-slot="button"][data-variant="outline"]::after {
+    background: linear-gradient(
+      120deg,
+      transparent 30%,
+      rgb(244 158 109 / 0.22) 50%,
+      transparent 70%
+    );
+  }
+  .cta-sunrise:hover::after,
+  [data-slot="button"][data-variant="outline"]:hover::after {
     transform: translateX(130%);
+    transition: transform 600ms var(--ease-out);
   }
 }
 
