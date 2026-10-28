@@ -121,10 +121,10 @@ export default function ThreeLayers() {
                     {...(layer.cta.external
                       ? { target: "_blank", rel: "noopener noreferrer" }
                       : {})}
-                    className="inline-flex min-h-11 items-center gap-1 text-sm font-medium text-primary-text transition-colors hover:text-brand-orange"
+                    className="cta-link inline-flex min-h-11 items-center gap-1 text-sm font-medium text-primary-text transition-colors hover:text-brand-orange"
                   >
                     {layer.cta.label}
-                    <span aria-hidden="true">→</span>
+                    <span aria-hidden="true" className="cta-link-arrow">→</span>
                   </Link>
                 )}
               </div>

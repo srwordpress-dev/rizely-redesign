@@ -230,14 +230,15 @@
      `scale` for the press feedback, and gives the glow its own 200ms. */
   transition:
     box-shadow 200ms ease,
-    scale 150ms var(--ease-out);
+    scale 150ms var(--ease-out),
+    translate 200ms var(--ease-out);
 }
 .cta-sunrise:hover {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22),
     0 10px 30px -8px rgba(240, 81, 0, 0.6);
 }
 .cta-sunrise:active {
-  transition-duration: 200ms, 100ms;
+  transition-duration: 200ms, 100ms, 100ms;
 }
 /* The glow above replaces the Button's box-shadow focus ring, so keyboard focus
    gets an outline ring instead: same colour as every other button's ring. */
@@ -439,6 +440,34 @@ details[open] > summary .faq-chevron {
   .post-card:hover .post-card-arrow,
   .post-card:hover .post-card-cover {
     transform: none;
+  }
+}
+
+/*
+  Buttons lift 2px on hover: feedback that they are clickable. Ghost (navbar menu)
+  and link-style buttons stay put, since a row of lifting nav links is noise.
+  Pressing drops it back while it scales to 0.96. Real pointers only; under
+  reduced motion only the colour changes remain.
+*/
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  [data-slot="button"]:not([data-variant="ghost"]):not([data-variant="link"]):hover {
+    translate: 0 -2px;
+  }
+  [data-slot="button"]:not([data-variant="ghost"]):not([data-variant="link"]):active {
+    translate: 0 0;
+  }
+}
+
+/*
+  Text links with a → (Three Layers): the arrow slides 3px, like the button arrows.
+*/
+.cta-link-arrow {
+  display: inline-block;
+  transition: transform 200ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .cta-link:hover .cta-link-arrow {
+    transform: translateX(3px);
   }
 }
 
