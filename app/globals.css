@@ -478,6 +478,21 @@ details[open] > summary .faq-chevron {
 }
 
 /*
+  Outline buttons flip to a peach fill on hover. The colour washes in over 350ms
+  with `ease` (colour changes read better slower than motion); the lift and the
+  press keep their own quick timings so the button still answers the cursor
+  immediately. Unlayered, so this replaces the Button's transition utilities.
+*/
+[data-slot="button"][data-variant="outline"] {
+  transition-property: color, background-color, border-color, box-shadow, scale, translate;
+  transition-duration: 350ms, 350ms, 350ms, 350ms, 150ms, 200ms;
+  transition-timing-function: ease, ease, ease, ease, var(--ease-out), var(--ease-out);
+}
+[data-slot="button"][data-variant="outline"]:active {
+  transition-duration: 350ms, 350ms, 350ms, 350ms, 100ms, 100ms;
+}
+
+/*
   Text links with a → (Three Layers): the arrow slides 3px, like the button arrows.
 */
 .cta-link-arrow {
