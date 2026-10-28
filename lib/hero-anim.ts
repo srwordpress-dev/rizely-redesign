@@ -36,31 +36,31 @@ export const T = {
 export type Safe = { cx: number; cy: number; w: number; h: number; dim: number };
 export type Mode = "stage" | "hero";
 
-/** On a phone the hero's text column fills the full width and nearly the full
-    height, so there is no clear air for the fields to meet behind it (W-01).
-    Instead the whole animation plays in its own band above the badge. CSS
-    pixels from the top of the hero; components/hero.tsx reserves exactly
-    `top + height` above the text, so the two must change together. */
+/** The hero's text column leaves no clear air for the fields to meet behind it:
+    on a phone it fills the width and nearly the full height (W-01), and on
+    desktop the profile and follow-ups ended up behind the feature chips at the
+    fold. So at every width the whole animation plays in its own band above the
+    badge. CSS pixels from the top of the hero; components/hero.tsx reserves
+    exactly `top + height` above the text at each breakpoint, so the two must
+    change together. On desktop the stage is capped at 960px and centred, so the
+    composition sits over the text column instead of at the screen edges. */
 export const NARROW_STAGE = { top: 8, height: 170 } as const;
-const narrowStageEnd = NARROW_STAGE.top + NARROW_STAGE.height;
+export const WIDE_STAGE = { top: 24, height: 260, maxWidth: 960 } as const;
+const stageFor = (W: number) =>
+  W < 768
+    ? { top: NARROW_STAGE.top, height: NARROW_STAGE.height, width: W }
+    : { top: WIDE_STAGE.top, height: WIDE_STAGE.height, width: Math.min(W, WIDE_STAGE.maxWidth) };
 
 /* "stage" is the prototype: one headline, lots of clear air.
    "hero" is the real page: a full text column — badge, headline, subhead,
-   two CTAs, microcopy — so the protected band is much taller and the settled
-   profile drops below the text instead of sitting behind it. */
-export const safeFor = (W: number, H: number, mode: Mode = "stage"): Safe =>
-  mode === "hero"
-    ? W < 768
-      ? // Everything below the stage band is text.
-        {
-          cx: 0.5,
-          cy: (narrowStageEnd + H) / 2 / H,
-          w: 1.02,
-          h: (H - narrowStageEnd) / H,
-          dim: 0.86,
-        }
-      : { cx: 0.5, cy: 0.42, w: 0.64, h: 0.68, dim: 0.72 }
-    : W < 768
+   two CTAs, microcopy — so the animation gets a band above it (stageFor). */
+export const safeFor = (W: number, H: number, mode: Mode = "stage"): Safe => {
+  if (mode === "hero") {
+    // Everything below the stage band is text.
+    const end = stageFor(W).top + stageFor(W).height;
+    return { cx: 0.5, cy: (end + H) / 2 / H, w: 1.02, h: (H - end) / H, dim: 0.86 };
+  }
+  return W < 768
     ? // On a phone the headline wraps to four lines and fills the width, so the
       // fields cannot meet behind it. The text moves to a band at the top and
       // the whole composition drops below it (see LAYOUT).
@@ -69,56 +69,40 @@ export const safeFor = (W: number, H: number, mode: Mode = "stage"): Safe =>
       // centred to match the hero's layout. Dimmed gently — 48px bold type on
       // near-black does not need much protecting.
       { cx: 0.5, cy: 0.5, w: 0.66, h: 0.3, dim: 0.6 };
+};
 
 /** Where each piece sits, as canvas fractions. Two layouts, one per breakpoint. */
 function layoutFor(W: number, H: number, mode: Mode) {
   const narrow = W < 768;
   if (mode === "hero") {
-    if (narrow) {
-      // The whole story plays inside NARROW_STAGE: card left, agent right, the
-      // tap in the middle, then card · profile · agent with the follow-ups
-      // lifting off above the agent. Laid out in pixels (the band is a fixed
-      // height) and converted to fractions of whatever the hero's height is.
-      const y = (px: number) => (NARROW_STAGE.top + px) / H;
-      const mid = NARROW_STAGE.height / 2;
-      return {
-        fieldY: y(mid),
-        cardX: 0.2,
-        agentX: 0.8,
-        nearCardX: 0.36,
-        nearAgentX: 0.64,
-        profile: [0.5, y(mid)] as const,
-        // Three-quarter size and a steep stagger, or at 320–375px the three
-        // overlap into one strip.
-        bubbles: [
-          [0.68, y(26)],
-          [0.8, y(17)],
-          [0.92, y(8)],
-        ] as const,
-        bubbleScale: 0.75,
-        arcY: [y(NARROW_STAGE.height - 6), y(6)] as const,
-        scatterY: [y(10), y(NARROW_STAGE.height - 10)] as const,
-      };
-    }
-    // Everything that must stay readable lives in the upper two thirds, so the
-    // profile and the follow-ups settle along the bottom edge.
+    // The whole story plays inside the stage band: card left, agent right, the
+    // tap in the middle, then card · profile · agent with the follow-ups
+    // lifting off above the agent. Laid out in pixels (the band is a fixed
+    // height) and converted to fractions of the canvas. Designed on the 170px
+    // phone band; on desktop the vertical offsets scale with the taller band and
+    // x is placed within the centred stage width.
+    const st = stageFor(W);
+    const k = st.height / NARROW_STAGE.height;
+    const y = (px: number) => (st.top + px * k) / H;
+    const x = (f: number) => ((W - st.width) / 2 + f * st.width) / W;
+    const mid = NARROW_STAGE.height / 2;
     return {
-      fieldY: 0.46,
-      // Far enough in that a full-width card is never clipped by the
-      // viewport edge: half the card is ~0.13W at the hero's scale.
-      cardX: 0.16,
-      agentX: 0.84,
-      nearCardX: 0.31,
-      nearAgentX: 0.69,
-      profile: [0.5, 0.86] as const,
+      fieldY: y(mid),
+      cardX: x(0.2),
+      agentX: x(0.8),
+      nearCardX: x(0.36),
+      nearAgentX: x(0.64),
+      profile: [0.5, y(mid)] as const,
+      // Three-quarter size and a steep stagger, or at 320–375px the three
+      // overlap into one strip.
       bubbles: [
-        [0.68, 0.93],
-        [0.78, 0.87],
-        [0.87, 0.8],
+        [x(0.68), y(26)],
+        [x(0.8), y(17)],
+        [x(0.92), y(8)],
       ] as const,
-      arcY: [0.98, 0.3] as const,
-      bubbleScale: 1,
-      scatterY: [0.12, 0.88] as const,
+      bubbleScale: 0.75,
+      arcY: [y(NARROW_STAGE.height - 6), y(6)] as const,
+      scatterY: [y(10), y(NARROW_STAGE.height - 10)] as const,
     };
   }
   return narrow
@@ -417,12 +401,14 @@ export function buildScene(
   const gap = density >= 0.7 ? 2 : 3; // line art needs tight sampling to read
   // Uniform scale off the design size, floored so the shapes stay readable on a
   // phone instead of shrinking into confetti.
-  // In the phone hero the band, not the canvas, sets the size: tall enough
-  // that the settled profile (320 design px) fits inside it, narrow enough
-  // that card · profile · agent sit side by side without touching.
+  // In the hero the band, not the canvas, sets the size: tall enough that the
+  // settled profile (320 design px) fits inside it, narrow enough that card ·
+  // profile · agent sit side by side without touching.
   const s =
-    mode === "hero" && W < 768
-      ? Math.min(W / 850, (NARROW_STAGE.height - 24) / 320)
+    mode === "hero"
+      ? // Desktop keeps ~30px clear above and below the shapes, off the navbar and
+        // the badge; the phone band is too short to spare more than 12px.
+        Math.min(stageFor(W).width / 850, (stageFor(W).height - (W < 768 ? 24 : 60)) / 320)
       : Math.max(Math.min(W / 1200, H / 620), W < 768 ? 0.46 : 0.3);
 
   const L = layoutFor(W, H, mode);
@@ -545,7 +531,8 @@ export function buildScene(
   // composition has to show all three layers, not just the profile.
   // The phone band has no room for the rising arc: packed into 170px the trail
   // reads as noise over the profile, so those particles go to the shapes.
-  const trails = !(mode === "hero" && W < 768);
+  // No rising-arc trail in the hero: the band is short and the text sits right below it.
+  const trails = mode !== "hero";
   const roleFor = (r: number, isAgent: boolean): Role => {
     if (isAgent) {
       if (r < 0.46) return 0;

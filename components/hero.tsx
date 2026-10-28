@@ -4,7 +4,7 @@ import { DASHBOARD_URL } from "@/lib/site";
 import { Check, LayoutDashboard } from "lucide-react";
 import CardCta from "@/components/card-cta";
 import HeroParticles from "@/components/hero-particles";
-import { NARROW_STAGE } from "@/lib/hero-anim";
+import { NARROW_STAGE, WIDE_STAGE } from "@/lib/hero-anim";
 
 /*
   The hero leads with the three layers — card, profile, agent — because all
@@ -36,14 +36,20 @@ export default function Hero() {
         <HeroParticles mode="hero" />
       </div>
 
-      {/* Below 768px the animation gets its own band above the text (W-01).
-          A container query, not md:, because the canvas switches layout on its
-          own width — the two must agree even when a scrollbar narrows it. */}
-      <section className="max-w-(--breakpoint-xl) mx-auto px-4 pt-0 pb-28 @min-[768px]:pt-28 md:pb-40 md:px-8 flex flex-col justify-center items-center">
+      {/* The animation plays in its own band above the text at every width
+          (W-01): 170px on phones, 260px from 768px up. Container queries, not
+          md:, because the canvas switches layout on its own width — the two
+          must agree even when a scrollbar narrows it. */}
+      <section className="max-w-(--breakpoint-xl) mx-auto px-4 pt-0 pb-28 md:pb-40 md:px-8 flex flex-col justify-center items-center">
         <div
           aria-hidden="true"
           className="w-full @min-[768px]:hidden"
           style={{ height: NARROW_STAGE.top + NARROW_STAGE.height }}
+        />
+        <div
+          aria-hidden="true"
+          className="w-full hidden @min-[768px]:block"
+          style={{ height: WIDE_STAGE.top + WIDE_STAGE.height }}
         />
         <div className="flex flex-col justify-center items-center space-y-6 max-w-3xl mx-auto text-center">
           <span className="w-fit text-xs sm:text-sm bg-card/80 backdrop-blur-sm px-3 py-1 border border-border rounded-full text-muted-foreground">
