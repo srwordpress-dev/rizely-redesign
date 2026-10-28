@@ -73,6 +73,11 @@ started. Logic is in `lib/hero-anim.ts` (scale factor at line 385, narrow branch
 > with a container query, so CSS and canvas switch at the same width). In the band: denser
 > sampling, no rising-arc trail (it read as noise), smaller staggered follow-up bubbles.
 > Desktop (≥768px) is unchanged.
+>
+> **28 Oct: desktop now uses the band too.** On desktop the profile and follow-ups settled
+> behind the feature chips at the fold. From 768px up the animation plays in a 260px band
+> (`WIDE_STAGE`), on a stage capped at 960px and centred over the text. Trade-off: on a
+> 1024×768 laptop the hero CTAs now sit just below the fold.
 > *Measured on a production build:* card forms → meets the agent with the ripple → card ·
 > profile · agent + three follow-ups, legible at 320 / 375 / 414 / 767. Reduced motion draws
 > the settled frame, zero rAF calls; canvas still `aria-hidden`. With the CPU throttled 6×:
@@ -368,6 +373,8 @@ W-01. `components/navbar.tsx` switches to the full desktop nav at `sm` (640px), 
 plus the CTA do not fit until roughly 900px. At 767 and 768px "Start free on WhatsApp" is cut
 off at the right edge. *Done when:* nothing in the nav is clipped at any width from 640 to
 1024px. Either keep the hamburger up to `lg`, or tighten the link spacing.
+> **28 Oct, worse than first noted:** between 640 and 768px the logo also shrinks to 0px wide
+> and disappears, and the CTA (now "Open your dashboard") pokes out to 752px. Still open.
 
 ---
 
@@ -386,6 +393,24 @@ Two things already decided, so you do not need to re-open them:
   The 2.0–2.6s headline reveal was dropped on purpose; see the comment at `components/hero.tsx:13`.
 - **The card does not sell on-page.** Every card CTA goes to `shop.rizely.net`. No checkout,
   no cart, no second price table to keep in sync.
+
+**Taken by Dev on 28 Oct, overriding the handoff. Ankush to confirm or reverse:**
+
+- **D-2, settled differently.** The hero's primary CTA is now *Open your dashboard*
+  (`app.rizely.net`) on screens ≥640px and *Start free on WhatsApp* on phones. *Get your card*
+  became a button that rotates through the Metal, PVC and Customised cards.
+- **The metal card is on the page** (the rotating hero CTA), against `01` §2 "PVC only",
+  because the shop sells it. See W-15.
+- **The Claude and OpenAI logos are in the "Works where you already are" strip.** The old
+  note said Anthropic's badge was not approved. OpenAI's mark is shown white, not purple.
+- **Plan CTAs (Solo, Team, Business) say "Shop now" and go to the shop.** The shop sells cards,
+  not plans, so a plan buyer finds no plan there. Plans still start on WhatsApp after the free
+  scans. Either a plan product on the shop or pointing these at the dashboard would fix it.
+- **The Three Layers profile card links to `app.rizely.net/login`** ("Edit your profile"). This
+  is the dashboard, not `profile.rizely.net`, so `01` §3 still holds.
+- **Contrast pass:** secondary text is `#d4cec9`, accent text `#f49e6d`, and button fills are
+  darker (`#b1602f`, gradient ending `#db3c00`) so white labels pass WCAG AA. Values and
+  measurements are in comments in `app/globals.css`.
 
 ---
 
