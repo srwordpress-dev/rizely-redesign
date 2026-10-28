@@ -374,7 +374,11 @@ plus the CTA do not fit until roughly 900px. At 767 and 768px "Start free on Wha
 off at the right edge. *Done when:* nothing in the nav is clipped at any width from 640 to
 1024px. Either keep the hamburger up to `lg`, or tighten the link spacing.
 > **28 Oct, worse than first noted:** between 640 and 768px the logo also shrinks to 0px wide
-> and disappears, and the CTA (now "Open your dashboard") pokes out to 752px. Still open.
+> and disappears, and the CTA (now "Open your dashboard") pokes out to 752px.
+> **Fixed in code, 28 Oct.** The hamburger menu now runs up to `lg` (1024px); the full row
+> starts there. The logo is `shrink-0`, so it can never be squeezed to 0px, and stays centred
+> below `lg`. The menu's CTA follows the hero: WhatsApp under 640px, the dashboard on tablets.
+> Checked at 320, 375, 639, 640, 700, 768, 900, 1023, 1024 and 1440px.
 
 ---
 

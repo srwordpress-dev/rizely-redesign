@@ -47,7 +47,7 @@ export default function NavBar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative flex justify-between items-center h-16">
-          <div className="flex sm:hidden">
+          <div className="flex lg:hidden">
             <Button
               variant="ghost"
               size="icon"
@@ -67,18 +67,21 @@ export default function NavBar() {
             </Button>
           </div>
 
-          {/* On phones the hamburger sits left and the right slot is empty, so
-              justify-between left the logo 18px right of centre. Pin it to the
-              middle there; from sm up it rejoins the flex row. */}
+          {/* Below lg the hamburger sits left and the right slot is empty, so
+              justify-between left the logo off centre. Pin it to the middle there;
+              from lg up it rejoins the flex row. shrink-0 so a crowded row can
+              never squeeze it to 0px (W-30). */}
           <Link
             href="/"
             aria-label="Rizely home"
-            className="absolute left-1/2 -translate-x-1/2 sm:static sm:translate-x-0"
+            className="absolute left-1/2 -translate-x-1/2 shrink-0 lg:static lg:translate-x-0"
           >
             <RizelyLogo priority />
           </Link>
 
-          <div className="hidden sm:flex items-center space-x-6">
+          {/* Logo + six links + the CTA need roughly 900px, so the full row starts at
+              lg (1024px); below that it is the hamburger menu (W-30). */}
+          <div className="hidden lg:flex items-center space-x-6">
             {menuItems.map((item) => (
               <Button key={item.name} asChild variant="ghost" size="sm">
                 <Link href={item.href}>{item.name}</Link>
@@ -87,7 +90,7 @@ export default function NavBar() {
           </div>
 
           <div className="flex items-center">
-            <Button asChild size="sm" className="hidden sm:flex">
+            <Button asChild size="sm" className="hidden lg:flex">
               <Link href={DASHBOARD_URL} target="_blank" rel="noopener noreferrer">
                 Open your dashboard
               </Link>
@@ -102,7 +105,7 @@ export default function NavBar() {
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="sm:hidden overflow-hidden"
+              className="lg:hidden overflow-hidden"
             >
               <div className="px-2 pt-2 pb-4 space-y-1">
                 {menuItems.map((item) => (
@@ -115,8 +118,9 @@ export default function NavBar() {
                     {item.name}
                   </Link>
                 ))}
-                {/* The menu only exists under 640px, where the CTA is WhatsApp (see hero.tsx). */}
-                <Button asChild size="sm" className="w-full mt-2">
+                {/* The menu shows below lg. Its CTA follows the hero (hero.tsx): WhatsApp on
+                    phones (under 640px), the dashboard on tablets. */}
+                <Button asChild size="sm" className="w-full mt-2 sm:hidden">
                   <Link
                     href={WHATSAPP_URL}
                     target="_blank"
@@ -124,6 +128,16 @@ export default function NavBar() {
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Start free on WhatsApp
+                  </Link>
+                </Button>
+                <Button asChild size="sm" className="w-full mt-2 hidden sm:flex">
+                  <Link
+                    href={DASHBOARD_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Open your dashboard
                   </Link>
                 </Button>
               </div>
@@ -144,7 +158,7 @@ export default function NavBar() {
             transition={{ duration: 0.3, ease: "easeInOut" }}
             onClick={() => setIsMenuOpen(false)}
             aria-hidden
-            className="sm:hidden fixed inset-x-0 top-16 bottom-0 z-40 bg-background/80 backdrop-blur-sm"
+            className="lg:hidden fixed inset-x-0 top-16 bottom-0 z-40 bg-background/80 backdrop-blur-sm"
           />
         )}
       </AnimatePresence>
