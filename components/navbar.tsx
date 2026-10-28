@@ -5,7 +5,7 @@ import { HamburgerMenuIcon, Cross1Icon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { DASHBOARD_URL } from "@/lib/site";
+import { DASHBOARD_URL, WHATSAPP_URL } from "@/lib/site";
 import { RizelyLogo } from "@/components/logo";
 
 // Absolute hrefs, not bare "#how": these render on /blogs and /privacy too,
@@ -108,14 +108,15 @@ export default function NavBar() {
                     {item.name}
                   </Link>
                 ))}
+                {/* The menu only exists under 640px, where the CTA is WhatsApp (see hero.tsx). */}
                 <Button asChild size="sm" className="w-full mt-2">
                   <Link
-                    href={DASHBOARD_URL}
+                    href={WHATSAPP_URL}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    Open your dashboard
+                    Start free on WhatsApp
                   </Link>
                 </Button>
               </div>

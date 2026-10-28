@@ -1,8 +1,9 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { DASHBOARD_URL } from "@/lib/site";
+import { DASHBOARD_URL, WHATSAPP_URL } from "@/lib/site";
 import { Check, LayoutDashboard } from "lucide-react";
 import CardCta from "@/components/card-cta";
+import { WhatsAppIcon } from "@/components/whatsapp-icon";
 import HeroParticles from "@/components/hero-particles";
 import { NARROW_STAGE, WIDE_STAGE } from "@/lib/hero-anim";
 
@@ -69,10 +70,23 @@ export default function Hero() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center gap-3 w-full justify-center pt-2">
+            {/* Phones (under 640px) start on WhatsApp, where the free scans run; wider
+                screens open the dashboard. Both are in the HTML and CSS shows one, so
+                there is no device sniffing and nothing to hydrate differently. */}
             <Button
               asChild
               size="lg"
-              className="cta-sunrise h-14 px-8 text-base sm:text-lg font-semibold w-full sm:w-auto"
+              className="cta-sunrise h-14 px-8 text-base font-semibold w-full sm:hidden"
+            >
+              <Link href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+                <WhatsAppIcon className="size-5" />
+                Start free on WhatsApp
+              </Link>
+            </Button>
+            <Button
+              asChild
+              size="lg"
+              className="cta-sunrise h-14 px-8 text-lg font-semibold hidden sm:inline-flex sm:w-auto"
             >
               <Link href={DASHBOARD_URL} target="_blank" rel="noopener noreferrer">
                 <LayoutDashboard aria-hidden="true" className="size-5" />
