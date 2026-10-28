@@ -48,6 +48,8 @@
 
 :root {
   --radius: 0.75rem;
+  /* Strong ease-out for UI motion (hover, press, reveal). Same curve as .post-card's --card-ease. */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 
   /* Light theme (kept correct; not the default render) */
   --background: #ffffff;
@@ -210,12 +212,22 @@
   overflow: hidden;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16),
     0 8px 24px -10px rgba(240, 81, 0, 0.5);
+  /* Unlayered, so this replaces the Button's transition utilities: it has to keep
+     `scale` for the press feedback, and gives the glow its own 200ms. */
+  transition:
+    box-shadow 200ms ease,
+    scale 150ms var(--ease-out);
 }
 .cta-sunrise:hover {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22),
     0 10px 30px -8px rgba(240, 81, 0, 0.6);
 }
-@media (prefers-reduced-motion: no-preference) {
+.cta-sunrise:active {
+  transition-duration: 200ms, 100ms;
+}
+/* The shine is hover-only decoration: real pointers only, since a tap on touch
+   fires a false hover. */
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
   .cta-sunrise::after {
     content: "";
     position: absolute;
@@ -227,7 +239,7 @@
       transparent 70%
     );
     transform: translateX(-130%);
-    transition: transform 0.6s ease;
+    transition: transform 600ms var(--ease-out);
   }
   .cta-sunrise:hover::after {
     transform: translateX(130%);
@@ -407,6 +419,38 @@ details[open] > summary .faq-chevron {
   .post-card:hover .post-card-arrow,
   .post-card:hover .post-card-cover {
     transform: none;
+  }
+}
+
+/*
+  A button's → arrow nudges forward on hover: feedback that the button takes you
+  somewhere. Same 3px / 200ms as the blog cards. Real pointers only; off under
+  reduced motion.
+*/
+[data-slot="button"] .lucide-arrow-right {
+  transition: transform 200ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  [data-slot="button"]:hover .lucide-arrow-right {
+    transform: translateX(3px);
+  }
+}
+
+/*
+  Homepage cards (layers, agents, pricing, personas…). They are not links, so
+  hover only warms the border and lifts the surface a shade: it shows which card
+  you are reading without promising a click. No transform, so nothing changes
+  under reduced motion.
+*/
+.hover-card {
+  transition:
+    border-color 200ms ease,
+    background-color 200ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .hover-card:hover {
+    border-color: color-mix(in oklab, var(--primary) 45%, var(--border));
+    background-color: color-mix(in oklab, var(--card) 80%, transparent);
   }
 }
 

@@ -75,7 +75,7 @@ export default function Personas() {
               whileInView={{ y: 0, opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.55, delay: index * 0.1 }}
-              className="flex flex-col rounded-2xl border border-border bg-card/40 p-6 sm:p-8"
+              className="hover-card flex flex-col rounded-2xl border border-border bg-card/40 p-6 sm:p-8"
             >
               <div className="flex items-center gap-3 mb-4">
                 <div className="grid size-11 shrink-0 place-items-center rounded-xl border border-primary/30 bg-primary/10 text-primary">

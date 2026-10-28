@@ -23,7 +23,13 @@ const label = (c: (typeof CARDS)[number]) => `${c.name} — from ${c.from}`;
 const STATIC_LABEL = `Choose your NFC card — from ${CARDS[1].from}`;
 
 export default function CardCta({ className = "" }: { className?: string }) {
-  const reduce = useReducedMotion();
+  // The server can't know the visitor's motion setting, so the first client render
+  // must match the server's (first card); the static label only takes over after
+  // mount. Reading useReducedMotion() straight into the render broke hydration.
+  const prefersReduced = useReducedMotion();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const reduce = mounted && prefersReduced;
   const [i, setI] = useState(0);
   const [paused, setPaused] = useState(false);
 

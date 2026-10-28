@@ -135,7 +135,7 @@ export default function Pricing() {
               className={`relative h-full rounded-2xl ${
                 plan.isMostPop
                   ? "border-2 border-primary bg-primary/5 shadow-lg"
-                  : "border border-border"
+                  : "hover-card border border-border"
               }`}
             >
               {plan.isMostPop && (
@@ -200,7 +200,7 @@ export default function Pricing() {
           not a yearly commitment. The card links out to Shopify; nothing is
           sold on this site (PRD v4 D2). */}
       <div className="mx-auto mt-6 grid max-w-5xl gap-4 sm:mt-8 sm:gap-6 md:grid-cols-2">
-        <div className="rounded-2xl border border-border bg-card/40 p-6">
+        <div className="hover-card rounded-2xl border border-border bg-card/40 p-6">
           <h3 className="font-heading text-lg font-semibold">Event Pass</h3>
           <p className="mt-1 text-sm text-muted-foreground">
             Running a booth? Pay for the show, not the year.
@@ -221,7 +221,7 @@ export default function Pricing() {
           </Button>
         </div>
 
-        <div className="rounded-2xl border border-border bg-card/40 p-6">
+        <div className="hover-card rounded-2xl border border-border bg-card/40 p-6">
           <h3 className="font-heading text-lg font-semibold">The NFC card</h3>
           <p className="mt-1 text-sm text-muted-foreground">
             A one-off purchase, not a plan. Your profile is included free.

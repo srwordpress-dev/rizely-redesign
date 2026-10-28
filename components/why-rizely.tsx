@@ -59,7 +59,7 @@ export default function WhyRizely() {
               whileInView={{ y: 0, opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.08 }}
-              className="flex gap-4 rounded-2xl border border-border bg-background/60 p-6"
+              className="hover-card flex gap-4 rounded-2xl border border-border bg-background/60 p-6"
             >
               <div className="grid size-11 shrink-0 place-items-center rounded-xl bg-primary/10 border border-primary/20">
                 <p.icon aria-hidden="true" className="size-5 text-primary" />

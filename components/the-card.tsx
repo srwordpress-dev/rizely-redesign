@@ -84,7 +84,7 @@ export default function TheCard() {
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.1, type: "spring", bounce: 0 }}
-          className="rounded-2xl border border-border bg-card/40 p-6 sm:p-8"
+          className="hover-card rounded-2xl border border-border bg-card/40 p-6 sm:p-8"
         >
           <h3 className="font-heading text-lg font-semibold">Buying for the booth</h3>
           <p className="mt-1 text-sm text-muted-foreground">

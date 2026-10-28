@@ -53,7 +53,7 @@ export default function HowItWorks() {
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: index * 0.1 }}
-            className="relative rounded-2xl border border-border bg-card/50 p-6 flex flex-col gap-4"
+            className="hover-card relative rounded-2xl border border-border bg-card/50 p-6 flex flex-col gap-4"
           >
             <div className="flex items-center justify-between">
               <div className="flex size-11 items-center justify-center rounded-xl bg-primary/10 border border-primary/20">

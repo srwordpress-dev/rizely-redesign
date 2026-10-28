@@ -206,7 +206,7 @@ export default function AgentsOrbit() {
                 className={`rounded-2xl border p-5 ${
                   agent.status === "live"
                     ? "border-primary/40 bg-primary/5"
-                    : "border-border bg-card/40"
+                    : "hover-card border-border bg-card/40"
                 }`}
               >
                 <div className="flex items-start gap-4">

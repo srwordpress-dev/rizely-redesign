@@ -94,7 +94,7 @@ export default function ThreeLayers() {
               whileInView={{ y: 0, opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.55, delay: index * 0.1 }}
-              className="relative rounded-2xl border border-border bg-card/40 p-6 flex flex-col gap-4"
+              className="hover-card relative rounded-2xl border border-border bg-card/40 p-6 flex flex-col gap-4"
             >
               <div className="flex items-center justify-between">
                 <div className="grid size-11 place-items-center rounded-xl bg-sunrise text-white shadow-[0_0_30px_-8px_rgba(240,81,0,0.55)]">
