@@ -116,7 +116,7 @@ export default function Connect() {
       </div>
 
       <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-10">
-        <Button asChild size="lg">
+        <Button asChild size="lg" className="cta-sunrise">
           <Link href="/connect">See how Connect works</Link>
         </Button>
         <Button asChild size="lg" variant="outline">

@@ -41,7 +41,7 @@ const Footer = () => {
             The live agent is on the job, your first 50 scans are free, and it works inside the
             WhatsApp you already have open. Try it on the cards from your last event.
           </p>
-          <Button asChild size="lg" className="h-12 px-6 text-base font-semibold">
+          <Button asChild size="lg" className="cta-sunrise h-12 px-6 text-base font-semibold">
             <Link href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
               Start free on WhatsApp
             </Link>

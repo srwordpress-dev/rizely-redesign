@@ -97,7 +97,7 @@ export default function Personas() {
               </div>
 
               <div className="mt-5 flex flex-wrap gap-3">
-                <Button asChild>
+                <Button asChild className="cta-sunrise">
                   <Link href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
                     {p.cta}
                   </Link>

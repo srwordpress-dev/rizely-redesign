@@ -225,6 +225,12 @@
 .cta-sunrise:active {
   transition-duration: 200ms, 100ms;
 }
+/* The glow above replaces the Button's box-shadow focus ring, so keyboard focus
+   gets an outline ring instead: same colour as every other button's ring. */
+.cta-sunrise:focus-visible {
+  outline: 3px solid color-mix(in oklab, var(--ring) 50%, transparent);
+  outline-offset: 2px;
+}
 /* The shine is hover-only decoration: real pointers only, since a tap on touch
    fires a false hover. */
 @media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
@@ -443,13 +449,22 @@ details[open] > summary .faq-chevron {
   under reduced motion.
 */
 .hover-card {
+  /* Depth from a faint white ring, not the brown hairline (better-ui: shadows
+     for elevation, borders for structure). */
+  border-color: transparent;
+  box-shadow: 0 0 0 1px oklch(1 0 0 / 0.08);
   transition:
-    border-color 200ms ease,
+    box-shadow 200ms ease,
     background-color 200ms ease;
+}
+/* Lift the 40–50% card fills a shade so the surface separates from the page.
+   The <Card> component already has a solid fill. */
+.hover-card:not([data-slot="card"]) {
+  background-color: color-mix(in oklab, var(--card) 60%, transparent);
 }
 @media (hover: hover) and (pointer: fine) {
   .hover-card:hover {
-    border-color: color-mix(in oklab, var(--primary) 45%, var(--border));
+    box-shadow: 0 0 0 1px color-mix(in oklab, var(--primary) 45%, var(--border));
     background-color: color-mix(in oklab, var(--card) 80%, transparent);
   }
 }

@@ -185,7 +185,13 @@ export default function Pricing() {
               </CardContent>
 
               <CardFooter className="p-4 pt-0 sm:p-6 sm:pt-0">
-                <Button asChild className="w-full cta-sunrise h-11" size="lg">
+                {/* One primary per view: only the recommended plan gets the sunrise CTA. */}
+                <Button
+                  asChild
+                  size="lg"
+                  variant={plan.isMostPop ? "default" : "outline"}
+                  className={`w-full h-11 ${plan.isMostPop ? "cta-sunrise" : ""}`}
+                >
                   <Link href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
                     Start free on WhatsApp
                   </Link>

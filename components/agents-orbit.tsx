@@ -240,7 +240,7 @@ export default function AgentsOrbit() {
           })}
 
           <div className="flex flex-col sm:flex-row gap-3 pt-2">
-            <Button asChild size="lg" className="w-full sm:w-auto">
+            <Button asChild size="lg" className="cta-sunrise w-full sm:w-auto">
               <Link href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
                 Put the live agent to work
               </Link>
