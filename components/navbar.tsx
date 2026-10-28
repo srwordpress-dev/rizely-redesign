@@ -5,7 +5,7 @@ import { HamburgerMenuIcon, Cross1Icon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { WHATSAPP_URL } from "@/lib/site";
+import { DASHBOARD_URL } from "@/lib/site";
 import { RizelyLogo } from "@/components/logo";
 
 // Absolute hrefs, not bare "#how": these render on /blogs and /privacy too,
@@ -81,8 +81,8 @@ export default function NavBar() {
 
           <div className="flex items-center">
             <Button asChild size="sm" className="hidden sm:flex">
-              <Link href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-                Start free on WhatsApp
+              <Link href={DASHBOARD_URL} target="_blank" rel="noopener noreferrer">
+                Open your dashboard
               </Link>
             </Button>
           </div>
@@ -110,12 +110,12 @@ export default function NavBar() {
                 ))}
                 <Button asChild size="sm" className="w-full mt-2">
                   <Link
-                    href={WHATSAPP_URL}
+                    href={DASHBOARD_URL}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    Start free on WhatsApp
+                    Open your dashboard
                   </Link>
                 </Button>
               </div>
