@@ -120,6 +120,10 @@ project. It fails soft, so nothing errors. Expected on the preview — but `/blo
 sitemap, so this must not reach rizely.net.
 *Done when:* confirmed that whichever project builds for go-live has `STRAPI_URL` set, and
 `/blogs` renders posts there.
+*29 Oct:* the preview (`rizely-homepage-preview`) now builds from the new CMS,
+`https://rizely-cms-v2.onrender.com`, and `/blogs` renders its posts. Publishing there rebuilds
+the preview by itself (see §4, "Taken by Dev on 29 Oct"). Still open for go-live: which CMS
+rizely.net builds from.
 
 **W-07 · Verify the "3-day follow-up campaigns" claim before it ships.**
 It appears on the page as a feature chip. Three of our own sources describe the follow-up
@@ -249,6 +253,9 @@ say the follow-up "goes out automatically" (approve-first, W-18), and they rewor
 `main`, so this has to be fixed before the merge (`02` §4).
 *Done when:* the figures are deleted in Strapi, "automatically" becomes approve-first, the "only
 tool" line appears at most once and word for word, and the posts are republished.
+*29 Oct:* these three posts live in the old CMS (Railway). The preview now builds from the new
+CMS, so they are no longer on the preview, but they are still on rizely.net. Fix them there, or
+fix them while copying them into the new CMS if it becomes the one rizely.net uses.
 
 #### P1
 
@@ -420,6 +427,23 @@ Two things already decided, so you do not need to re-open them:
   **"Follow-up drafted"**, at Dev's request, although the agent does not send follow-ups today.
   The hero says "An agent that follows up" too. Ankush to decide whether the page may show
   follow-ups before they ship. The QR line also contradicts `01` §4 ("does not scan QR codes").
+
+**Taken by Dev on 29 Oct (blog), Ankush to confirm or reverse:**
+
+- **A new, reusable blog CMS.** Dev's senior asked for one. It is Strapi 5 in
+  `DEVSINGH2004/rizely-cms-v2`, with the same Article, Author and FAQ fields that `lib/strapi.ts`
+  reads, so this repo did not change. Hosting is free: Render (server, kept awake by an
+  UptimeRobot ping on `/_health`), Neon (Postgres) and Cloudinary (images). Admin:
+  `https://rizely-cms-v2.onrender.com/admin`. The old CMS on Railway and rizely.net's
+  publish-to-Netlify hook are untouched.
+- **The preview now rebuilds itself on publish (closes D-3 another way).** Netlify cannot link
+  this repo (it is on a personal GitHub account), so a GitHub Action in
+  `DEVSINGH2004/rizely-preview-deploy` builds `dev/homepage`, removes `/lab` and `/hero-anim`,
+  adds noindex, checks for banned claims and deploys to `rizely-homepage-preview` only. It runs
+  when the CMS publishes, unpublishes or deletes a post (about 1.5 minutes end to end, tested
+  29 Oct), on demand, and hourly as a backup for new commits.
+- **Three tokens expire around 27 Jan 2027**: two in that repo's secrets, one in the CMS's
+  Render settings. When they lapse the Action fails and GitHub emails Dev.
 
 ---
 
