@@ -6,6 +6,7 @@ import Footer from "@/components/footer";
 import BlocksRenderer from "@/components/blog/blocks-renderer";
 import { PostCard } from "@/components/blog/post-list";
 import { BRAND, OG_IMAGE, SITE_URL } from "@/lib/site";
+import { isNoindexSlug } from "@/lib/noindex";
 import {
   getArticles,
   getArticleBySlug,
@@ -68,6 +69,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${title} — ${BRAND}`,
     description,
     alternates: { canonical: `/blogs/${post.slug}` },
+    // Live but held out of search until Ankush approves (lib/noindex.ts).
+    ...(isNoindexSlug(post.slug) ? { robots: { index: false, follow: false } } : {}),
     openGraph: {
       type: "article",
       url,

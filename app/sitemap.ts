@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/site";
 import { getArticles, articleDate } from "@/lib/strapi";
+import { isNoindexSlug } from "@/lib/noindex";
 
 // Replaces the hand-written public/sitemap.xml, which could not list blog
 // posts. /lab and /hero-anim are deliberately absent — both are noindex
@@ -24,7 +25,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const posts = await getArticles();
   const postRoutes: MetadataRoute.Sitemap = posts
-    .filter((p) => p.slug)
+    // Noindex posts stay out: a sitemap must not list pages that ask not to be indexed.
+    .filter((p) => p.slug && !isNoindexSlug(p.slug))
     .map((p) => {
       const date = p.updatedAt ?? articleDate(p);
       return {
