@@ -14,3 +14,34 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+# Agent discovery (isitagentready.com). The files live in public/.well-known.
+# Point agents from the homepage to the machine-readable descriptions.
+[[headers]]
+  for = "/"
+  [headers.values]
+    Link = '</.well-known/api-catalog>; rel="api-catalog", </connect>; rel="service-doc"; type="text/html", </llms.txt>; rel="describedby"; type="text/plain"'
+
+# RFC 9727 requires this media type; the file has no extension to infer it from.
+[[headers]]
+  for = "/.well-known/api-catalog"
+  [headers.values]
+    Content-Type = "application/linkset+json"
+
+[[headers]]
+  for = "/.well-known/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+
+# The OAuth server and the MCP resource live on app.rizely.net, which publishes
+# the authoritative metadata. Redirect rather than copy, so it can never go stale
+# and the issuer always matches the host that serves it.
+[[redirects]]
+  from = "/.well-known/oauth-authorization-server"
+  to = "https://app.rizely.net/.well-known/oauth-authorization-server"
+  status = 302
+
+[[redirects]]
+  from = "/.well-known/oauth-protected-resource"
+  to = "https://app.rizely.net/.well-known/oauth-protected-resource"
+  status = 302
