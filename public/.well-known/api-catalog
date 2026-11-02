@@ -1,0 +1,29 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://app.rizely.net/api/mcp",
+      "service-desc": [
+        {
+          "href": "https://rizely.net/.well-known/mcp/server-card.json",
+          "type": "application/json"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://rizely.net/connect",
+          "type": "text/html"
+        },
+        {
+          "href": "https://rizely.net/.well-known/agent-skills/rizely/SKILL.md",
+          "type": "text/markdown"
+        }
+      ],
+      "describedby": [
+        {
+          "href": "https://app.rizely.net/.well-known/oauth-protected-resource",
+          "type": "application/json"
+        }
+      ]
+    }
+  ]
+}

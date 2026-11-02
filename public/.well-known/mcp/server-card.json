@@ -1,0 +1,23 @@
+{
+  "serverInfo": {
+    "name": "rizely",
+    "title": "Rizely",
+    "version": "1.0.0"
+  },
+  "description": "Run your Rizely event-lead pipeline from an AI assistant: add and find contacts, organise events, pull an event's leads, export leads and top up credits. Requires a Rizely account with WhatsApp or Telegram linked.",
+  "websiteUrl": "https://rizely.net",
+  "documentationUrl": "https://rizely.net/connect",
+  "transport": {
+    "type": "streamable-http",
+    "endpoint": "https://app.rizely.net/api/mcp"
+  },
+  "authentication": {
+    "required": true,
+    "schemes": ["oauth2"],
+    "authorizationServer": "https://app.rizely.net",
+    "protectedResourceMetadata": "https://app.rizely.net/.well-known/oauth-protected-resource"
+  },
+  "capabilities": {
+    "tools": {}
+  }
+}

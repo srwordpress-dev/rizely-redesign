@@ -1,0 +1,34 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "Rizely",
+    "identifier": "did:web:rizely.net"
+  },
+  "entries": [
+    {
+      "identifier": "urn:air:rizely.net:server:rizely",
+      "displayName": "Rizely MCP server",
+      "description": "Run your Rizely event-lead pipeline from an AI assistant: contacts, events, an event's leads, CSV export and credit top-ups. OAuth, scoped to the user's own account.",
+      "type": "application/mcp-server-card+json",
+      "url": "https://rizely.net/.well-known/mcp/server-card.json",
+      "representativeQueries": [
+        "find the contacts I scanned at last week's trade show",
+        "add this business card to my Rizely pipeline",
+        "export the leads from my last event as a CSV",
+        "list my Rizely events",
+        "top up my Rizely credits"
+      ]
+    },
+    {
+      "identifier": "urn:air:rizely.net:skill:rizely",
+      "displayName": "Using Rizely from an AI assistant",
+      "description": "How to connect to Rizely and work with a user's event leads safely.",
+      "type": "text/markdown",
+      "url": "https://rizely.net/.well-known/agent-skills/rizely/SKILL.md",
+      "representativeQueries": [
+        "how do I connect Rizely to Claude",
+        "what can the Rizely connector do"
+      ]
+    }
+  ]
+}
