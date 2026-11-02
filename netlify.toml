@@ -28,6 +28,15 @@
   [headers.values]
     Content-Type = "application/linkset+json"
 
+# Markdown twins of the pages (scripts/build-markdown.mjs). Agents get them on
+# the page's own URL via netlify/edge-functions/agent-markdown.ts; the raw files
+# are duplicates of the HTML, so keep them out of search.
+[[headers]]
+  for = "/markdown/*"
+  [headers.values]
+    Content-Type = "text/markdown; charset=utf-8"
+    X-Robots-Tag = "noindex"
+
 [[headers]]
   for = "/.well-known/*"
   [headers.values]
