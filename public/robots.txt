@@ -21,6 +21,7 @@ User-agent: Bingbot
 Allow: /
 
 User-agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 Allow: /
 Disallow: /__forms.html
 Disallow: /lab
