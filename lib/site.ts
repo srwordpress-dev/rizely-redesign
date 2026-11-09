@@ -26,9 +26,11 @@ export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURICo
 // and shipping — the marketing site never duplicates any of it (PRD v4 D2).
 export const SHOP_URL = "https://shop.rizely.net";
 
-// The three cards the shop sells, in the order the hero CTA rotates through them.
-// "From" prices are the cheapest variant on shop.rizely.net (checked 28 Oct via
-// /products.json). Re-check before launch; do not show a price the store doesn't.
+// The card range the shop sells, in the order the hero CTA rotates through them
+// (PVC stays second: card-cta.tsx uses it as the static label). "From" prices are
+// the cheapest variant on shop.rizely.net (checked 9 Nov via /products.json):
+// metal starts at UV print ₹1,999, engraved is ₹2,499. Re-check before launch;
+// do not show a price the store doesn't.
 export const CARDS = [
   { name: "Metal NFC card", from: "₹1,999", href: `${SHOP_URL}/products/metal-nfc-card` },
   { name: "PVC NFC card", from: "₹599", href: `${SHOP_URL}/products/pvc-nfc-card` },
@@ -37,11 +39,19 @@ export const CARDS = [
     from: "₹699",
     href: `${SHOP_URL}/products/customised-business-nfc-card`,
   },
+  {
+    name: "Transparent NFC card",
+    from: "₹2,499",
+    href: `${SHOP_URL}/products/transparent-nfc-business-card`,
+  },
 ] as const;
 
 // The user dashboard (log in, manage leads and cards). Not profile.rizely.net:
 // that is the unconfigured vendor script handoff/01 §3 says never to link to.
 export const DASHBOARD_URL = "https://app.rizely.net";
+
+// Where "Connect Rizely to Claude" goes: the app page that links an AI assistant.
+export const AI_ASSISTANTS_URL = "https://app.rizely.net/ai-assistants";
 
 // The share image (app/opengraph-image.png, rendered from scripts/og/). A page that sets its own
 // `openGraph` replaces the root one and loses the image, so pass this explicitly.
