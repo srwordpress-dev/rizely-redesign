@@ -188,7 +188,7 @@ export default function TheCard() {
                   <span className="text-muted-foreground">{p.qty}</span>
                   <span className="h-2.5 overflow-hidden rounded-full bg-parchment" aria-hidden="true">
                     <span
-                      className={`block h-full rounded-full ${i === PACKS.length - 1 ? "bg-spark-action" : "bg-[#e8a27e]"}`}
+                      className={`block h-full rounded-full ${i === PACKS.length - 1 ? "bg-spark-action" : "bg-[var(--line-strong)]"}`}
                       style={{ width: p.width }}
                     />
                   </span>

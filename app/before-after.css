@@ -80,7 +80,7 @@
   border: 1px solid var(--line);
   box-shadow: 0 3px 8px rgb(31 27 23 / 0.1);
   rotate: 5deg;
-  font-family: var(--font-serif), "Source Serif 4", Georgia, serif;
+  font-family: var(--font-display), "Bricolage Grotesque", system-ui, sans-serif;
   font-style: italic;
   font-size: 20px;
   color: var(--graphite);
@@ -98,7 +98,7 @@
   rotate: -4deg;
 }
 .bf-day-head { padding: 4px 0; background: #8a847c; color: #fff; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; }
-.bf-day-no { padding: 6px 0 8px; font-family: var(--font-serif), "Source Serif 4", Georgia, serif; font-size: 38px; line-height: 1; color: var(--graphite); }
+.bf-day-no { padding: 6px 0 8px; font-family: var(--font-display), "Bricolage Grotesque", system-ui, sans-serif; font-size: 38px; line-height: 1; color: var(--graphite); }
 
 /* With Rizely */
 .bf-panel {
@@ -141,7 +141,7 @@
   background: #fff;
   border: 1px solid var(--line);
   box-shadow: 0 6px 16px rgb(31 27 23 / 0.1);
-  font-family: "Noto Sans Devanagari", var(--font-inter), Inter, sans-serif;
+  font-family: "Noto Sans Devanagari", var(--font-body), Inter, sans-serif;
   font-size: 12px;
   line-height: 1.5;
 }

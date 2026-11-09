@@ -70,8 +70,8 @@
 .tl-label.is-on { opacity: 1; }
 .tl-time {
   display: block;
-  font-family: var(--font-serif), "Source Serif 4", Georgia, serif;
-  font-style: italic;
+  font-family: var(--font-display), "Bricolage Grotesque", system-ui, sans-serif;
+  font-style: normal;
   font-size: 20px;
   color: #8a847c;
   transition: color 400ms ease;
@@ -95,8 +95,8 @@
 .tl-from-side { translate: 16px 0; }
 .tl-card.is-on { opacity: 1; translate: 0 0; }
 .tl-no {
-  font-family: var(--font-serif), "Source Serif 4", Georgia, serif;
-  font-style: italic;
+  font-family: var(--font-display), "Bricolage Grotesque", system-ui, sans-serif;
+  font-style: normal;
   font-size: 18px;
   color: var(--spark-text);
 }
