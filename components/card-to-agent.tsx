@@ -16,7 +16,7 @@ import { WHATSAPP_URL } from "@/lib/site";
 const beats = [
   {
     k: "Your card handles one direction",
-    v: "They tap, they get you. That half is done, and it cost you ₹599 once.",
+    v: "They tap, they get you. That half is done, and it was a one-off cost.",
   },
   {
     k: "The stack in your pocket is the other",
@@ -36,7 +36,7 @@ export default function CardToAgent() {
         whileInView={{ y: 0, opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, type: "spring", bounce: 0 }}
-        className="mx-auto max-w-4xl rounded-2xl border border-border bg-card/40 p-8 sm:p-10"
+        className="mx-auto max-w-4xl rounded-2xl border border-border bg-card p-8 sm:p-10"
       >
         <div className="max-w-2xl">
           <span className="w-fit text-xs font-semibold uppercase tracking-widest text-primary-text">
@@ -62,7 +62,7 @@ export default function CardToAgent() {
         <div className="mt-8 flex flex-col sm:flex-row sm:items-center gap-4">
           <Button asChild size="lg" className="cta-sunrise h-12 px-6">
             <Link href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-              Try it on your last event
+              Start free
             </Link>
           </Button>
           <p className="text-sm text-muted-foreground">

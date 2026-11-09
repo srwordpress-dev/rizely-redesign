@@ -4,8 +4,7 @@ import { faqs } from "@/lib/faqs";
 /* Split into two graphs on purpose (kept from main, 9 Sep).
  *
  * SITE_GRAPH (Organization + WebSite) describes the publisher and is correct on
- * every page. HOME_GRAPH (SoftwareApplication with its price Offers, and the
- * FAQPage) describes things that only exist on the homepage.
+ * every page. HOME_GRAPH (SoftwareApplication and the FAQPage) describes things that only exist on the homepage.
  *
  * Both used to render from the root layout, which meant /privacy, /terms and
  * every blog post claimed FAQs and pricing offers that were nowhere on the
@@ -13,19 +12,6 @@ import { faqs } from "@/lib/faqs";
  * content. Worse, a blog post carrying its own FAQs emitted two competing
  * FAQPage nodes. So HOME_GRAPH is rendered by app/page.tsx alone.
  */
-const offer = (name: string, price: string) => ({
-  "@type": "Offer",
-  name,
-  price,
-  priceCurrency: "INR",
-  priceSpecification: {
-    "@type": "UnitPriceSpecification",
-    price,
-    priceCurrency: "INR",
-    valueAddedTaxIncluded: false,
-  },
-});
-
 const SITE_GRAPH = {
   "@context": "https://schema.org",
   "@graph": [
@@ -35,7 +21,7 @@ const SITE_GRAPH = {
       name: "Rizely",
       url: SITE_URL,
       description:
-        "Rizely is a platform of WhatsApp- and Telegram-native AI micro-agents for sales and event teams. The first one scans event business cards, builds a lead pipeline, and drafts follow-ups you approve, in many languages.",
+        "Rizely is a platform of WhatsApp- and Telegram-native AI micro-agents for sales and event teams. The live one scans event business cards, builds a lead pipeline, and drafts follow-ups for you to send, in many languages.",
     },
     {
       "@type": "WebSite",
@@ -58,17 +44,11 @@ const HOME_GRAPH = {
       operatingSystem: "WhatsApp, Telegram, Web",
       url: SITE_URL,
       description:
-        "Scan the business cards you collect at events inside WhatsApp or Telegram, build a managed lead pipeline, and draft personalised follow-ups you approve — in many languages, priced per event or per year.",
-      /* INR only, deliberately. The page itself switches currency per visitor
-         (PRD v4 §5) but this markup is served identically to everyone, so it
-         states one unambiguous set rather than two competing ones.
-         [PRICING PROPOSED] — see PRD v4 D3. Prices are ex-GST (01 §2), so each offer says so. */
-      offers: [
-        offer("Solo (annual)", "3499"),
-        offer("Team (annual)", "11999"),
-        offer("Business (annual)", "27999"),
-        offer("Event Pass (per event)", "2499"),
-      ],
+        "Scan the business cards you collect at events inside WhatsApp or Telegram, build a managed lead pipeline, and draft personalised follow-ups for you to send — in many languages, priced per event or per year.",
+      /* No `offers` while the plan prices are [PRICING PROPOSED] (tracker D-1):
+         Google can show offer prices in results, and these are not final. Add
+         them back once Ankush confirms the prices — INR only, ex-GST, since
+         this markup is served identically to every visitor. */
     },
     {
       "@type": "FAQPage",

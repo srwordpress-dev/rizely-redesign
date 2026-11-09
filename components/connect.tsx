@@ -82,9 +82,9 @@ export default function Connect() {
               whileInView={{ y: 0, opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.07 }}
-              className="hover-card rounded-2xl border border-border bg-card/40 p-5"
+              className="hover-card rounded-2xl border border-border bg-card p-5"
             >
-              <div className="grid size-10 place-items-center rounded-xl border border-primary/30 bg-primary/10 text-primary mb-3">
+              <div className="grid size-10 place-items-center rounded-xl border border-primary/30 bg-peach text-primary mb-3">
                 <Icon aria-hidden="true" className="size-5" />
               </div>
               <h3 className="font-heading font-semibold mb-1">{cap.title}</h3>

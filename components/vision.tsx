@@ -25,7 +25,7 @@ const stages: Stage[] = [
     icon: Handshake,
     title: "Acquisition — get the lead, with consent",
     line: "Events, business cards, review tags for local shops, partner channels — different ways to stand next to a consented opt-in and feed one pipeline.",
-    now: "Live today: event cards on WhatsApp & Telegram.",
+    now: "Live today: event cards on WhatsApp, and on Telegram in beta.",
     next: "Roadmap: review tags and partner channels.",
   },
   {
@@ -41,7 +41,7 @@ const stages: Stage[] = [
     icon: Bot,
     title: "Agentic — agents that do the work",
     line: "Small AI agents that capture, follow up, and eventually carry the conversation — and that you can run from the assistant you already use.",
-    now: "Live today: the Card Agent's follow-ups, and Connect on Claude.",
+    now: "Live today: the Card Agent's follow-up drafts, and Connect on Claude.",
     next: "Roadmap: the Keeper, the Reviews Agent, and the Caller.",
   },
 ];
@@ -82,10 +82,10 @@ export default function Vision() {
               whileInView={{ y: 0, opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.55, delay: index * 0.1 }}
-              className="hover-card relative rounded-2xl border border-border bg-card/40 p-6 flex flex-col gap-4"
+              className="hover-card relative rounded-2xl border border-border bg-card p-6 flex flex-col gap-4"
             >
               <div className="flex items-center justify-between">
-                <div className="grid size-11 place-items-center rounded-xl bg-sunrise text-white shadow-[0_0_30px_-8px_rgba(240,81,0,0.55)]">
+                <div className="grid size-11 place-items-center rounded-xl border border-spark/25 bg-peach text-spark">
                   <Icon aria-hidden="true" className="size-5" />
                 </div>
                 <span className="font-heading text-2xl font-bold text-muted-foreground/60 tabular-nums">

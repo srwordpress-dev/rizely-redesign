@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Repeat2, Languages, MessageCircle, Ticket } from "lucide-react";
+import SectionKicker from "@/components/section-kicker";
 
 const points = [
   {
@@ -12,11 +13,11 @@ const points = [
   {
     icon: Languages,
     title: "Reads cards in your language, not just English",
-    desc: "Hindi, Gujarati, Marathi and plenty more — some scanners say in their own docs that they “work best with English.” A coffee-stained card at 11pm can still stump it — we’d rather tell you that than pretend.",
+    desc: "Hindi, Gujarati, Marathi and plenty more, not just English. A coffee-stained card at 11pm can still stump it — we’d rather tell you that than pretend.",
   },
   {
     icon: MessageCircle,
-    title: "WhatsApp and Telegram, both",
+    title: "WhatsApp, with Telegram in beta",
     desc: "It works where your leads already are — no new app to make anyone install, nothing for your team to learn by Monday.",
   },
   {
@@ -37,17 +38,16 @@ export default function WhyRizely() {
           transition={{ duration: 0.6, type: "spring", bounce: 0 }}
           className="flex flex-col gap-3 text-center mb-14 max-w-2xl mx-auto"
         >
+          <SectionKicker no="03" className="mx-auto">Why Rizely</SectionKicker>
           <h2 className="text-3xl font-heading font-bold sm:text-4xl tracking-tight">
-            Scanning is the easy part. Rizely keeps going.
+            Scanning is the easy part. Rizely <em>keeps going</em>.
           </h2>
           <p className="text-muted-foreground text-lg">
-            {/* The sanctioned positioning line, word for word as handoff/01 §6 writes it:
-                "the only tool that does capture and follow-up, in Indian languages, priced
-                per event". It is defensible only as that exact compound (Karo "works best
-                with English", Freshsales English-only). Do not reword or broaden it. */}
-            We&apos;re not the first to scan a card on WhatsApp. We&apos;re the only tool that
-            does capture <em className="not-italic text-foreground font-medium">and</em>{" "}
-            follow-up, in Indian languages, priced per event.
+            {/* Was handoff/01 §6's "the only tool that does capture and follow-up…".
+                The "only" claim was dropped in the Nov 2026 editorial pass (approved by
+                the site owner); restore it only with fresh competitor evidence. */}
+            Capture <em className="not-italic text-foreground font-medium">and</em> follow-up
+            together, in Indian languages, priced per event.
           </p>
         </motion.div>
 
@@ -64,7 +64,7 @@ export default function WhyRizely() {
               className="hover-card flex flex-col gap-4 rounded-2xl border border-border bg-background/60 p-6"
             >
               <div className="flex items-center justify-between">
-                <div className="grid size-11 shrink-0 place-items-center rounded-xl bg-primary/10 border border-primary/20">
+                <div className="grid size-11 shrink-0 place-items-center rounded-xl bg-peach border border-primary/20">
                   <p.icon aria-hidden="true" className="size-5 text-primary" />
                 </div>
                 <span className="font-heading text-2xl font-bold text-muted-foreground/60 tabular-nums">

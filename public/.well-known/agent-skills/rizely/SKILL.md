@@ -7,7 +7,7 @@ description: Connect to a user's Rizely account over MCP and work with the busin
 
 Rizely is a WhatsApp- and Telegram-native AI agent for sales and event teams. Users
 photograph the business cards they collect at events; Rizely reads each card, files it as a
-lead under its event and drafts a follow-up for the user to approve. This skill covers working
+lead under its event and drafts a follow-up for the user to send. This skill covers working
 with that pipeline from an AI assistant.
 
 ## Connect
@@ -32,6 +32,6 @@ with that pipeline from an AI assistant.
 
 - Act only on the signed-in user's own data, and only when they ask.
 - Confirm with the user before deleting a contact, merging duplicates or closing an event.
-- Follow-ups are drafted for the user to approve. Never describe them as sent automatically.
+- Rizely drafts follow-ups; the user reads, edits and sends them. Never describe them as sent by Rizely.
 - Do not invent contacts, events, prices or statistics. If a call fails, say so.
 - There is no CRM sync; export is CSV.

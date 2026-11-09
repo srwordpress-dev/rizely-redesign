@@ -12,13 +12,12 @@ import { RizelyLogo } from "@/components/logo";
 // where a bare hash would resolve to /blogs#how and go nowhere.
 const menuItems = [
   { name: "How it works", href: "/#how" },
-  { name: "Agents", href: "/agents" },
-  { name: "Connect", href: "/connect" },
   { name: "Pricing", href: "/#pricing" },
-  { name: "FAQ", href: "/#faq" },
+  { name: "NFC cards", href: "/#card" },
   // Kept from main: the blog is live and already linked from rizely.net, so
   // dropping it here would orphan published posts.
   { name: "Blog", href: "/blogs" },
+  { name: "FAQ", href: "/#faq" },
 ];
 
 export default function NavBar() {
@@ -39,10 +38,10 @@ export default function NavBar() {
     <nav
       className={`sticky top-0 z-50 w-full transition-[background-color,backdrop-filter,border-color] duration-300 ease-out ${
         isMenuOpen
-          ? "backdrop-blur bg-background/95 supports-backdrop-filter:bg-background/90 border-b border-border/60"
+          ? "bg-parchment border-b border-hairline"
           : showNavbarBlur
-          ? "backdrop-blur supports-backdrop-filter:bg-background/70 border-b border-border/60"
-          : "backdrop-blur-0 supports-backdrop-filter:bg-background/0 border-b border-transparent"
+          ? "bg-parchment border-b border-hairline"
+          : "bg-canvas border-b border-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -90,9 +89,10 @@ export default function NavBar() {
           </div>
 
           <div className="flex items-center">
+            {/* One filled button, for new visitors; it opens the app, where sign-up lives. */}
             <Button asChild size="sm" className="hidden lg:flex">
               <Link href={DASHBOARD_URL} target="_blank" rel="noopener noreferrer">
-                Open your dashboard
+                Start free
               </Link>
             </Button>
           </div>
@@ -137,7 +137,7 @@ export default function NavBar() {
                     rel="noopener noreferrer"
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    Open your dashboard
+                    Start free
                   </Link>
                 </Button>
               </div>
@@ -158,7 +158,7 @@ export default function NavBar() {
             transition={{ duration: 0.3, ease: "easeInOut" }}
             onClick={() => setIsMenuOpen(false)}
             aria-hidden
-            className="lg:hidden fixed inset-x-0 top-16 bottom-0 z-40 bg-background/80 backdrop-blur-sm"
+            className="lg:hidden fixed inset-x-0 top-16 bottom-0 z-40 bg-ink/40"
           />
         )}
       </AnimatePresence>

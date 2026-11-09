@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { faqs } from "@/lib/faqs";
+import SectionKicker from "@/components/section-kicker";
 
 export default function Faq() {
   return (
@@ -15,11 +16,12 @@ export default function Faq() {
       className="relative w-full max-w-(--breakpoint-xl) mx-auto px-4 py-24 gap-6 md:px-8 flex flex-col justify-center items-center"
     >
       <div className="flex flex-col gap-3 justify-center items-center text-center">
+        <SectionKicker no="09">FAQ</SectionKicker>
         <h2 className="text-3xl font-heading font-bold sm:text-4xl tracking-tight">
-          Questions, answered
+          Questions, <em>answered</em>.
         </h2>
         <p className="max-w-xl text-muted-foreground text-center text-lg">
-          The things people ask before their first event with Rizely.
+          What people ask before they start.
         </p>
       </div>
 
@@ -29,7 +31,7 @@ export default function Faq() {
           <details key={i} className="group py-1">
             <summary className="faq-summary flex cursor-pointer items-center justify-between gap-4 py-4 text-left font-medium text-foreground">
               {item.q}
-              <ChevronDown aria-hidden="true" className="faq-chevron size-4 shrink-0 text-muted-foreground" />
+              <ChevronDown aria-hidden="true" className="faq-chevron size-4 shrink-0 text-spark" />
             </summary>
             <p className="pb-4 pr-8 text-muted-foreground leading-relaxed">{item.a}</p>
           </details>

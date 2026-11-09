@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ScanLine, Sparkles, Send } from "lucide-react";
+import SectionKicker from "@/components/section-kicker";
 
 const steps = [
   {
@@ -19,8 +20,8 @@ const steps = [
   {
     icon: Send,
     step: "03",
-    title: "It follows up",
-    desc: "Rizely drafts a personalised follow-up for each lead and sends it on WhatsApp or Telegram. You approve the first batch so it sounds like you — after that it can run on its own.",
+    title: "It drafts the follow-up",
+    desc: "Rizely drafts a personalised follow-up for each lead, in their language. You read it, change anything you like, and send it yourself on WhatsApp or Telegram.",
   },
 ];
 
@@ -37,11 +38,12 @@ export default function HowItWorks() {
         transition={{ duration: 0.6, type: "spring", bounce: 0 }}
         className="flex flex-col gap-3 text-center mb-14 max-w-2xl"
       >
+        <SectionKicker no="01" className="mx-auto">How it works</SectionKicker>
         <h2 className="text-3xl font-heading font-bold sm:text-4xl tracking-tight">
-          From a card in your hand to a reply in your inbox
+          From a card in your hand to a reply in their <em>inbox</em>.
         </h2>
         <p className="text-muted-foreground text-lg">
-          The whole loop happens in the chat app you already have open at the event.
+          Three steps, inside the chat app you already use.
         </p>
       </motion.div>
 
@@ -53,10 +55,10 @@ export default function HowItWorks() {
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: index * 0.1 }}
-            className="hover-card relative rounded-2xl border border-border bg-card/50 p-6 flex flex-col gap-4"
+            className="hover-card relative rounded-2xl border border-border bg-card p-6 flex flex-col gap-4"
           >
             <div className="flex items-center justify-between">
-              <div className="flex size-11 items-center justify-center rounded-xl bg-primary/10 border border-primary/20">
+              <div className="flex size-11 items-center justify-center rounded-xl bg-peach border border-primary/20">
                 <s.icon aria-hidden="true" className="size-5 text-primary" />
               </div>
               <span className="font-mono text-sm text-muted-foreground">{s.step}</span>

@@ -8,19 +8,19 @@ export const faqs = [
   },
   {
     q: "Do I need to download an app?",
-    a: "No. Rizely Cards lives inside WhatsApp and Telegram — apps already open on your phone. Nothing to install, nothing for your leads to install either.",
+    a: "No. Rizely Cards lives inside WhatsApp (and Telegram, in beta) — apps already open on your phone. Nothing to install, nothing for your leads to install either.",
   },
   {
     q: "Will it read a Hindi or Gujarati card, or only English?",
     a: "Indian-language cards too — Hindi, Gujarati and Marathi, not just English. It's not magic: a badly printed or coffee-stained card can still trip it up, so check the details before the follow-up goes out.",
   },
   {
-    q: "Does it send the follow-ups on its own, or do I approve them first?",
-    a: "You're in control. You review and approve the first batch so it sounds like you, not a robot. After that you can let it run automatically, or keep approving each batch — your call, changeable any time.",
+    q: "Does it send the follow-ups for me?",
+    a: "No. Rizely drafts a personalised follow-up for each lead, in their language and in your voice. You read it, change anything you like, and send it yourself. Nothing goes out without you.",
   },
   {
     q: "What happens after the 50 free scans?",
-    a: "You move to an annual plan when you're ready, or buy a one-off Event Pass for a single show. Solo is around $79/year; in India it is ₹3,499/year ex-GST, with a GST invoice and UPI. Plans are annual rather than monthly because RBI e-mandates make monthly subscriptions genuinely painful in India. You won't be charged automatically the moment the free scans run out. (Plans are proposed and may change.)",
+    a: "You move to an annual plan when you're ready, or buy a one-off Event Pass for a single show. Solo is around $79/year; in India it is ₹3,499/year ex-GST, with a GST invoice and UPI. Plans are annual rather than monthly because RBI e-mandates make monthly subscriptions genuinely painful in India. Running low mid-year? Top up extra credits any time over UPI. You won't be charged automatically the moment the free scans run out. (Plans are proposed and may change.)",
   },
   {
     q: "Do I need the card to use the agent, or the agent to use the card?",
@@ -32,7 +32,7 @@ export const faqs = [
   },
   {
     q: "Do you ship the card outside India?",
-    a: "The store is set up for India today — ₹599 including GST, free shipping over ₹999. If you want cards somewhere else, ask on WhatsApp and we'll tell you honestly whether we can do it yet rather than taking the order and hoping.",
+    a: "The store is set up for India today — cards from ₹599 including GST, with free shipping across India. If you want cards somewhere else, ask on WhatsApp and we'll tell you honestly whether we can do it yet rather than taking the order and hoping.",
   },
   {
     q: "Why annual plans and not monthly?",

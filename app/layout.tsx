@@ -1,15 +1,19 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import "./globals.css";
+import CookieConsent from "@/components/cookie-consent";
+import CtaNudge from "@/components/cta-nudge";
 import { Providers } from "./providers";
 import NavBar from "@/components/navbar";
 import StructuredData from "@/components/structured-data";
-import { Plus_Jakarta_Sans, Inter } from "next/font/google";
+import { Source_Serif_4, Inter } from "next/font/google";
 import { SITE_URL } from "@/lib/site";
 
-const jakarta = Plus_Jakarta_Sans({
+// Section and display headings (DESIGN.md section 2): one weight, 500.
+const serif = Source_Serif_4({
   subsets: ["latin"],
-  variable: "--font-jakarta",
+  weight: ["500"],
+  style: ["normal", "italic"],
+  variable: "--font-serif",
   display: "swap",
 });
 
@@ -24,11 +28,11 @@ const inter = Inter({
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 
 const DESCRIPTION =
-  "Rizely is a platform of AI micro-agents for sales and event teams. The first one scans the business cards you collect at events, builds a managed lead pipeline, and drafts the follow-up for you to approve — inside WhatsApp and Telegram, in many languages, priced per event.";
+  "Rizely is a platform of AI micro-agents for sales and event teams. The live one scans the business cards you collect at events, builds a managed lead pipeline, and drafts the follow-up for you to send — inside WhatsApp and Telegram, in many languages, priced per event.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Rizely — scan the card, send the follow-up, on WhatsApp",
+  title: "Rizely — scan the card, draft the follow-up, on WhatsApp",
   description: DESCRIPTION,
   keywords: [
     "business card scanner WhatsApp",
@@ -50,7 +54,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Rizely — scan the card, send the follow-up",
+    title: "Rizely — scan the card, draft the follow-up",
     description: DESCRIPTION,
   },
 };
@@ -64,10 +68,9 @@ export default function RootLayout({
     <html
       lang="en-IN"
       suppressHydrationWarning
-      className="dark"
       data-currency="usd"
     >
-      <body className={`${jakarta.variable} ${inter.variable} antialiased`}>
+      <body className={`${serif.variable} ${inter.variable} antialiased`}>
         {/* These sit at the top of <body>, not in <head>: Netlify injects an HTML comment into
             <head> on some sites, and React then finds that comment where it expected this script,
             fails hydration (#418) and re-renders the document, which drops data-currency. At the
@@ -94,28 +97,16 @@ export default function RootLayout({
         <noscript>
           <style>{`[style*="opacity:0"]{opacity:1!important;transform:none!important}`}</style>
         </noscript>
-        {/* GTM loads after hydration (afterInteractive), not from <head>, for the same
-            #418 reason as above, and so it never delays the first paint. */}
-        {GTM_ID && (
-          <>
-            <noscript>
-              <iframe
-                src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
-                height="0"
-                width="0"
-                style={{ display: "none", visibility: "hidden" }}
-              />
-            </noscript>
-            <Script id="gtm" strategy="afterInteractive">
-              {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GTM_ID}');`}
-            </Script>
-          </>
-        )}
         <StructuredData />
         <Providers>
           <NavBar />
           {children}
         </Providers>
+        {/* GTM (and through it GA4 and Clarity) loads only after the visitor
+            accepts cookies; there is no <noscript> fallback because a visitor
+            without JavaScript cannot consent. */}
+        {GTM_ID && <CookieConsent gtmId={GTM_ID} />}
+        <CtaNudge />
       </body>
     </html>
   );

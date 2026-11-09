@@ -30,12 +30,12 @@ const layers: Layer[] = [
     n: "01",
     icon: CreditCard,
     title: "The card",
-    body: "A PVC card with a chip in it. Hold it near a phone and your profile opens — no app on their side, no typing, nothing to spell out across a loud hall. 102 designs; pick one and we print it.",
+    body: "An NFC card in PVC, metal or transparent. Hold it near a phone and your profile opens — no app on their side, no typing, nothing to spell out across a loud hall. We design it with your details and logo, and you approve the preview before it's printed.",
     // GST only belongs in the ₹ view (01 §2); the card is sold in ₹ to everyone.
     meta: (
       <>
-        <span data-price="inr">₹599 incl. GST · one-off · free shipping over ₹999</span>
-        <span data-price="usd">₹599 · one-off · ships within India</span>
+        <span data-price="inr">From ₹599 incl. GST · one-off · free shipping across India</span>
+        <span data-price="usd">From ₹599 · one-off · ships within India</span>
       </>
     ),
     cta: { label: "Choose your card", href: SHOP_URL, external: true },
@@ -55,8 +55,8 @@ const layers: Layer[] = [
     n: "03",
     icon: Bot,
     title: "The agent",
-    body: "The other direction: the cards you collect. Photograph them in WhatsApp or Telegram and the agent reads each one — Indian-language cards too — files the lead, and drafts a personalised follow-up for you to approve while you're still shaking the next hand.",
-    meta: "Live on WhatsApp & Telegram · first 50 scans free",
+    body: "The other direction: the cards you collect. Photograph them in WhatsApp or Telegram and the agent reads each one — Indian-language cards too — files the lead, and drafts a personalised follow-up for you to send while you're still shaking the next hand.",
+    meta: "Live on WhatsApp · Telegram in beta · first 50 scans free",
     cta: { label: "Start free on WhatsApp", href: WHATSAPP_URL, external: true },
   },
 ];
@@ -96,10 +96,10 @@ export default function ThreeLayers() {
               whileInView={{ y: 0, opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.55, delay: index * 0.1 }}
-              className="hover-card relative rounded-2xl border border-border bg-card/40 p-6 flex flex-col gap-4"
+              className="hover-card relative rounded-2xl border border-border bg-card p-6 flex flex-col gap-4"
             >
               <div className="flex items-center justify-between">
-                <div className="grid size-11 place-items-center rounded-xl bg-sunrise text-white shadow-[0_0_30px_-8px_rgba(240,81,0,0.55)]">
+                <div className="grid size-11 place-items-center rounded-xl border border-spark/25 bg-peach text-spark">
                   <Icon aria-hidden="true" className="size-5" />
                 </div>
                 <span className="font-heading text-2xl font-bold text-muted-foreground/60 tabular-nums">
@@ -123,7 +123,7 @@ export default function ThreeLayers() {
                       : {})}
                     className="cta-link inline-flex min-h-11 items-center gap-1 text-sm font-medium text-primary-text transition-colors hover:text-brand-orange"
                   >
-                    {layer.cta.label}
+                    <span className="cta-link-text">{layer.cta.label}</span>
                     <span aria-hidden="true" className="cta-link-arrow">→</span>
                   </Link>
                 )}

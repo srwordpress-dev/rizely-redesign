@@ -6,7 +6,7 @@
       "type": "skill-md",
       "description": "Connect to a user's Rizely account over MCP and work with the business-card leads they collected at events: contacts, events, an event's leads, CSV export and credit top-ups.",
       "url": "https://rizely.net/.well-known/agent-skills/rizely/SKILL.md",
-      "digest": "sha256:9d20270c264c7fef2c08a9d4039ea29f3ce2fd79a43dcd7b5302a11fbce765c6"
+      "digest": "sha256:6b765227e535dc2fbac9065ac9753a41d38196715aa8d5957a9ab5ff2c696ca4"
     }
   ]
 }

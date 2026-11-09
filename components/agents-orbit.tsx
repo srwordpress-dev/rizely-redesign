@@ -23,7 +23,7 @@ const agents: Agent[] = [
     short: "Cards",
     icon: ScanLine,
     status: "live",
-    desc: "Scans event business cards, builds your lead pipeline, and drafts personalised WhatsApp and Telegram follow-ups for you to approve. This is the one doing real work today.",
+    desc: "Scans event business cards, builds your lead pipeline, and drafts personalised WhatsApp and Telegram follow-ups for you to send. This is the one doing real work today.",
   },
   {
     name: "The Keeper",
@@ -86,7 +86,7 @@ function OrbitChip({
       }}
     >
       <div className={`-translate-x-1/2 -translate-y-1/2 ${counterClass}`}>
-        <div className="flex items-center gap-1 rounded-full border border-border bg-card/95 px-2 py-1 shadow-sm backdrop-blur">
+        <div className="flex items-center gap-1 rounded-full border border-border bg-card px-2 py-1 shadow-sm backdrop-blur">
           <Icon
             aria-hidden="true"
             className={`size-3.5 ${
@@ -118,8 +118,8 @@ function OrbitVisual() {
 
       {/* the sun = the user's business, at the centre */}
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-        <div className="sun-pulse grid size-24 place-items-center rounded-full bg-sunrise shadow-[0_0_60px_-6px_rgba(240,81,0,0.55)]">
-          <span className="text-center text-[11px] font-semibold uppercase tracking-wide leading-tight text-white">
+        <div className="sun-pulse grid size-24 place-items-center rounded-full border-[1.5px] border-spark bg-peach">
+          <span className="text-center text-[11px] font-semibold uppercase tracking-wide leading-tight text-spark-text">
             Your
             <br />
             business
@@ -205,15 +205,15 @@ export default function AgentsOrbit() {
                 transition={{ duration: 0.5, delay: index * 0.08 }}
                 className={`rounded-2xl border p-5 ${
                   agent.status === "live"
-                    ? "border-primary/40 bg-primary/5"
-                    : "hover-card border-border bg-card/40"
+                    ? "border-primary/40 bg-peach/60"
+                    : "hover-card border-border bg-card"
                 }`}
               >
                 <div className="flex items-start gap-4">
                   <div
                     className={`grid size-10 shrink-0 place-items-center rounded-xl border ${
                       agent.status === "live"
-                        ? "border-primary/30 bg-primary/10 text-primary"
+                        ? "border-primary/30 bg-peach text-primary"
                         : "border-border bg-background text-muted-foreground"
                     }`}
                   >
@@ -242,7 +242,7 @@ export default function AgentsOrbit() {
           <div className="flex flex-col sm:flex-row gap-3 pt-2">
             <Button asChild size="lg" className="cta-sunrise w-full sm:w-auto">
               <Link href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-                Put the live agent to work
+                Start free
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="w-full sm:w-auto">

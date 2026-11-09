@@ -117,13 +117,8 @@ export default function ${name}() {
   fs.writeFileSync(path.join(COMPONENTS, "scan-lead.tsx"), emit("ScanLead", "", s, mk, script));
   console.log("wrote components/scan-lead.tsx");
 }
-// ---- WALKTHROUGH (unscoped -> scope under .cpc-walk) ----
-{
-  const { css, markup, script } = extract(path.join(HERE, "walkthrough.src.html"));
-  const s = scopeCss(css, ".cpc-walk", "cpc_walk");
-  fs.writeFileSync(path.join(COMPONENTS, "walkthrough.tsx"), emit("Walkthrough", "cpc-walk", s, markup, script));
-  console.log("wrote components/walkthrough.tsx");
-}
+// (The walkthrough demo was deleted on 9 Nov 2026: it was on no page and carried
+// banned claims. Its source and component are gone.)
 // ---- assets ----
 fs.copyFileSync(path.join(HERE, "card_wa.jpg"), path.join(PUBLIC, "chat-wa.jpg"));
 fs.copyFileSync(path.join(HERE, "card_tg.jpg"), path.join(PUBLIC, "chat-tg.jpg"));

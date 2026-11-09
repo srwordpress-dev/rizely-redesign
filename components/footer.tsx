@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { BRAND, WHATSAPP_URL } from "@/lib/site";
 import { RizelyLogo } from "@/components/logo";
 import { SHOP_URL } from "@/lib/site";
+import { OPEN_EVENT } from "@/components/cookie-consent";
 
 const Footer = () => {
   const year = new Date().getFullYear();
@@ -24,22 +25,22 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="w-full border-t border-border bg-card/40">
-      <div className="mx-auto max-w-6xl px-4 py-16 sm:py-20">
-        {/* Closing CTA */}
+    <footer className="w-full">
+      {/* Closing CTA: the page's one --night band (DESIGN.md). */}
+      <div data-closing-cta className="bg-night text-canvas">
+      <div className="mx-auto max-w-6xl px-4 py-16 sm:py-24">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="flex flex-col items-center text-center gap-5 pb-14"
+          className="flex flex-col items-center text-center gap-5"
         >
-          <h2 className="text-3xl font-heading font-bold sm:text-4xl tracking-tight text-balance max-w-2xl">
-            Scan a card. Watch your business <span className="text-sunrise">rise</span>.
+          <h2 className="text-4xl sm:text-5xl leading-[1.1] text-balance max-w-2xl">
+            Meet someone today. <em>Follow up</em> tonight<span className="text-spark">.</span>
           </h2>
-          <p className="text-muted-foreground max-w-lg">
-            The live agent is on the job, your first 50 scans are free, and it works inside the
-            WhatsApp you already have open. Try it on the cards from your last event.
+          <p className="text-canvas/75 max-w-lg text-lg">
+            First 50 scans are free, inside the WhatsApp you already have open.
           </p>
           <Button asChild size="lg" className="cta-sunrise h-12 px-6 text-base font-semibold">
             <Link href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
@@ -47,8 +48,11 @@ const Footer = () => {
             </Link>
           </Button>
         </motion.div>
+      </div>
+      </div>
 
-        <Separator />
+      <div className="bg-parchment border-t border-hairline">
+      <div className="mx-auto max-w-6xl px-4 py-12 sm:py-16">
 
         <div className="grid gap-8 sm:grid-cols-2 sm:gap-10 lg:grid-cols-3 pt-10">
           <div className="space-y-3">
@@ -120,9 +124,21 @@ const Footer = () => {
             <Link href="/terms" className="inline-flex min-h-11 items-center transition-colors hover:text-foreground">
               Terms
             </Link>
+            {/* Reopens the cookie banner (components/cookie-consent.tsx). Shown only
+                where analytics are configured, since that is the only place it does anything. */}
+            {process.env.NEXT_PUBLIC_GTM_ID && (
+              <button
+                type="button"
+                onClick={() => window.dispatchEvent(new Event(OPEN_EVENT))}
+                className="inline-flex min-h-11 items-center transition-colors hover:text-foreground"
+              >
+                Cookie settings
+              </button>
+            )}
             <span>Made in India 🇮🇳</span>
           </div>
         </div>
+      </div>
       </div>
     </footer>
   );

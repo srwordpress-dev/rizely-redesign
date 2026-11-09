@@ -129,9 +129,9 @@ export default function ConnectPageContent() {
                 whileInView={{ y: 0, opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.06 }}
-                className="rounded-2xl border border-border bg-card/40 p-5"
+                className="rounded-2xl border border-border bg-card p-5"
               >
-                <div className="grid size-10 place-items-center rounded-xl border border-primary/30 bg-primary/10 text-primary mb-3">
+                <div className="grid size-10 place-items-center rounded-xl border border-primary/30 bg-peach text-primary mb-3">
                   <Icon aria-hidden="true" className="size-5" />
                 </div>
                 <h3 className="font-heading font-semibold mb-1">{cap.title}</h3>
@@ -153,7 +153,7 @@ export default function ConnectPageContent() {
               Works in Claude on the web, the desktop app, and Claude Code. Connect once and go.
             </p>
           </div>
-          <div className="rounded-2xl border border-border bg-card/40 p-6">
+          <div className="rounded-2xl border border-border bg-card p-6">
             <h3 className="font-heading font-semibold mb-1 flex items-center gap-2">
               <span className="size-2 rounded-full bg-muted-foreground/50" /> ChatGPT — next
             </h3>
@@ -182,7 +182,7 @@ export default function ConnectPageContent() {
               whileInView={{ y: 0, opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="rounded-2xl border border-border bg-card/40 p-6"
+              className="rounded-2xl border border-border bg-card p-6"
             >
               <div className="grid size-9 place-items-center rounded-full bg-sunrise text-white font-heading font-bold text-sm mb-4">
                 {step.n}
@@ -196,7 +196,7 @@ export default function ConnectPageContent() {
 
       {/* Honest limits */}
       <section className="max-w-3xl mx-auto w-full px-4 py-8 md:px-8">
-        <div className="rounded-2xl border border-border bg-card/40 p-6 sm:p-8">
+        <div className="rounded-2xl border border-border bg-card p-6 sm:p-8">
           <h3 className="font-heading font-semibold flex items-center gap-2 mb-4">
             <ShieldCheck aria-hidden="true" className="size-5 text-brand-teal" /> Straight about the edges
           </h3>

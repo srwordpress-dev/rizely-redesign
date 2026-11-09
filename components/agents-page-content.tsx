@@ -34,9 +34,9 @@ const agents: Agent[] = [
     name: "The Card Agent",
     icon: ScanLine,
     status: "live",
-    body: "Photograph a business card in WhatsApp or Telegram. It reads the card (Indian-language cards too, not just English), turns it into a clean lead with name, company, role, phone, email and event, and files it into your pipeline. Then it drafts a personalised follow-up for each person and sends it on WhatsApp or Telegram — you approve the first batch, and it keeps asking until you tell it to run on its own. It's the part that usually gets dropped: capture and follow-up, in one motion.",
+    body: "Photograph a business card in WhatsApp or Telegram. It reads the card (Indian-language cards too, not just English), turns it into a clean lead with name, company, role, phone, email and event, and files it into your pipeline. Then it drafts a personalised follow-up for each person, ready for you to read, edit and send on WhatsApp or Telegram. It's the part that usually gets dropped: capture and follow-up, in one motion.",
     limits:
-      "Honest limits: a badly printed or damaged card can still need a human glance, so check the details before you approve the follow-up.",
+      "Honest limits: a badly printed or damaged card can still need a human glance, so check the details before you send the follow-up.",
   },
   {
     name: "The Keeper",
@@ -89,7 +89,7 @@ export default function AgentsPageContent() {
 
       {/* The micro-agent model */}
       <section className="max-w-3xl mx-auto px-4 pb-6 md:px-8">
-        <div className="rounded-2xl border border-border bg-card/40 p-6 sm:p-8 text-center">
+        <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 text-center">
           <p className="text-muted-foreground leading-relaxed">
             Most software asks you to learn a big dashboard and do the work yourself. Rizely flips
             that. Instead of one bloated app, you get focused agents, each with one job. Today
@@ -114,14 +114,14 @@ export default function AgentsPageContent() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.06 }}
               className={`rounded-2xl border p-6 ${
-                isLive ? "border-primary/40 bg-primary/5" : "border-border bg-card/40"
+                isLive ? "border-primary/40 bg-peach/60" : "border-border bg-card"
               }`}
             >
               <div className="flex items-start gap-4">
                 <div
                   className={`grid size-11 shrink-0 place-items-center rounded-xl border ${
                     isLive
-                      ? "border-primary/30 bg-primary/10 text-primary"
+                      ? "border-primary/30 bg-peach text-primary"
                       : "border-border bg-background text-muted-foreground"
                   }`}
                 >
@@ -148,7 +148,7 @@ export default function AgentsPageContent() {
                     <div className="pt-2">
                       <Button asChild size="sm">
                         <Link href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-                          Put the Card Agent to work
+                          Start free
                         </Link>
                       </Button>
                     </div>

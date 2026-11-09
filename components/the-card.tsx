@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { SHOP_URL, WHATSAPP_URL } from "@/lib/site";
+import SectionKicker from "@/components/section-kicker";
 
 /*
   The card, in detail — but nothing is sold here (PRD v4 D2). Shopify already
@@ -16,16 +17,24 @@ import { SHOP_URL, WHATSAPP_URL } from "@/lib/site";
   10; anything larger is quoted on WhatsApp.
 */
 
+// USD figures are approximate conversions (about ₹85 to $1) for visitors who pick
+// USD; the store charges in ₹ only.
 const packs = [
-  { qty: "1 card", price: "₹599", each: "" },
-  { qty: "3 cards", price: "₹1,707", each: "₹569 each" },
-  { qty: "5 cards", price: "₹2,695", each: "₹539 each" },
-  { qty: "10 cards", price: "₹5,091", each: "₹509 each" },
+  { qty: "1 card", price: "₹599", usd: "~$7", each: "", eachUsd: "" },
+  { qty: "3 cards", price: "₹1,707", usd: "~$20", each: "₹569 each", eachUsd: "~$6.70 each" },
+  { qty: "5 cards", price: "₹2,695", usd: "~$32", each: "₹539 each", eachUsd: "~$6.30 each" },
+  { qty: "10 cards", price: "₹5,091", usd: "~$60", each: "₹509 each", eachUsd: "~$6 each" },
 ];
 
 const facts = [
-  ["102 designs", "Pick one and we print it. Your details, your logo."],
-  ["Light, durable PVC", "It goes through an airport without a fuss."],
+  ["Designed for you", "Your details and logo. You approve the preview before it's printed."],
+  [
+    "PVC, metal or transparent",
+    <>
+      <span data-price="inr">PVC from ₹599, customised from ₹699, metal from ₹1,999, transparent ₹2,499.</span>
+      <span data-price="usd">PVC from ~$7, customised from ~$8, metal from ~$24, transparent ~$29 (charged in ₹).</span>
+    </>,
+  ],
   ["Works on NFC phones", "Tap to open. No app on their side, ever."],
   ["Profile included", "Free with the card. No subscription to read it."],
 ];
@@ -44,21 +53,20 @@ export default function TheCard() {
           transition={{ duration: 0.6, type: "spring", bounce: 0 }}
           className="flex flex-col gap-4"
         >
-          <span className="w-fit text-xs font-semibold uppercase tracking-widest text-primary-text">
-            The card, up close
-          </span>
+          <SectionKicker no="07">The card, up close</SectionKicker>
           <h2 className="text-3xl font-heading font-bold sm:text-4xl tracking-tight">
-            Stop spelling your email out across a loud hall.
+            Stop spelling your email out across a <em>loud hall</em>.
           </h2>
           <p className="text-muted-foreground text-lg">
             One tap and they have everything — saved to their phone, not scribbled on the back of
-            someone else&apos;s card. It costs ₹599 once, there is nothing to renew, and the
+            someone else&apos;s card. It costs from <span data-price="inr">₹599</span>
+            <span data-price="usd">~$7</span>, once, there is nothing to renew, and the
             profile behind it comes free.
           </p>
 
           <dl className="mt-2 grid gap-4 sm:grid-cols-2">
             {facts.map(([term, desc]) => (
-              <div key={term}>
+              <div key={term as string}>
                 <dt className="text-sm font-semibold">{term}</dt>
                 <dd className="mt-1 text-sm text-muted-foreground leading-relaxed">{desc}</dd>
               </div>
@@ -68,7 +76,7 @@ export default function TheCard() {
           <div className="flex flex-col sm:flex-row gap-3 pt-3">
             <Button asChild size="lg" className="cta-sunrise h-12 px-6">
               <Link href={SHOP_URL} target="_blank" rel="noopener noreferrer">
-                Choose your card
+                Buy a card
               </Link>
             </Button>
             <Button asChild variant="outline" size="lg" className="h-12 px-6">
@@ -84,11 +92,11 @@ export default function TheCard() {
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.1, type: "spring", bounce: 0 }}
-          className="hover-card rounded-2xl border border-border bg-card/40 p-6 sm:p-8"
+          className="hover-card rounded-2xl border border-border bg-card p-6 sm:p-8"
         >
           <h3 className="font-heading text-lg font-semibold">Buying for the booth</h3>
           <p className="mt-1 text-sm text-muted-foreground">
-            The more you order, the less each card costs. Shipping is free over ₹999.
+            The more you order, the less each card costs. Prices below are for the PVC card; every card gets cheaper in packs. Shipping is free across India.
           </p>
 
           <ul className="mt-5 divide-y divide-border">
@@ -96,9 +104,13 @@ export default function TheCard() {
               <li key={p.qty} className="flex items-baseline justify-between gap-4 py-3">
                 <span className="text-sm">{p.qty}</span>
                 <span className="flex items-baseline gap-2 tabular-nums">
-                  <span className="font-semibold">{p.price}</span>
+                  <span className="font-semibold" data-price="inr">{p.price}</span>
+                  <span className="font-semibold" data-price="usd">{p.usd}</span>
                   {p.each && (
-                    <span className="text-xs text-muted-foreground">{p.each}</span>
+                    <>
+                      <span className="text-xs text-muted-foreground" data-price="inr">{p.each}</span>
+                      <span className="text-xs text-muted-foreground" data-price="usd">{p.eachUsd}</span>
+                    </>
                   )}
                 </span>
               </li>
@@ -111,13 +123,13 @@ export default function TheCard() {
 
           <p className="mt-5 text-xs text-muted-foreground">
             <span data-price="inr">Prices include GST. </span>
-            <span data-price="usd">Prices are in ₹ and the card ships within India. </span>
+            <span data-price="usd">Dollar prices are approximate: you are charged in ₹ and the card ships within India. </span>
             Packs, designs and checkout all live on the store — this page just points you at it.
           </p>
 
           <Button asChild variant="outline" className="mt-5 h-11 w-full">
             <Link href={SHOP_URL} target="_blank" rel="noopener noreferrer">
-              See all 102 designs
+              See all the cards
             </Link>
           </Button>
         </motion.div>

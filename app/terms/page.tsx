@@ -13,8 +13,8 @@ export default function TermsPage() {
     <LegalLayout title="Terms of Service" updated="22 August 2026">
       <p>
         These Terms govern your use of <strong>Rizely</strong> (the &quot;Service&quot;) — a
-        WhatsApp- and Telegram-based tool that scans business cards, builds a lead pipeline, and
-        sends follow-ups. By using the Service, you agree to these Terms.
+        WhatsApp- and Telegram-based AI agent that scans business cards, builds a lead pipeline, and
+        drafts follow-ups for you to send. By using the Service, you agree to these Terms.
       </p>
 
       <h2>1. Who can use it</h2>
@@ -52,7 +52,7 @@ export default function TermsPage() {
       <p>
         Paid plans are billed in the currency shown at checkout — US Dollars (USD) by default, or
         Indian Rupees (INR) with GST for customers in India. Plans are billed annually, or as a
-        one-off Event Pass for a single event; your first 50 scans are free, then a paid plan or Event Pass. Prices shown on the site are being finalised and may
+        one-off Event Pass for a single event; your first 50 scans are free, then a paid plan or Event Pass. Extra credits can be bought as top-ups at any time. Prices shown on the site are being finalised and may
         change before general availability — the price and inclusions confirmed at checkout apply.
         A GST invoice is provided on Indian plans.
       </p>

@@ -14,8 +14,8 @@ export default function PrivacyPage() {
       <p>
         This Privacy Policy explains how <strong>Rizely</strong> (&quot;Rizely&quot;,
         &quot;we&quot;, &quot;us&quot;) collects, uses, shares, and protects personal data when you
-        use our website and our WhatsApp- and Telegram-based business-card scanning and follow-up
-        service (the &quot;Service&quot;). We operate globally, with a strong presence in India, and
+        use our website and our WhatsApp- and Telegram-based AI agent for scanning business cards
+        and drafting follow-ups (the &quot;Service&quot;). We operate globally, with a strong presence in India, and
         handle personal data with India&apos;s Digital Personal Data Protection Act, 2023 (DPDP) in mind.
       </p>
 
@@ -35,13 +35,13 @@ export default function PrivacyPage() {
         </li>
         <li>
           <strong>Usage data.</strong> Basic technical and usage information (for example, scans
-          made, follow-ups sent, and error logs) so we can run and improve the Service.
+          made, follow-ups drafted, and error logs) so we can run and improve the Service.
         </li>
       </ul>
 
       <h2>2. How we use it</h2>
       <ul>
-        <li>To provide the Service — scan cards, build your lead pipeline, and send follow-ups.</li>
+        <li>To provide the Service — scan cards, build your lead pipeline, and draft follow-ups.</li>
         <li>To respond to sign-ups and support requests.</li>
         <li>To operate, secure, and improve the product.</li>
         <li>To comply with legal obligations, including under the DPDP Act.</li>

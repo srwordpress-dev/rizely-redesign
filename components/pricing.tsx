@@ -8,6 +8,7 @@ import { CheckIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { WHATSAPP_URL, SHOP_URL } from "@/lib/site";
 import CurrencyToggle from "@/components/currency-toggle";
+import SectionKicker from "@/components/section-kicker";
 
 /*
   Annual, ex-GST, grounded in workstreams/07-research/PRICING.md.
@@ -39,9 +40,9 @@ const plans: Plan[] = [
     features: [
       "1 seat",
       "500 scans / month",
-      "200 follow-ups / month",
+      "200 follow-up drafts / month",
       "Multilingual card capture",
-      "WhatsApp & Telegram",
+      "WhatsApp & Telegram (beta)",
     ],
   },
   {
@@ -54,7 +55,7 @@ const plans: Plan[] = [
       "Everything in Solo",
       "3 seats",
       "2,000 scans / month",
-      "1,000 follow-ups / month",
+      "1,000 follow-up drafts / month",
       "CSV export · Connect to Claude",
     ],
   },
@@ -68,7 +69,7 @@ const plans: Plan[] = [
       "Everything in Team",
       "10 seats",
       "Unlimited scans",
-      "5,000 follow-ups / month",
+      "5,000 follow-up drafts / month",
       "Priority support",
     ],
   },
@@ -102,12 +103,13 @@ export default function Pricing() {
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="mb-12 flex flex-col items-center gap-3 text-center sm:mb-16"
       >
+        <SectionKicker no="08">Pricing</SectionKicker>
         <h2 className="text-3xl font-heading font-bold sm:text-4xl tracking-tight">
-          Start free. Pay only when it&apos;s earning its keep.
+          Start free. Pay when it&apos;s <em>earning its keep</em>.
         </h2>
         <p className="mx-auto max-w-xl text-muted-foreground text-lg">
-          Your first 50 scans are free — no card, no app. After that, plans are annual, or buy a
-          one-off Event Pass for a single show.
+          50 scans free. Then a yearly plan, or an Event Pass for a single show. Top up credits any
+          time.
         </p>
         <div className="flex flex-col items-center gap-2 pt-1">
           <CurrencyToggle />
@@ -134,7 +136,7 @@ export default function Pricing() {
             <Card
               className={`relative h-full rounded-2xl ${
                 plan.isMostPop
-                  ? "border-2 border-primary bg-primary/5 shadow-lg"
+                  ? "border-2 border-primary bg-peach/60 shadow-lg"
                   : "hover-card border border-border"
               }`}
             >
@@ -208,7 +210,7 @@ export default function Pricing() {
           not a yearly commitment. The card links out to Shopify; nothing is
           sold on this site (PRD v4 D2). */}
       <div className="mx-auto mt-6 grid max-w-5xl gap-4 sm:mt-8 sm:gap-6 md:grid-cols-2">
-        <div className="hover-card rounded-2xl border border-border bg-card/40 p-6">
+        <div className="hover-card rounded-2xl border border-border bg-card p-6">
           <h3 className="font-heading text-lg font-semibold">Event Pass</h3>
           <p className="mt-1 text-sm text-muted-foreground">
             Running a booth? Pay for the show, not the year.
@@ -220,7 +222,7 @@ export default function Pricing() {
             <span className="ml-1 text-sm text-muted-foreground">/event</span>
           </div>
           <p className="mt-1 text-xs text-muted-foreground">
-            5 seats · 750 scans · 750 follow-ups · 30-day window · [PRICING PROPOSED]
+            5 seats · 750 scans · 750 follow-up drafts · 30-day window · [PRICING PROPOSED]
           </p>
           <Button asChild variant="outline" className="mt-4 h-11 w-full">
             <Link href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
@@ -229,22 +231,25 @@ export default function Pricing() {
           </Button>
         </div>
 
-        <div className="hover-card rounded-2xl border border-border bg-card/40 p-6">
+        <div className="hover-card rounded-2xl border border-border bg-card p-6">
           <h3 className="font-heading text-lg font-semibold">The NFC card</h3>
           <p className="mt-1 text-sm text-muted-foreground">
             A one-off purchase, not a plan. Your profile is included free.
           </p>
           <div className="mt-3 flex items-baseline tabular-nums">
-            <span className="text-3xl font-bold">₹599</span>
+            <span className="mr-1 self-center text-sm text-muted-foreground">From</span>
+            {/* The shop charges in ₹ only; the USD figure is an approximate conversion. */}
+            <span className="text-3xl font-bold" data-price="inr">₹599</span>
+            <span className="text-3xl font-bold" data-price="usd">~$7</span>
             <span className="ml-1 text-sm text-muted-foreground" data-price="inr">incl. GST</span>
-            <span className="ml-1 text-sm text-muted-foreground" data-price="usd">· ships within India</span>
+            <span className="ml-1 text-sm text-muted-foreground" data-price="usd">charged as ₹599 · ships within India</span>
           </div>
           <p className="mt-1 text-xs text-muted-foreground">
-            102 designs · packs down to ₹509 a card · free shipping over ₹999
+            PVC, customised, metal or transparent · designed for you, approved before print · free shipping across India
           </p>
           <Button asChild variant="outline" className="mt-4 h-11 w-full">
             <Link href={SHOP_URL} target="_blank" rel="noopener noreferrer">
-              Choose your card
+              Buy a card
             </Link>
           </Button>
         </div>

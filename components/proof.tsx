@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { X, Check, Sparkles } from "lucide-react";
+import SectionKicker from "@/components/section-kicker";
 
 // Honest, mechanism-based before/after — describes the manual pain vs. what the
 // loop does. Deliberately NO fabricated percentages, ₹ figures, user counts, or
@@ -15,7 +16,7 @@ const before = [
 
 const after = [
   "Each card becomes a clean lead, filed under the right event.",
-  "A personalised follow-up is drafted the same night, in the lead's language — you approve it.",
+  "A personalised follow-up is drafted the same night, in the lead's language — you send it.",
   "The stack gets worked while the conversations are still warm.",
 ];
 
@@ -29,8 +30,9 @@ export default function Proof() {
         transition={{ duration: 0.6, type: "spring", bounce: 0 }}
         className="flex flex-col gap-3 text-center mb-14 max-w-2xl mx-auto"
       >
+        <SectionKicker no="04" className="mx-auto">One event</SectionKicker>
         <h2 className="text-3xl font-heading font-bold sm:text-4xl tracking-tight">
-          What one event turns into
+          What one event <em>turns into</em>.
         </h2>
         <p className="text-muted-foreground text-lg">
           The same stack of cards, two very different Mondays.
@@ -44,7 +46,7 @@ export default function Proof() {
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="rounded-2xl border border-border bg-card/40 p-6 sm:p-8"
+          className="rounded-2xl border border-border bg-card p-6 sm:p-8"
         >
           <h3 className="mb-5 text-sm font-semibold uppercase tracking-widest text-muted-foreground">
             Without Rizely
@@ -52,7 +54,7 @@ export default function Proof() {
           <ul className="space-y-4">
             {before.map((line) => (
               <li key={line} className="flex gap-3 text-sm text-muted-foreground">
-                <X aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-destructive" />
+                <X aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-graphite" />
                 <span>{line}</span>
               </li>
             ))}
@@ -65,7 +67,7 @@ export default function Proof() {
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="rounded-2xl border-2 border-primary/40 bg-primary/5 p-6 sm:p-8"
+          className="rounded-2xl border-2 border-primary/40 bg-peach/60 p-6 sm:p-8"
         >
           <h3 className="mb-5 text-sm font-semibold uppercase tracking-widest text-primary-text">
             With Rizely
@@ -87,7 +89,7 @@ export default function Proof() {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.15 }}
-        className="mx-auto mt-8 max-w-4xl rounded-2xl border border-dashed border-border bg-card/30 p-5 text-center"
+        className="mx-auto mt-8 max-w-4xl rounded-2xl border border-dashed border-border bg-card p-5 text-center"
       >
         <p className="inline-flex flex-wrap items-center justify-center gap-2 text-sm text-muted-foreground">
           <Sparkles aria-hidden="true" className="size-4 text-brand-amber" />

@@ -3,12 +3,13 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { WHATSAPP_URL } from "@/lib/site";
-import { Briefcase, Store } from "lucide-react";
+import { SHOP_URL, WHATSAPP_URL } from "@/lib/site";
+import { Briefcase, CreditCard, Store } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import SectionKicker from "@/components/section-kicker";
 
-// Two use-cases, cost-differentiated: the person who ATTENDS the event vs. the
-// team that RUNS the booth. Each maps to the plan that fits how they show up.
+// Three use-cases: the person who ATTENDS the event, the team that RUNS the
+// booth, and the person who just wants a better card. Each maps to what fits.
 type Persona = {
   icon: LucideIcon;
   tag: string;
@@ -17,6 +18,8 @@ type Persona = {
   // Prices follow the ₹/$ toggle like the pricing section (data-price). [PRICING PROPOSED]
   fit: { inr: string; usd: string };
   cta: string;
+  href: string;
+  secondary: { label: string; href: string };
 };
 
 const personas: Persona[] = [
@@ -30,6 +33,8 @@ const personas: Persona[] = [
       usd: "Best fit: Solo — $79/yr if you work events often, or a one-off Event Pass — $49 for a single show. (proposed)",
     },
     cta: "Start free on WhatsApp",
+    href: WHATSAPP_URL,
+    secondary: { label: "See pricing", href: "#pricing" },
   },
   {
     icon: Store,
@@ -40,7 +45,22 @@ const personas: Persona[] = [
       inr: "Best fit: Event Pass — ₹2,499/event for 5 seats, or Team / Business if you exhibit all year. (proposed)",
       usd: "Best fit: Event Pass — $49/event for 5 seats, or Team / Business if you exhibit all year. (proposed)",
     },
-    cta: "Get an Event Pass",
+    cta: "Start free on WhatsApp",
+    href: WHATSAPP_URL,
+    secondary: { label: "See pricing", href: "#pricing" },
+  },
+  {
+    icon: CreditCard,
+    tag: "You hand out cards",
+    title: "Anyone who wants a better card",
+    body: "Swap paper for a card they tap. Your profile opens on their phone — no app on their side, nothing to type — and it saves straight to their contacts. Add the agent whenever you start collecting cards of your own.",
+    fit: {
+      inr: "Best fit: a Rizely NFC card — from ₹599, once. Your profile is included free.",
+      usd: "Best fit: a Rizely NFC card — from ~$7 (charged in ₹), once. Your profile is included free.",
+    },
+    cta: "Buy a card",
+    href: SHOP_URL,
+    secondary: { label: "See the cards", href: "#card" },
   },
 ];
 
@@ -54,18 +74,16 @@ export default function Personas() {
         transition={{ duration: 0.6, type: "spring", bounce: 0 }}
         className="flex flex-col gap-3 text-center mb-14 max-w-2xl mx-auto"
       >
-        <span className="mx-auto w-fit text-xs font-semibold uppercase tracking-widest text-primary-text">
-          Use cases
-        </span>
+        <SectionKicker no="05" className="mx-auto">Use cases</SectionKicker>
         <h2 className="text-3xl font-heading font-bold sm:text-4xl tracking-tight">
-          Walk the floor, or run the booth?
+          However you meet people, it <em>fits</em>.
         </h2>
         <p className="text-muted-foreground text-lg">
-          Same product, a different play — and a plan that matches how you actually show up.
+          Pick the one that sounds like you.
         </p>
       </motion.div>
 
-      <div className="grid gap-5 md:grid-cols-2 max-w-5xl mx-auto">
+      <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
         {personas.map((p, index) => {
           const Icon = p.icon;
           return (
@@ -75,10 +93,10 @@ export default function Personas() {
               whileInView={{ y: 0, opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.55, delay: index * 0.1 }}
-              className="hover-card flex flex-col rounded-2xl border border-border bg-card/40 p-6 sm:p-8"
+              className="hover-card flex flex-col rounded-2xl border border-border bg-card p-6 sm:p-8"
             >
               <div className="flex items-center gap-3 mb-4">
-                <div className="grid size-11 shrink-0 place-items-center rounded-xl border border-primary/30 bg-primary/10 text-primary">
+                <div className="grid size-11 shrink-0 place-items-center rounded-xl border border-primary/30 bg-peach text-primary">
                   <Icon aria-hidden="true" className="size-5" />
                 </div>
                 <div>
@@ -91,19 +109,19 @@ export default function Personas() {
 
               <p className="text-sm text-muted-foreground leading-relaxed">{p.body}</p>
 
-              <div className="mt-4 rounded-xl border border-primary/20 bg-primary/5 p-3 text-sm text-foreground/90">
+              <div className="mt-4 rounded-xl border border-primary/20 bg-peach/60 p-3 text-sm text-foreground/90">
                 <span data-price="inr">{p.fit.inr}</span>
                 <span data-price="usd">{p.fit.usd}</span>
               </div>
 
-              <div className="mt-5 flex flex-wrap gap-3">
+              <div className="mt-auto flex flex-wrap gap-3 pt-5">
                 <Button asChild className="cta-sunrise">
-                  <Link href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+                  <Link href={p.href} target="_blank" rel="noopener noreferrer">
                     {p.cta}
                   </Link>
                 </Button>
                 <Button asChild variant="outline">
-                  <Link href="#pricing">Compare plans</Link>
+                  <Link href={p.secondary.href}>{p.secondary.label}</Link>
                 </Button>
               </div>
             </motion.div>
