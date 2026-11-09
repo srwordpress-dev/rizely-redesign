@@ -1,0 +1,231 @@
+/*
+  01 · How it works timeline (components/how-it-works.tsx). State classes
+  (.is-on) flip on a clock; every move here is a transition.
+*/
+.tl-box {
+  position: relative;
+  width: 100%;
+  max-width: 1088px;
+  aspect-ratio: 1088 / 640;
+}
+.tl-stage {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1088px;
+  height: 640px;
+  transform-origin: top left;
+}
+.tl-track,
+.tl-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 318px;
+  height: 2px;
+}
+.tl-track { background-image: repeating-linear-gradient(90deg, var(--line-strong) 0 6px, transparent 6px 12px); }
+.tl-line {
+  background: var(--spark-action);
+  transform-origin: left;
+  transition: transform 1100ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+.tl-stop { position: absolute; top: 319px; width: 0; height: 0; }
+.tl-node,
+.tl-ripple {
+  position: absolute;
+  left: -11px;
+  top: -11px;
+  width: 22px;
+  height: 22px;
+  box-sizing: border-box;
+  border-radius: 50%;
+}
+.tl-node {
+  border: 2px solid var(--line-strong);
+  background: var(--parchment);
+  scale: 0.8;
+  transition: background-color 300ms ease, border-color 300ms ease, scale 400ms var(--ease-out);
+}
+.tl-node.is-on { border-color: var(--spark-action); background: var(--spark-action); scale: 1; }
+.tl-ripple {
+  border: 2px solid var(--spark-action);
+  opacity: 0;
+  animation: tl-ripple 1200ms var(--ease-out) 1;
+}
+@keyframes tl-ripple {
+  from { transform: scale(1); opacity: 0.5; }
+  to { transform: scale(2.4); opacity: 0; }
+}
+.tl-label {
+  position: absolute;
+  left: -110px;
+  top: -70px;
+  width: 220px;
+  text-align: center;
+  opacity: 0.4;
+  transition: opacity 500ms ease;
+}
+.tl-stop.is-below .tl-label { top: 24px; }
+.tl-label.is-on { opacity: 1; }
+.tl-time {
+  display: block;
+  font-family: var(--font-serif), "Source Serif 4", Georgia, serif;
+  font-style: italic;
+  font-size: 20px;
+  color: #8a847c;
+  transition: color 400ms ease;
+}
+.tl-label.is-on .tl-time { color: var(--spark-text); }
+.tl-when { display: block; font-size: 13px; color: var(--graphite); }
+.tl-slot { position: absolute; width: 300px; }
+
+/* Cards */
+.tl-card {
+  overflow: hidden;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  box-shadow: var(--shadow-card);
+  opacity: 0;
+  transition: opacity 600ms var(--ease-out), translate 600ms var(--ease-out);
+}
+.tl-from-down { translate: 0 24px; }
+.tl-from-up { translate: 0 -24px; }
+.tl-from-side { translate: 16px 0; }
+.tl-card.is-on { opacity: 1; translate: 0 0; }
+.tl-no {
+  font-family: var(--font-serif), "Source Serif 4", Georgia, serif;
+  font-style: italic;
+  font-size: 18px;
+  color: var(--spark-text);
+}
+.tl-visual {
+  height: 150px;
+  box-sizing: border-box;
+  background: var(--parchment);
+}
+.tl-pop {
+  opacity: 0;
+  translate: 0 8px;
+  transition: opacity 400ms var(--ease-out), translate 400ms var(--ease-out);
+}
+.tl-pop.is-on { opacity: 1; translate: 0 0; }
+.tl-v-chat { display: flex; align-items: flex-end; justify-content: flex-end; padding: 14px; }
+.tl-photo {
+  padding: 4px;
+  border-radius: 12px 12px 3px 12px;
+  background: #fff;
+  border: 1px solid var(--line);
+}
+.tl-photo img { display: block; width: 132px; height: 80px; object-fit: cover; border-radius: 8px; }
+.tl-photo span { display: block; margin-top: 2px; text-align: right; font-size: 9px; color: var(--spark-text); }
+.tl-v-lead { display: grid; place-items: center; }
+.tl-lead {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 236px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid var(--hairline);
+}
+.tl-chip { padding: 2px 7px; border-radius: 999px; background: var(--peach); color: #8a2e00; font-size: 9px; font-weight: 600; }
+.tl-field { display: grid; grid-template-columns: 54px minmax(0, 1fr); font-size: 11px; }
+.tl-v-draft { display: flex; flex-direction: column; justify-content: center; gap: 8px; padding: 12px 14px; }
+.tl-draft {
+  padding: 8px 10px;
+  border-radius: 12px 12px 12px 3px;
+  background: #fff;
+  border: 1px solid var(--line);
+  font-size: 11px;
+  line-height: 1.5;
+}
+.tl-btns { display: flex; justify-content: flex-end; gap: 6px; }
+.tl-edit { padding: 5px 11px; border-radius: 8px; border: 1.5px solid var(--spark-action); color: var(--spark-text); font-size: 10px; font-weight: 600; }
+.tl-send {
+  padding: 5px 13px;
+  border-radius: 8px;
+  background: var(--spark-action);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  transition: background-color 150ms ease, scale 150ms var(--ease-out);
+}
+.tl-send.is-press { background: var(--spark-action-hover); scale: 0.9; }
+
+/* Vertical timeline (below lg). Its own CSS sets display, so it is hidden
+   from lg here too: unlayered CSS beats Tailwind's lg:hidden. */
+@media (min-width: 1024px) {
+  .tl-vertical { display: none !important; }
+}
+.tl-vertical {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  width: 100%;
+  max-width: 460px;
+  padding-left: 48px;
+}
+.tl-vtrack,
+.tl-vline {
+  position: absolute;
+  left: 18px;
+  top: 10px;
+  bottom: 10px;
+  width: 2px;
+}
+.tl-vtrack { background-image: repeating-linear-gradient(180deg, var(--line-strong) 0 6px, transparent 6px 12px); }
+.tl-vline {
+  background: var(--spark-action);
+  transform-origin: top;
+  transition: transform 1100ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+.tl-vitem { position: relative; display: flex; flex-direction: column; gap: 12px; }
+.tl-vstop { position: relative; height: 22px; }
+.tl-vstop .tl-node,
+.tl-vstop .tl-ripple { left: -41px; top: 0; }
+.tl-vstop .tl-label {
+  left: 0;
+  top: 0;
+  width: auto;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  text-align: left;
+}
+.tl-vstop .tl-time { font-size: 18px; }
+
+.tl-replay {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  margin-top: 28px;
+  padding: 0 18px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 200ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .tl-replay:hover { border-color: var(--line-strong); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tl-line, .tl-vline, .tl-card, .tl-pop { transition: opacity 200ms ease; }
+  .tl-card, .tl-pop { translate: none; }
+  .tl-ripple { animation: none; }
+}
+
+/* Before the first play the stage snaps to its start with no transitions. */
+.tl-snap .tl-line,
+.tl-snap .tl-vline,
+.tl-snap .tl-card,
+.tl-snap .tl-pop,
+.tl-snap .tl-node,
+.tl-snap .tl-label { transition: none; }
