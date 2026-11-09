@@ -114,9 +114,12 @@ carries text:
 ## 4. Components
 
 ### Buttons
-- **Primary:** `--spark-action` fill, white Instrument Sans 16px/500, 8px radius, 12px × 20px padding,
-  no border, no shadow. Hover `--spark-action-hover`. One per view.
-- **Ghost:** transparent, 2px `--spark-action` border, `--ink` label, same size.
+- **Primary (click here):** `--cta` `#B33C00` fill, white Instrument Sans 16px/500 (5.89:1),
+  8px radius, 12px × 20px padding, no border, no shadow. Hover `--cta-hover` `#9E3500` (7.09:1).
+  One per view. Every button a visitor should press uses it, including the one on the dark band.
+- **Black (`--spark-action`)** is kept for selected states and the mock buttons inside drawings,
+  which are pictures, not controls.
+- **Ghost:** transparent, 2px `--ink` border, `--ink` label, same size.
   Hover fills `--parchment`. Travels with a primary.
 - **Text link:** `--spark-text`, underline on hover, arrow nudges 2px right.
 - **Focus ring:** 2px `--spark`, 2px offset, on every interactive element.
@@ -193,3 +196,19 @@ The one `--night` section: serif headline in `--canvas`, primary button, lead in
 - No serif below 24px, no serif weight other than 500.
 - Don't change the hero animation's behaviour, only its colours.
 - No emoji as icons, no centred everything; left-align body copy.
+
+---
+
+## Hand layer (Nov 2026)
+
+Small human marks on a clean grid. Keep each to the places listed; more of them turns into decoration.
+
+- **Hand-drawn underline** (rough-notation, `components/scribble.tsx`) in `--spark`, on the hero's
+  last two words only. Drawn once after load; already drawn under reduced motion.
+- **Margin notes** in Kalam 400 (`--font-hand`, not preloaded), `--graphite`, tilted 2-3°, with an
+  orange hand-drawn arrow. Two notes on the desktop timeline only.
+- **Stickers** (`.sticker`): `--spark` fill, `--ink` label (5.55:1), Bricolage 700, tilted -4° or 3°.
+  Used for "Most popular" and one note on the card photo.
+- **Paper grain** on the grey bands: an SVG noise tile at 5% black.
+- **Section heads vary**: the label sits only on How it works and Pricing. How it works carries the
+  oversized `10:42 → 19:30`, the page's one deliberate break from the grid.

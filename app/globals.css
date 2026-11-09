@@ -41,6 +41,8 @@
   --color-line: var(--line);
   --color-spark: var(--spark);
   --color-spark-action: var(--spark-action);
+  --color-cta: var(--cta);
+  --color-cta-hover: var(--cta-hover);
   --color-spark-action-hover: var(--spark-action-hover);
   --color-spark-text: var(--spark-text);
   --color-night: var(--night);
@@ -101,6 +103,11 @@ h1 {
   --spark: #f05100; /* the Rizely orange: icons, logo, focus, the hero full stop */
   --spark-action: #0a0a0a; /* palette D: buttons are black, white label */
   --spark-action-hover: #2b2b2b;
+  /* The click-here colour (Nov 2026): every real CTA a visitor should press is
+     burnt orange with a white label (5.89:1, hover 7.09:1). Black stays for
+     secondary buttons, selected states and the mock UI inside drawings. */
+  --cta: #b33c00;
+  --cta-hover: #9e3500;
   --spark-text: #b33c00; /* orange text on cream, 5.74:1 */
   --night: #0a0a0a; /* the one dark band per page */
 
@@ -268,14 +275,14 @@ h1 {
    call site follows). DESIGN.md: flat --spark-action fill, white label, no
    gradient, no glow, no shadow; hover deepens. */
 .cta-sunrise {
-  background-color: var(--spark-action);
+  background-color: var(--cta);
   background-image: none;
   color: #fff;
   box-shadow: none;
 }
 .cta-sunrise:hover,
 .cta-sunrise:active {
-  background-color: var(--spark-action-hover);
+  background-color: var(--cta-hover);
 }
 .cta-sunrise:focus-visible {
   outline: 2px solid var(--spark);
@@ -476,7 +483,7 @@ details[open] > summary .faq-chevron {
   transition-timing-function: ease, ease, ease, var(--ease-out), var(--ease-out);
 }
 [data-slot="button"][data-variant="default"]:active {
-  background-color: var(--spark-action-hover);
+  background-color: var(--cta-hover);
 }
 [data-slot="button"][data-variant="outline"]:active {
   background-color: var(--peach);
@@ -1074,3 +1081,101 @@ h2 em {
 @media (prefers-reduced-motion: reduce) {
   .card-photo { scale: none; transition: opacity 200ms ease; }
 }
+
+/*
+  Hand layer (Nov 2026, approved A-D): orange stickers, a faint paper grain on
+  the grey bands, handwritten margin notes. Small human marks on a clean grid.
+*/
+.sticker {
+  display: inline-block;
+  padding: 0.3rem 0.75rem;
+  border-radius: 6px;
+  background: var(--spark);
+  color: var(--ink); /* 5.55:1 on #F05100 */
+  font-family: var(--font-display), "Bricolage Grotesque", system-ui, sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
+  rotate: -4deg;
+  box-shadow: 0 1px 0 rgb(10 10 10 / 0.08), 0 8px 16px -8px rgb(10 10 10 / 0.35);
+}
+.sticker-r { rotate: 3deg; }
+
+main > .bg-parchment {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .05 0 0 0 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.hand-note {
+  font-family: var(--font-hand), "Kalam", cursive;
+  font-weight: 400;
+}
+
+/* The oversized clock above How it works: the page's one deliberate break. */
+.big-clock {
+  font-family: var(--font-display), "Bricolage Grotesque", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: clamp(2.25rem, 11vw, 5.75rem);
+  line-height: 0.9;
+  letter-spacing: -0.045em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.big-clock .arrow { color: var(--spark); font-weight: 500; }
+
+/* Why Rizely: the small drawings beside each reason. */
+.wr-vis {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+.wr-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--card);
+  white-space: nowrap;
+}
+.wr-chip-hot { background: var(--peach); border-color: transparent; color: var(--spark-text); }
+.wr-arrow, .wr-or { color: var(--graphite); font-weight: 500; }
+.wr-mini-card { width: 16px; height: 11px; border-radius: 2px; background: var(--ink); }
+.wr-tag {
+  padding: 0 0.35rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--graphite);
+}
+.wr-scripts span {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.2;
+  padding: 0.15rem 0.6rem;
+  border-radius: 8px;
+  background: var(--card);
+  border: 1px solid var(--line);
+}
+.wr-scripts span:first-child { background: var(--peach); border-color: transparent; }
+.wr-ticket {
+  display: inline-flex;
+  flex-direction: column;
+  padding: 0.45rem 1rem;
+  border-radius: 6px;
+  background: var(--spark);
+  color: var(--ink);
+  rotate: -3deg;
+  -webkit-mask: radial-gradient(circle 6px at 0 50%, #0000 98%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle 6px at 100% 50%, #0000 98%, #000) right / 51% 100% no-repeat;
+  mask: radial-gradient(circle 6px at 0 50%, #0000 98%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle 6px at 100% 50%, #0000 98%, #000) right / 51% 100% no-repeat;
+}
+.wr-ticket-k { font-family: var(--font-display), "Bricolage Grotesque", system-ui, sans-serif; font-weight: 700; font-size: 0.9375rem; }
+.wr-ticket-v { font-size: 0.6875rem; font-weight: 600; }

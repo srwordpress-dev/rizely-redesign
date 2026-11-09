@@ -5,7 +5,6 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { AI_ASSISTANTS_URL } from "@/lib/site";
-import SectionKicker from "@/components/section-kicker";
 
 /*
   "Works with Claude": one Claude chat with Rizely connected, playing a short
@@ -75,9 +74,8 @@ export default function ClaudeChat() {
         transition={{ duration: 0.6, type: "spring", bounce: 0 }}
         className="mx-auto mb-10 flex max-w-2xl flex-col gap-3 text-center sm:mb-12"
       >
-        <SectionKicker no="06" className="mx-auto">Works with Claude</SectionKicker>
         <h2 className="text-[2rem] leading-[1.15] sm:text-[2.75rem] sm:leading-[1.12] text-balance">
-          Just ask Claude about your <em>leads</em>.
+          Just ask Claude about your leads.
         </h2>
         <p className="text-base text-muted-foreground sm:text-lg">
           Connect Rizely once. Then ask in plain words and the answer lands right in your chat.

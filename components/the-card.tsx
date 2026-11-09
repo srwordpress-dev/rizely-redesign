@@ -6,7 +6,6 @@ import Link from "next/link";
 import { ArrowRight, Nfc, Smartphone, UserRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CARDS, WHATSAPP_URL } from "@/lib/site";
-import SectionKicker from "@/components/section-kicker";
 
 /*
   07 · The card, up close. Visual first (design: claude.ai/artifact/HNwzG6H1xMdcuPYsENCm4E):
@@ -102,9 +101,8 @@ export default function TheCard() {
           transition={{ duration: 0.6, type: "spring", bounce: 0 }}
           className="flex flex-col gap-4 lg:col-start-2 lg:row-start-1 lg:self-end"
         >
-          <SectionKicker no="07">The card, up close</SectionKicker>
           <h2 className="text-3xl font-heading font-bold sm:text-4xl tracking-tight">
-            Stop spelling your email out across a <em>loud hall</em>.
+            Stop spelling your email out across a loud hall.
           </h2>
           <p className="text-muted-foreground text-lg">
             One tap and your details are saved on their phone. Pay once. Nothing to renew.
@@ -120,6 +118,7 @@ export default function TheCard() {
           className="flex flex-col gap-4 lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:self-center"
         >
           <div className="card-stage">
+            <span aria-hidden="true" className="sticker absolute right-4 top-4 z-10">Free shipping in India</span>
             {MATERIALS.map((m) => (
               // eslint-disable-next-line @next/next/no-img-element -- static export, images are pre-sized WebP
               <img

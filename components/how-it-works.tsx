@@ -211,13 +211,19 @@ export default function HowItWorks() {
         whileInView={{ y: 0, opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, type: "spring", bounce: 0 }}
-        className="flex flex-col gap-3 text-center mb-10 max-w-2xl"
+        className="mb-12 grid w-full max-w-[1088px] gap-6 text-left lg:grid-cols-[auto_1fr] lg:items-end lg:gap-14"
       >
-        <SectionKicker no="01" className="mx-auto">How it works</SectionKicker>
-        <h2 className="text-3xl font-heading font-bold sm:text-4xl tracking-tight">
-          From a card in your hand to a reply in their <em>inbox</em>.
-        </h2>
-        <p className="text-muted-foreground text-lg">One card, one evening. Here is the whole trip.</p>
+        {/* The whole trip in two times: the page's one oversized, off-grid moment. */}
+        <p aria-hidden="true" className="big-clock">
+          10:42<span className="arrow"> → </span>19:30
+        </p>
+        <div className="flex flex-col gap-3">
+          <SectionKicker no="01">How it works</SectionKicker>
+          <h2 className="text-3xl font-heading font-bold sm:text-4xl tracking-tight text-balance">
+            From a card in your hand to a reply in their inbox.
+          </h2>
+          <p className="text-muted-foreground text-lg">One card, one evening. Here is the whole trip.</p>
+        </div>
       </motion.div>
 
       {/* Desktop: horizontal zig-zag */}
@@ -239,6 +245,21 @@ export default function HowItWorks() {
           <div className="tl-slot" style={{ left: 775, top: 356 }}>
             <Card i={2} t={t} dir="down" />
           </div>
+          {/* Two handwritten margin notes, in the empty space under 10:43. */}
+          <p aria-hidden="true" className={`tl-note hand-note ${show(t >= AT[0] + 1300)}`} style={{ left: 382, top: 472 }}>
+            <svg className="tl-note-arrow" style={{ left: -62, top: 6 }} width="56" height="40" viewBox="0 0 56 40" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M54 6c-14 2-30 9-46 27" />
+              <path d="M6 22l2 11 11-3" />
+            </svg>
+            no typing, just a photo
+          </p>
+          <p aria-hidden="true" className={`tl-note tl-note-r hand-note ${show(t >= AT[2] + 1500)}`} style={{ left: 468, top: 566 }}>
+            you still press Send
+            <svg className="tl-note-arrow" style={{ right: -70, top: -18 }} width="64" height="40" viewBox="0 0 64 40" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M2 30c18 4 38-2 58-24" />
+              <path d="M49 6l11 0 0 11" />
+            </svg>
+          </p>
         </div>
       </div>
 

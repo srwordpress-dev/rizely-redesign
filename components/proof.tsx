@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Check, Sparkles, X } from "lucide-react";
-import SectionKicker from "@/components/section-kicker";
 import "@/app/before-after.css";
 
 /*
@@ -200,13 +199,12 @@ export default function Proof() {
         whileInView={{ y: 0, opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, type: "spring", bounce: 0 }}
-        className="flex flex-col gap-3 text-center mb-10 sm:mb-12 max-w-2xl mx-auto"
+        className="mx-auto mb-10 flex w-full max-w-[420px] flex-col gap-3 text-left sm:mb-12 md:max-w-[1080px] lg:flex-row lg:items-end lg:justify-between lg:gap-12"
       >
-        <SectionKicker no="04" className="mx-auto">One event</SectionKicker>
         <h2 className="text-3xl font-heading font-bold sm:text-4xl tracking-tight">
-          What one event <em>turns into</em>.
+          What one event turns into.
         </h2>
-        <p className="text-muted-foreground text-lg">
+        <p className="text-muted-foreground text-lg lg:max-w-sm lg:text-right">
           The same stack of cards, two very different Mondays. Drag to compare.
         </p>
       </motion.div>

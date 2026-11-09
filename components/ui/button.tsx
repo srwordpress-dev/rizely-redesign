@@ -10,11 +10,11 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-spark-action text-white hover:bg-spark-action-hover",
+          "bg-cta text-white hover:bg-cta-hover",
         destructive:
           "bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
         outline:
-          "border-2 border-spark-action bg-transparent text-foreground hover:bg-parchment",
+          "border-2 border-foreground bg-transparent text-foreground hover:bg-parchment",
         secondary:
           "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
         ghost:

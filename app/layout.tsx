@@ -5,7 +5,7 @@ import CtaNudge from "@/components/cta-nudge";
 import { Providers } from "./providers";
 import NavBar from "@/components/navbar";
 import StructuredData from "@/components/structured-data";
-import { Bricolage_Grotesque, Instrument_Sans } from "next/font/google";
+import { Bricolage_Grotesque, Instrument_Sans, Kalam } from "next/font/google";
 import { SITE_URL } from "@/lib/site";
 
 // Display headings (DESIGN.md section 2): Bricolage Grotesque, variable weight.
@@ -13,6 +13,16 @@ const display = Bricolage_Grotesque({
   subsets: ["latin"],
   variable: "--font-display",
   display: "swap",
+});
+
+// Handwritten margin notes only (two notes on the timeline). Not preloaded: it
+// is never above the fold.
+const hand = Kalam({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-hand",
+  display: "swap",
+  preload: false,
 });
 
 // Body and UI text.
@@ -69,7 +79,7 @@ export default function RootLayout({
       suppressHydrationWarning
       data-currency="usd"
     >
-      <body className={`${display.variable} ${body.variable} antialiased`}>
+      <body className={`${display.variable} ${body.variable} ${hand.variable} antialiased`}>
         {/* These sit at the top of <body>, not in <head>: Netlify injects an HTML comment into
             <head> on some sites, and React then finds that comment where it expected this script,
             fails hydration (#418) and re-renders the document, which drops data-currency. At the
