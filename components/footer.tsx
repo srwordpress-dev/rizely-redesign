@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { BRAND, WHATSAPP_URL } from "@/lib/site";
+import { BRAND, DASHBOARD_URL } from "@/lib/site";
 import { RizelyLogo } from "@/components/logo";
 import { SHOP_URL } from "@/lib/site";
 import { OPEN_EVENT } from "@/components/cookie-consent";
@@ -40,11 +40,11 @@ const Footer = () => {
             Meet someone today. <em>Follow up</em> tonight<span className="text-spark">.</span>
           </h2>
           <p className="text-canvas/75 max-w-lg text-lg">
-            First 50 scans are free, inside the WhatsApp you already have open.
+            It works inside the WhatsApp you already have open.
           </p>
           <Button asChild size="lg" className="cta-sunrise h-12 px-6 text-base font-semibold">
-            <Link href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-              Start free on WhatsApp
+            <Link href={DASHBOARD_URL} target="_blank" rel="noopener noreferrer">
+              Start free: 50 scans
             </Link>
           </Button>
         </motion.div>

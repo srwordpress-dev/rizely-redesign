@@ -92,8 +92,10 @@ h2,
   --line: #d3ccc2; /* card and control borders, 1.59:1 on white */
   --line-strong: #c4bcb0; /* card border on hover, 1.88:1 */
   /* Card elevation (DESIGN.md, revised Nov): a soft two-layer ink shadow. */
-  --shadow-card: 0 1px 2px rgb(31 27 23 / 0.06), 0 4px 12px rgb(31 27 23 / 0.08);
-  --shadow-card-hover: 0 2px 4px rgb(31 27 23 / 0.07), 0 8px 20px rgb(31 27 23 / 0.1);
+  --shadow-card: 0 1px 2px rgb(31 27 23 / 0.05), 0 4px 10px rgb(31 27 23 / 0.06),
+    0 14px 28px -10px rgb(31 27 23 / 0.14);
+  --shadow-card-hover: 0 2px 4px rgb(31 27 23 / 0.06), 0 8px 18px rgb(31 27 23 / 0.08),
+    0 22px 40px -12px rgb(31 27 23 / 0.18);
   --spark: #f05100; /* the Rizely orange: icons, logo, focus, the hero full stop */
   --spark-action: #b33c00; /* button fill, white label 5.89:1 */
   --spark-action-hover: #9e3500; /* 7.09:1 */
@@ -582,9 +584,13 @@ details[open] > summary .faq-chevron {
     border-color 200ms ease,
     box-shadow 200ms ease;
 }
-/* Every bordered white card gets the same soft lift (light theme only). */
-:root:not(.dark) .bg-card.border,
-:root:not(.dark) .bg-card.border-2 {
+/* Every card gets the same warm lift (light theme only): bordered white
+   cards anywhere, and every 16px-radius card on a page, tinted ones too.
+   Boxes inside a card (rounded-xl) stay flat so a card reads as one piece. */
+:root:not(.dark) .bg-card.border:not(.border-dashed),
+:root:not(.dark) .bg-card.border-2,
+:root:not(.dark) main .rounded-2xl.border:not(.border-dashed),
+:root:not(.dark) main .rounded-2xl.border-2:not(.border-dashed) {
   box-shadow: var(--shadow-card);
 }
 
@@ -923,4 +929,56 @@ h2 em {
   height: 1px;
   background: currentColor;
   opacity: 0.6;
+}
+
+/*
+  Hero "start where you are" cards (components/hero.tsx): a link per kind of
+  visitor. White card with the site's card shadow; on hover the border warms,
+  the card lifts 2px and the arrow slides. Focus ring from the global rule.
+*/
+.path-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 100%;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  box-shadow: var(--shadow-card);
+  transition:
+    border-color 200ms ease,
+    box-shadow 200ms ease,
+    translate 200ms var(--ease-out);
+}
+.path-card-icon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--peach);
+  color: var(--spark-text);
+}
+.path-card-arrow {
+  color: var(--spark-text);
+  transition: translate 200ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .path-card:hover {
+    border-color: color-mix(in oklab, var(--spark-action) 55%, var(--line-strong));
+    box-shadow: var(--shadow-card-hover);
+  }
+  .path-card:hover .path-card-arrow {
+    translate: 3px 0;
+  }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .path-card:hover {
+    translate: 0 -2px;
+  }
+}
+.path-card:active {
+  border-color: var(--spark-action);
 }

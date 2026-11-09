@@ -95,7 +95,7 @@ export default function RootLayout({
         {/* No-JS resilience: if JavaScript never runs, don't leave animated
             (opacity:0) sections invisible — force them visible. */}
         <noscript>
-          <style>{`[style*="opacity:0"]{opacity:1!important;transform:none!important}`}</style>
+          <style>{`[style*="opacity:0"]{opacity:1!important;transform:none!important}.ts-box{opacity:1!important;translate:none!important}`}</style>
         </noscript>
         <StructuredData />
         <Providers>

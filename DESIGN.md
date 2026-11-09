@@ -36,7 +36,7 @@ demo, and the WhatsApp/Telegram/Claude/OpenAI chips), which carry their own bran
 | `--mist` | `#CACAC8` | Disabled borders, inactive markers. |
 | `--hairline` | `#E4E0DA` | Nav, footer and section dividers only. |
 | `--line` | `#D3CCC2` | Card, input and chip borders (1.59:1 on white). Hover: `--line-strong` `#C4BCB0` warming to orange. |
-| `--shadow-card` | `0 1px 2px` + `0 4px 12px`, ink at 6% / 8% | Card elevation; hover deepens to `--shadow-card-hover`. |
+| `--shadow-card` | `0 1px 2px` (5%) + `0 4px 10px` (6%) + `0 14px 28px -10px` (14%), all ink | Elevation for every card (white or tinted, 16px radius); hover deepens to `--shadow-card-hover`. Boxes inside a card and dashed note boxes stay flat. |
 | `--spark` | `#F05100` | **The Rizely orange.** Logo dot, icons, focus ring, the full stop on the hero headline, active nav state, large graphics. |
 | `--spark-action` | `#B33C00` | Fill of the primary button (white label). Same hue as `--spark`, deep enough for text. |
 | `--spark-action-hover` | `#9E3500` | Primary button hover and press. |

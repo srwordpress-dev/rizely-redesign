@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { DASHBOARD_URL, WHATSAPP_URL } from "@/lib/site";
-import { ArrowDown, ArrowRight, Check } from "lucide-react";
+import { ArrowRight, CalendarDays, Check, Compass, CreditCard } from "lucide-react";
 import { WhatsAppIcon } from "@/components/whatsapp-icon";
 import HeroParticles from "@/components/hero-particles";
 import HeroTapSnap from "@/components/hero-tap-snap";
@@ -29,10 +29,32 @@ import { NARROW_STAGE, WIDE_STAGE } from "@/lib/hero-anim";
 */
 const HERO_ANIMATION: "tap-snap" | "particles" = "tap-snap";
 
+// Three ways in, one per kind of visitor. Each is a small card: icon, who it
+// is for, and what they will find (prices follow the INR/USD toggle).
 const paths = [
-  { label: "I go to events", href: "#use-cases" },
-  { label: "I want a smart card", href: "#card" },
-  { label: "I'm new here, show me", href: "#how" },
+  {
+    icon: CalendarDays,
+    label: "I go to events",
+    sub: <>Turn the cards you collect into replies</>,
+    href: "#use-cases",
+  },
+  {
+    icon: CreditCard,
+    label: "I want a smart card",
+    sub: (
+      <>
+        NFC cards from <span data-price="inr">₹599</span>
+        <span data-price="usd">~$7</span>, once
+      </>
+    ),
+    href: "#card",
+  },
+  {
+    icon: Compass,
+    label: "I'm new here",
+    sub: <>See how it works in three steps</>,
+    href: "#how",
+  },
 ];
 
 const chips = [
@@ -114,12 +136,6 @@ export default function Hero() {
                 Start free: 50 scans
               </Link>
             </Button>
-            <Button asChild variant="outline" size="lg" className="h-14 px-6 text-base w-full sm:w-auto">
-              <Link href="#how">
-                See how it works
-                <ArrowDown aria-hidden="true" className="size-4" />
-              </Link>
-            </Button>
           </div>
 
           <p className="text-sm text-muted-foreground">
@@ -128,13 +144,27 @@ export default function Hero() {
 
           {/* Three ways in, for the three kinds of visitor: event people, card
               buyers, and people meeting Rizely for the first time. */}
-          <nav aria-label="Start here" className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-[15px]">
-            {paths.map((p) => (
-              <Link key={p.href} href={p.href} className="inline-flex items-center gap-1.5 font-medium text-spark-text">
-                <span className="cta-link-text">{p.label}</span>
-                <ArrowRight aria-hidden="true" className="cta-link-arrow size-4" />
-              </Link>
-            ))}
+          <nav aria-label="Start here" className="w-full max-w-3xl pt-2">
+            <p className="mb-3 text-sm text-muted-foreground">Or start where you are</p>
+            <ul className="grid gap-3 sm:grid-cols-3">
+              {paths.map((p) => {
+                const Icon = p.icon;
+                return (
+                  <li key={p.href}>
+                    <Link href={p.href} className="path-card group">
+                      <span className="path-card-icon">
+                        <Icon aria-hidden="true" className="size-[18px]" />
+                      </span>
+                      <span className="flex min-w-0 flex-1 flex-col text-left">
+                        <span className="text-[15px] font-semibold text-foreground">{p.label}</span>
+                        <span className="text-[13px] leading-snug text-muted-foreground">{p.sub}</span>
+                      </span>
+                      <ArrowRight aria-hidden="true" className="path-card-arrow size-4 shrink-0" />
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
           </nav>
 
           <div className="flex flex-wrap justify-center items-center gap-x-5 gap-y-2 pt-3 text-sm text-muted-foreground">

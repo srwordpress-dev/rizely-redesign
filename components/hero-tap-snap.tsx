@@ -104,7 +104,8 @@ export default function HeroTapSnap({ className = "" }: { className?: string }) 
   const [boot, setBoot] = useState(true); // first frame after mount: no transitions
   const [scale, setScale] = useState(1);
   const [mobile, setMobile] = useState(false);
-  const [ready, setReady] = useState(false); // stage hidden until it is measured
+  const [ready, setReady] = useState(false); // measured at least once
+  const [entered, setEntered] = useState(false); // the box has faded in
   const box = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -120,14 +121,22 @@ export default function HeroTapSnap({ className = "" }: { className?: string }) 
     const ro = new ResizeObserver(measure);
     ro.observe(el);
     mq.addEventListener("change", measure);
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setEntered(true);
       return () => {
         ro.disconnect();
         mq.removeEventListener("change", measure);
       };
+    }
     setStill(false);
     setT(0);
-    const bootId = window.setTimeout(() => setBoot(false), 120);
+    // Settle the first frame with transitions off, then fade the whole box in
+    // (.ts-box.is-in), so the drawing eases in instead of popping.
+    let enterId = 0;
+    const bootId = window.setTimeout(() => {
+      setBoot(false);
+      enterId = requestAnimationFrame(() => setEntered(true));
+    }, 120);
     let id = 0;
     let visible = true;
     const io = new IntersectionObserver(([e]) => (visible = e.isIntersecting));
@@ -150,6 +159,7 @@ export default function HeroTapSnap({ className = "" }: { className?: string }) 
     return () => {
       cancelAnimationFrame(id);
       window.clearTimeout(bootId);
+      cancelAnimationFrame(enterId);
       io.disconnect();
       ro.disconnect();
       mq.removeEventListener("change", measure);
@@ -166,14 +176,14 @@ export default function HeroTapSnap({ className = "" }: { className?: string }) 
       : { left, width, opacity: f.st[i] };
 
   return (
-    <div ref={box} aria-hidden="true" className={`ts-box ${className}`}>
+    <div ref={box} aria-hidden="true" className={`ts-box ${entered && ready ? "is-in" : ""} ${className}`}>
       <div
         className={`ts-stage ${f.reset || boot ? "ts-reset" : ""} ${mobile ? "is-mobile" : ""}`}
         style={{
           width: mobile ? MW : W,
           height: mobile ? MH : H,
           transform: `scale(${scale})`,
-          opacity: ready ? f.stage : 0,
+          opacity: f.stage,
         }}
       >
         {/* the dotted path, then its two orange fills and travelling dots */}

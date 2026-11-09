@@ -10,6 +10,17 @@
   margin-inline: auto;
   aspect-ratio: 1280 / 390;
   overflow: hidden;
+  /* Entrance: hidden until measured, then a slow fade and a short rise. */
+  opacity: 0;
+  translate: 0 12px;
+  transition: opacity 900ms cubic-bezier(0.23, 1, 0.32, 1), translate 900ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+.ts-box.is-in {
+  opacity: 1;
+  translate: 0 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ts-box { translate: none; transition: opacity 300ms ease; }
 }
 @media (max-width: 899px) {
   .ts-box {
