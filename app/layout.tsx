@@ -5,21 +5,30 @@ import CtaNudge from "@/components/cta-nudge";
 import { Providers } from "./providers";
 import NavBar from "@/components/navbar";
 import StructuredData from "@/components/structured-data";
-import { Source_Serif_4, Inter } from "next/font/google";
+import { Bricolage_Grotesque, Instrument_Sans, Kalam } from "next/font/google";
 import { SITE_URL } from "@/lib/site";
 
-// Section and display headings (DESIGN.md section 2): one weight, 500.
-const serif = Source_Serif_4({
+// Display headings (DESIGN.md section 2): Bricolage Grotesque, variable weight.
+const display = Bricolage_Grotesque({
   subsets: ["latin"],
-  weight: ["500"],
-  style: ["normal", "italic"],
-  variable: "--font-serif",
+  variable: "--font-display",
   display: "swap",
 });
 
-const inter = Inter({
+// Handwritten margin notes only (two notes on the timeline). Not preloaded: it
+// is never above the fold.
+const hand = Kalam({
   subsets: ["latin"],
-  variable: "--font-inter",
+  weight: ["400"],
+  variable: "--font-hand",
+  display: "swap",
+  preload: false,
+});
+
+// Body and UI text.
+const body = Instrument_Sans({
+  subsets: ["latin"],
+  variable: "--font-body",
   display: "swap",
 });
 
@@ -70,7 +79,7 @@ export default function RootLayout({
       suppressHydrationWarning
       data-currency="usd"
     >
-      <body className={`${serif.variable} ${inter.variable} antialiased`}>
+      <body className={`${display.variable} ${body.variable} ${hand.variable} antialiased`}>
         {/* These sit at the top of <body>, not in <head>: Netlify injects an HTML comment into
             <head> on some sites, and React then finds that comment where it expected this script,
             fails hydration (#418) and re-renders the document, which drops data-currency. At the

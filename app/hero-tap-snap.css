@@ -244,8 +244,8 @@
 .ts-cap:nth-child(2) { width: 340px; }
 .ts-cap.is-on { opacity: 1; }
 .ts-cap-no {
-  font-family: var(--font-serif), "Source Serif 4", Georgia, serif;
-  font-style: italic;
+  font-family: var(--font-display), "Bricolage Grotesque", system-ui, sans-serif;
+  font-style: normal;
   font-size: 26px;
   color: var(--graphite);
   transition: color 500ms ease;

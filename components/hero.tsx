@@ -5,6 +5,7 @@ import { ArrowRight, CalendarDays, Check, Compass, CreditCard } from "lucide-rea
 import { WhatsAppIcon } from "@/components/whatsapp-icon";
 import HeroParticles from "@/components/hero-particles";
 import HeroTapSnap from "@/components/hero-tap-snap";
+import Scribble from "@/components/scribble";
 import { NARROW_STAGE, WIDE_STAGE } from "@/lib/hero-anim";
 
 /*
@@ -60,7 +61,7 @@ const paths = [
 const chips = [
   "Reads cards in many languages",
   "Follow-ups drafted in your voice",
-  "No new app — WhatsApp or Telegram",
+  "No new app: WhatsApp or Telegram",
 ];
 
 export default function Hero() {
@@ -96,85 +97,92 @@ export default function Hero() {
         ) : (
           <HeroTapSnap className="mb-2 md:mt-2 md:mb-4" />
         )}
-        <div className="flex flex-col justify-center items-center space-y-6 max-w-5xl mx-auto text-center">
-          <span className="w-fit text-xs sm:text-sm bg-canvas px-3 py-1 border border-hairline rounded-full text-muted-foreground">
-            For everyone who meets people for work
-          </span>
+        {/* Asymmetric (Nov 2026, D): the headline holds the left, the promise and
+            the one CTA sit on the right, bottom-aligned to it. */}
+        <div className="grid w-full gap-6 text-left lg:grid-cols-12 lg:items-end lg:gap-12">
+          <div className="flex flex-col items-start gap-5 lg:col-span-7">
+            <span className="w-fit text-xs sm:text-sm bg-canvas px-3 py-1 border border-hairline rounded-full text-muted-foreground">
+              For everyone who meets people for work
+            </span>
 
-          {/* DESIGN.md display: serif 500, the page's largest voice, ending on the
-              orange full stop. */}
-          <h1 className="text-[2.75rem] mx-auto md:text-7xl lg:text-[5rem] text-balance leading-[1.1]">
-            Every person you meet, <em>kept</em> and followed up
-            <span className="text-spark">.</span>
-          </h1>
-
-          <p className="max-w-2xl text-base sm:text-lg mx-auto text-muted-foreground text-balance">
-            Give them a card they can tap. Snap the cards they give you. Rizely saves every contact
-            and drafts the WhatsApp follow-up, ready for you to send.
-          </p>
-
-          <div data-hero-ctas className="flex flex-col sm:flex-row items-center gap-3 w-full justify-center pt-2">
-            {/* Phones (under 640px) start on WhatsApp, where the free scans run; wider
-                screens sign up in the app. Both are in the HTML and CSS shows one, so
-                there is no device sniffing and nothing to hydrate differently. */}
-            <Button
-              asChild
-              size="lg"
-              className="cta-sunrise h-14 px-8 text-base font-semibold w-full sm:hidden"
-            >
-              <Link href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-                <WhatsAppIcon className="size-5" />
-                Start free on WhatsApp
-              </Link>
-            </Button>
-            <Button
-              asChild
-              size="lg"
-              className="cta-sunrise h-14 px-8 text-lg font-semibold hidden sm:inline-flex sm:w-auto"
-            >
-              <Link href={DASHBOARD_URL} target="_blank" rel="noopener noreferrer">
-                Start free: 50 scans
-              </Link>
-            </Button>
+            {/* The page's largest voice, ending on the orange full stop; the
+                last two words get the one hand-drawn underline. */}
+            <h1 className="text-[2.75rem] md:text-7xl lg:text-[4.75rem] text-balance leading-[1.05]">
+              Every person you meet, kept and <Scribble>followed up</Scribble>
+              <span className="text-spark">.</span>
+            </h1>
           </div>
 
-          <p className="text-sm text-muted-foreground">
-            First 50 scans free. No card or credit card needed to start.
-          </p>
+          <div className="flex flex-col items-start gap-5 lg:col-span-5 lg:pb-2">
+            <p className="text-base sm:text-lg text-muted-foreground">
+              Give them a card they can tap. Snap the cards they give you. Rizely saves every contact
+              and drafts the WhatsApp follow-up, ready for you to send.
+            </p>
 
-          {/* Three ways in, for the three kinds of visitor: event people, card
-              buyers, and people meeting Rizely for the first time. */}
-          <nav aria-label="Start here" className="w-full max-w-3xl pt-2">
-            <p className="mb-3 text-sm text-muted-foreground">Or start where you are</p>
-            <ul className="grid gap-3 sm:grid-cols-3">
-              {paths.map((p) => {
-                const Icon = p.icon;
-                return (
-                  <li key={p.href}>
-                    <Link href={p.href} className="path-card group">
-                      <span className="path-card-icon">
-                        <Icon aria-hidden="true" className="size-[18px]" />
-                      </span>
-                      <span className="flex min-w-0 flex-1 flex-col text-left">
-                        <span className="text-[15px] font-semibold text-foreground">{p.label}</span>
-                        <span className="text-[13px] leading-snug text-muted-foreground">{p.sub}</span>
-                      </span>
-                      <ArrowRight aria-hidden="true" className="path-card-arrow size-4 shrink-0" />
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
+            <div data-hero-ctas className="flex w-full flex-col items-stretch gap-3 sm:w-auto sm:flex-row">
+              {/* Phones (under 640px) start on WhatsApp, where the free scans run; wider
+                  screens sign up in the app. Both are in the HTML and CSS shows one. */}
+              <Button
+                asChild
+                size="lg"
+                className="cta-sunrise h-14 px-8 text-base font-semibold w-full sm:hidden"
+              >
+                <Link href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+                  <WhatsAppIcon className="size-5" />
+                  Start free on WhatsApp
+                </Link>
+              </Button>
+              <Button
+                asChild
+                size="lg"
+                className="cta-sunrise h-14 px-8 text-lg font-semibold hidden sm:inline-flex sm:w-auto"
+              >
+                <Link href={DASHBOARD_URL} target="_blank" rel="noopener noreferrer">
+                  Start free: 50 scans
+                </Link>
+              </Button>
+            </div>
 
-          <div className="flex flex-wrap justify-center items-center gap-x-5 gap-y-2 pt-3 text-sm text-muted-foreground">
-            {chips.map((c) => (
-              <span key={c} className="inline-flex items-center gap-1.5">
-                <Check aria-hidden="true" className="size-4 text-spark" />
-                {c}
-              </span>
-            ))}
+            <p className="text-sm text-muted-foreground">
+              First 50 scans free. No card or credit card needed to start.
+            </p>
           </div>
+        </div>
+
+        {/* Three ways in, for the three kinds of visitor. */}
+        <nav
+          aria-label="Start here"
+          className="mt-12 grid w-full gap-4 border-t border-hairline pt-6 text-left lg:grid-cols-12 lg:items-center"
+        >
+          <p className="text-sm text-muted-foreground lg:col-span-2">Or start where you are</p>
+          <ul className="grid gap-3 sm:grid-cols-3 lg:col-span-10">
+            {paths.map((p) => {
+              const Icon = p.icon;
+              return (
+                <li key={p.href}>
+                  <Link href={p.href} className="path-card group">
+                    <span className="path-card-icon">
+                      <Icon aria-hidden="true" className="size-[18px]" />
+                    </span>
+                    <span className="flex min-w-0 flex-1 flex-col text-left">
+                      <span className="text-[15px] font-semibold text-foreground">{p.label}</span>
+                      <span className="text-[13px] leading-snug text-muted-foreground">{p.sub}</span>
+                    </span>
+                    <ArrowRight aria-hidden="true" className="path-card-arrow size-4 shrink-0" />
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+
+        <div className="flex w-full flex-wrap items-center gap-x-5 gap-y-2 pt-5 text-sm text-muted-foreground">
+          {chips.map((c) => (
+            <span key={c} className="inline-flex items-center gap-1.5">
+              <Check aria-hidden="true" className="size-4 text-spark" />
+              {c}
+            </span>
+          ))}
         </div>
       </section>
 

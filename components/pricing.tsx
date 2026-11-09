@@ -142,9 +142,7 @@ export default function Pricing() {
             >
               {plan.isMostPop && (
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <span className="rounded-full border-2 border-primary bg-card px-3 py-1 text-xs font-medium sm:px-4 sm:text-sm">
-                    Most popular
-                  </span>
+                  <span className="sticker">Most popular</span>
                 </div>
               )}
 

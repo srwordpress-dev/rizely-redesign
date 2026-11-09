@@ -70,8 +70,8 @@
 .tl-label.is-on { opacity: 1; }
 .tl-time {
   display: block;
-  font-family: var(--font-serif), "Source Serif 4", Georgia, serif;
-  font-style: italic;
+  font-family: var(--font-display), "Bricolage Grotesque", system-ui, sans-serif;
+  font-style: normal;
   font-size: 20px;
   color: #8a847c;
   transition: color 400ms ease;
@@ -95,8 +95,8 @@
 .tl-from-side { translate: 16px 0; }
 .tl-card.is-on { opacity: 1; translate: 0 0; }
 .tl-no {
-  font-family: var(--font-serif), "Source Serif 4", Georgia, serif;
-  font-style: italic;
+  font-family: var(--font-display), "Bricolage Grotesque", system-ui, sans-serif;
+  font-style: normal;
   font-size: 18px;
   color: var(--spark-text);
 }
@@ -229,3 +229,20 @@
 .tl-snap .tl-pop,
 .tl-snap .tl-node,
 .tl-snap .tl-label { transition: none; }
+
+/* Handwritten margin notes (desktop stage only). */
+.tl-note {
+  position: absolute;
+  margin: 0;
+  font-size: 23px;
+  line-height: 1.1;
+  color: var(--graphite);
+  white-space: nowrap;
+  rotate: -3deg;
+  opacity: 0;
+  transition: opacity 0.45s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.tl-note-r { rotate: 2deg; }
+.tl-note.is-on { opacity: 1; }
+.tl-snap .tl-note { transition: none; }
+.tl-note-arrow { position: absolute; color: var(--spark); }

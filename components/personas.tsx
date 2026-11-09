@@ -5,7 +5,6 @@ import Link from "next/link";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SHOP_URL, WHATSAPP_URL } from "@/lib/site";
-import SectionKicker from "@/components/section-kicker";
 import "@/app/use-cases.css";
 
 /*
@@ -152,13 +151,11 @@ export default function Personas() {
         whileInView={{ y: 0, opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, type: "spring", bounce: 0 }}
-        className="flex flex-col gap-3 text-center mb-12 max-w-2xl mx-auto"
+        className="mx-auto mb-10 w-full max-w-6xl text-left"
       >
-        <SectionKicker no="05" className="mx-auto">Use cases</SectionKicker>
-        <h2 className="text-3xl font-heading font-bold sm:text-4xl tracking-tight">
-          However you meet people, it <em>fits</em>.
+        <h2 className="max-w-xl text-3xl font-heading font-bold sm:text-4xl tracking-tight text-balance">
+          However you meet people, it fits.
         </h2>
-        <p className="text-muted-foreground text-lg">Pick the one that sounds like you.</p>
       </motion.div>
 
       <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
