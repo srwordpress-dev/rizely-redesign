@@ -1,0 +1,301 @@
+/*
+  Hero animation, concept 01 (components/hero-tap-snap.tsx). Every move is a
+  transition; .ts-reset switches them off while the hidden stage snaps back.
+*/
+/* The box's size is pure CSS (no layout shift when the script measures it). */
+.ts-box {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  margin-inline: auto;
+  aspect-ratio: 1280 / 390;
+  overflow: hidden;
+}
+@media (max-width: 899px) {
+  .ts-box {
+    max-width: 250px;
+    aspect-ratio: 360 / 380;
+  }
+}
+.ts-stage {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: top left;
+  transition: opacity 450ms ease;
+}
+.ts-stage.ts-reset,
+.ts-stage.ts-reset * {
+  transition: none !important;
+}
+.ts-path {
+  position: absolute;
+  top: 170px;
+  height: 2px;
+  background-image: repeating-linear-gradient(90deg, var(--line-strong) 0 5px, transparent 5px 10px);
+}
+.ts-fill {
+  position: absolute;
+  top: 170px;
+  height: 2px;
+  background: var(--spark-action);
+  transform-origin: left;
+  transition: transform 700ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+.ts-dot {
+  position: absolute;
+  top: 164px;
+  width: 14px;
+  height: 14px;
+  margin-left: -7px;
+  border-radius: 50%;
+  background: var(--spark-action);
+  box-shadow: 0 0 0 5px rgb(179 60 0 / 0.15);
+  transition: transform 700ms cubic-bezier(0.65, 0, 0.35, 1), opacity 300ms ease;
+}
+.ts-station {
+  position: absolute;
+  top: 20px;
+  height: 290px;
+  transition: opacity 600ms ease;
+}
+.ts-ring {
+  position: absolute;
+  left: 190px;
+  top: 141px;
+  width: 220px;
+  height: 220px;
+  margin: -110px 0 0 -110px;
+  border-radius: 50%;
+  border: 1.5px solid var(--spark-action);
+  opacity: 0;
+  animation: ts-ring 1200ms cubic-bezier(0.23, 1, 0.32, 1) infinite;
+}
+.ts-ring-2 {
+  animation-delay: 400ms;
+}
+@keyframes ts-ring {
+  from { transform: scale(0.6); opacity: 0.45; }
+  to { transform: scale(1.4); opacity: 0; }
+}
+.ts-nfc {
+  position: absolute;
+  left: 0;
+  top: 104px;
+  z-index: 1;
+  width: 116px;
+  height: 72px;
+  border-radius: 9px;
+  background: var(--ink);
+  box-shadow: 0 6px 16px rgb(31 27 23 / 0.18);
+  transition: transform 900ms cubic-bezier(0.23, 1, 0.32, 1), opacity 500ms ease;
+}
+.ts-nfc-dot { position: absolute; left: 11px; top: 11px; width: 8px; height: 8px; border-radius: 50%; background: var(--spark); }
+.ts-nfc-word { position: absolute; left: 24px; top: 9px; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; color: var(--canvas); }
+.ts-nfc-l1 { position: absolute; left: 11px; bottom: 15px; width: 52px; height: 5px; border-radius: 3px; background: var(--canvas); opacity: 0.85; }
+.ts-nfc-l2 { position: absolute; left: 11px; bottom: 8px; width: 32px; height: 4px; border-radius: 3px; background: var(--canvas); opacity: 0.5; }
+.ts-phone {
+  position: absolute;
+  top: 10px;
+  z-index: 2;
+  height: 262px;
+  box-sizing: border-box;
+  border-radius: 22px;
+  border: 2px solid var(--ink);
+  background: #fff;
+  box-shadow: 0 2px 4px rgb(31 27 23 / 0.06), 0 10px 26px rgb(31 27 23 / 0.1);
+  overflow: hidden;
+}
+.ts-notch { position: absolute; left: 50%; top: 7px; width: 36px; height: 4px; margin-left: -18px; border-radius: 3px; background: var(--hairline); }
+.ts-fade {
+  transition: opacity 500ms cubic-bezier(0.23, 1, 0.32, 1), transform 500ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+.ts-profile {
+  position: absolute;
+  inset: 22px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding-top: 14px;
+}
+.ts-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--peach); border: 1.5px solid var(--spark-action); }
+.ts-name { font-size: 12px; font-weight: 600; }
+.ts-role { font-size: 9px; color: var(--graphite); }
+.ts-bar { display: block; height: 4px; border-radius: 3px; background: var(--hairline); }
+.ts-save {
+  position: relative;
+  display: grid;
+  margin-top: 14px;
+  padding: 6px 11px;
+  border-radius: 8px;
+  background: var(--spark-action);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  transition: background-color 350ms ease, color 350ms ease, scale 150ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+.ts-save.is-saved { background: var(--peach); color: #8a2e00; }
+.ts-swap { grid-area: 1 / 1; text-align: center; transition: opacity 300ms ease; }
+.ts-paper {
+  position: absolute;
+  left: 10px;
+  top: 112px;
+  width: 112px;
+  height: 66px;
+  border-radius: 6px;
+  background: #fff;
+  border: 1px solid var(--line-strong);
+  box-shadow: 0 2px 6px rgb(31 27 23 / 0.08);
+  transition: transform 900ms cubic-bezier(0.65, 0, 0.35, 1), opacity 450ms ease 450ms;
+}
+.ts-p1 { position: absolute; left: 10px; top: 12px; width: 50px; height: 5px; border-radius: 3px; background: var(--ink); }
+.ts-p2 { position: absolute; left: 10px; top: 24px; width: 34px; height: 4px; border-radius: 3px; background: var(--line-strong); }
+.ts-p3 { position: absolute; left: 10px; bottom: 12px; width: 60px; height: 4px; border-radius: 3px; background: var(--hairline); }
+.ts-panel {
+  position: absolute;
+  left: 150px;
+  top: 46px;
+  z-index: 4;
+  width: 180px;
+  box-sizing: border-box;
+  padding: 12px;
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid var(--line);
+  box-shadow: 0 2px 4px rgb(31 27 23 / 0.06), 0 10px 26px rgb(31 27 23 / 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.ts-panel-title { font-size: 12px; font-weight: 700; }
+.ts-row {
+  display: flex;
+  flex-direction: column;
+  padding: 7px 9px;
+  border-radius: 8px;
+  border: 1px solid var(--hairline);
+  background: #fff;
+  transition: background-color 450ms ease, border-color 450ms ease;
+}
+.ts-row.is-on { background: var(--peach); border-color: var(--peach); }
+.ts-row-name,
+.ts-row-co { opacity: 0; transition: opacity 450ms ease 100ms; }
+.ts-row.is-on .ts-row-name,
+.ts-row.is-on .ts-row-co { opacity: 1; }
+.ts-row-name { font-size: 11px; font-weight: 600; }
+.ts-row-co { font-size: 9px; color: var(--graphite); }
+.ts-chat { display: flex; flex-direction: column; }
+.ts-chat-head { display: flex; align-items: center; gap: 6px; padding: 20px 10px 8px; border-bottom: 1px solid var(--hairline); font-size: 11px; font-weight: 600; }
+.ts-chat-av { width: 18px; height: 18px; border-radius: 50%; background: var(--hairline); }
+.ts-chat-body { flex: 1; padding: 12px 10px; background: var(--parchment); display: flex; flex-direction: column; gap: 8px; }
+.ts-bubble {
+  align-self: flex-end;
+  max-width: 136px;
+  padding: 7px 9px;
+  border-radius: 10px 10px 3px 10px;
+  background: #fff;
+  border: 1px solid var(--line);
+  font-size: 10px;
+  line-height: 1.45;
+}
+.ts-tick { display: block; margin-top: 2px; text-align: right; font-size: 9px; color: var(--spark-action); transition: opacity 300ms ease; }
+.ts-chip { align-self: flex-end; padding: 3px 7px; border-radius: 999px; background: var(--peach); color: #8a2e00; font-size: 9px; font-weight: 600; }
+.ts-chat-input { display: flex; align-items: center; gap: 6px; padding: 8px 10px 12px; }
+.ts-input { flex: 1; height: 22px; border-radius: 11px; border: 1px solid var(--line); }
+.ts-send {
+  padding: 5px 9px;
+  border-radius: 8px;
+  background: var(--spark-action);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  transition: background-color 150ms ease, scale 150ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+.ts-send.is-press { background: var(--spark-action-hover); scale: 0.9; }
+.ts-caps {
+  position: absolute;
+  left: 60px;
+  right: 50px;
+  top: 322px;
+  display: flex;
+  justify-content: space-between;
+}
+.ts-cap {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 10px;
+  width: 280px;
+  opacity: 0.45;
+  transition: opacity 500ms ease;
+}
+.ts-cap:nth-child(2) { width: 340px; }
+.ts-cap.is-on { opacity: 1; }
+.ts-cap-no {
+  font-family: var(--font-serif), "Source Serif 4", Georgia, serif;
+  font-style: italic;
+  font-size: 26px;
+  color: var(--graphite);
+  transition: color 500ms ease;
+}
+.ts-cap.is-on .ts-cap-no { color: var(--spark-action); }
+.ts-cap-label { font-size: 15px; font-weight: 500; }
+/* Phones: one caption, centred, with three progress dots under it. */
+.ts-stage.is-mobile .ts-caps {
+  left: 0;
+  right: 0;
+  top: 316px;
+  justify-content: center;
+}
+.ts-stage.is-mobile .ts-cap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: auto;
+  opacity: 0;
+}
+.ts-stage.is-mobile .ts-cap.is-on { opacity: 1; }
+.ts-stage.is-mobile .ts-cap-label { font-size: 18px; }
+.ts-stage.is-mobile .ts-cap-no { font-size: 30px; }
+.ts-dots {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 360px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+.ts-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--line-strong);
+  transition: background-color 400ms ease, width 400ms ease;
+}
+.ts-dots span.is-on {
+  width: 22px;
+  border-radius: 4px;
+  background: var(--spark-action);
+}
+@media (prefers-reduced-motion: reduce) {
+  .ts-ring { animation: none; }
+}
+/* Phones: smaller tap rings, so they stay inside the narrow stage. */
+.ts-stage.is-mobile .ts-ring {
+  width: 160px;
+  height: 160px;
+  margin: -80px 0 0 -80px;
+}
+/* Phones: one station at a time. The old one fades out first, then the new
+   one fades in (the delay is set inline), so two never show at once. */
+.ts-stage.is-mobile .ts-station {
+  transition-duration: 300ms;
+}
+.ts-stage.is-mobile .ts-cap {
+  transition: opacity 300ms ease;
+}
+.ts-stage.is-mobile .ts-cap.is-on {
+  transition-delay: 320ms;
+}
