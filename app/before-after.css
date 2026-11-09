@@ -1,0 +1,247 @@
+/*
+  04 · What one event turns into (components/proof.tsx): the before/after
+  frame. The frame's size is CSS only; the scenes inside are drawn at a fixed
+  size and scaled by the component.
+*/
+.bf-frame {
+  position: relative;
+  max-width: 1080px;
+  margin-inline: auto;
+  aspect-ratio: 1080 / 480;
+  overflow: hidden;
+  border-radius: 20px;
+  border: 1px solid var(--line);
+  background: #e7e2da;
+  box-shadow: var(--shadow-card);
+}
+@media (max-width: 639px) {
+  .bf-frame {
+    max-width: 420px;
+    aspect-ratio: 360 / 460;
+  }
+}
+.bf-stage {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: top left;
+  transition: opacity 400ms ease;
+}
+.bf-scene {
+  position: absolute;
+  inset: 0;
+}
+.bf-before { background: #e7e2da; }
+.bf-after { background: var(--canvas); }
+.bf-clip { position: absolute; inset: 0; }
+.is-anim .bf-clip,
+.is-anim .bf-handle {
+  transition: clip-path 700ms cubic-bezier(0.65, 0, 0.35, 1), left 700ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.bf-badge {
+  position: absolute;
+  left: 24px;
+  top: 22px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.85);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--graphite);
+}
+.bf-badge-after {
+  left: auto;
+  right: 24px;
+  background: var(--peach);
+  color: #8a2e00;
+}
+
+/* Without Rizely */
+.bf-paper {
+  position: absolute;
+  width: 132px;
+  height: 80px;
+  border-radius: 6px;
+  background: #fff;
+  border: 1px solid var(--line-strong);
+  box-shadow: 0 3px 8px rgb(31 27 23 / 0.12);
+}
+.bf-p1 { position: absolute; left: 12px; top: 14px; width: 62px; height: 6px; border-radius: 3px; background: var(--graphite); }
+.bf-p2 { position: absolute; left: 12px; top: 28px; width: 42px; height: 5px; border-radius: 3px; background: var(--line-strong); }
+.bf-p3 { position: absolute; left: 12px; bottom: 14px; width: 80px; height: 4px; border-radius: 3px; background: var(--hairline); }
+.bf-note {
+  position: absolute;
+  width: 150px;
+  padding: 14px 16px;
+  background: var(--parchment);
+  border: 1px solid var(--line);
+  box-shadow: 0 3px 8px rgb(31 27 23 / 0.1);
+  rotate: 5deg;
+  font-family: var(--font-serif), "Source Serif 4", Georgia, serif;
+  font-style: italic;
+  font-size: 20px;
+  color: var(--graphite);
+}
+.bf-note span { display: block; margin-top: 4px; font-size: 14px; }
+.bf-day {
+  position: absolute;
+  width: 96px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid var(--line-strong);
+  box-shadow: 0 3px 8px rgb(31 27 23 / 0.1);
+  text-align: center;
+  rotate: -4deg;
+}
+.bf-day-head { padding: 4px 0; background: #8a847c; color: #fff; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; }
+.bf-day-no { padding: 6px 0 8px; font-family: var(--font-serif), "Source Serif 4", Georgia, serif; font-size: 38px; line-height: 1; color: var(--graphite); }
+
+/* With Rizely */
+.bf-panel {
+  position: absolute;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px;
+  border-radius: 16px;
+  background: #fff;
+  border: 1px solid var(--line);
+  box-shadow: 0 2px 4px rgb(31 27 23 / 0.06), 0 10px 26px rgb(31 27 23 / 0.1);
+}
+.bf-panel-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; padding: 0 2px 4px; font-size: 13px; }
+.bf-panel-head span:last-child { font-size: 11px; }
+.bf-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--hairline);
+}
+.bf-status {
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--peach);
+  background: var(--peach);
+  color: #8a2e00;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.bf-status.is-sent { background: #fff; border-color: var(--spark-action); color: var(--spark-text); }
+.bf-draft { position: absolute; display: flex; flex-direction: column; gap: 6px; }
+.bf-bubble {
+  padding: 9px 11px;
+  border-radius: 12px 12px 3px 12px;
+  background: #fff;
+  border: 1px solid var(--line);
+  box-shadow: 0 6px 16px rgb(31 27 23 / 0.1);
+  font-family: "Noto Sans Devanagari", var(--font-inter), Inter, sans-serif;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.bf-chip {
+  align-self: flex-end;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--peach);
+  color: #8a2e00;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.bf-stack { position: absolute; width: 160px; height: 100px; }
+.bf-paper-neat { box-shadow: 0 2px 4px rgb(31 27 23 / 0.08); }
+.bf-scanned {
+  position: absolute;
+  left: 40px;
+  top: 104px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--peach);
+  color: #8a2e00;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* The three lines inside each wide scene */
+.bf-list {
+  position: absolute;
+  bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  font-size: 14px;
+}
+.bf-list li { display: flex; align-items: center; gap: 8px; }
+.bf-list-before { left: 24px; background: rgb(255 255 255 / 0.88); color: var(--graphite); }
+.bf-list-before svg { color: #8a847c; }
+.bf-list-after { right: 24px; background: #fff; border: 1px solid var(--hairline); }
+.bf-list-after svg { color: var(--spark-text); }
+.bf-list-flat { display: flex; flex-direction: column; gap: 8px; font-size: 15px; }
+.bf-list-flat li { display: flex; align-items: center; gap: 8px; }
+
+/* The control: an invisible native range over the frame, and the drawn handle. */
+.bf-range {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: ew-resize;
+  touch-action: pan-y;
+}
+.bf-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 3;
+  width: 0;
+  pointer-events: none;
+}
+.bf-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -1px;
+  width: 2px;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgb(31 27 23 / 0.12);
+}
+.bf-knob {
+  position: absolute;
+  top: 50%;
+  left: -24px;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  margin-top: -24px;
+  border-radius: 50%;
+  background: var(--spark-action);
+  color: #fff;
+  box-shadow: 0 4px 12px rgb(31 27 23 / 0.25);
+  transition: scale 150ms var(--ease-out);
+}
+.bf-range:active ~ .bf-handle .bf-knob { scale: 0.94; }
+.bf-range:focus-visible ~ .bf-handle .bf-knob {
+  outline: 2px solid var(--spark);
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .is-anim .bf-clip,
+  .is-anim .bf-handle { transition: none; }
+}
