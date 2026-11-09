@@ -1,0 +1,178 @@
+/*
+  05 · Use cases scenes (components/personas.tsx). Small drawings at the top of
+  each card, built from boxes; centred on the card so they hold at any width.
+*/
+.uc-scene {
+  position: relative;
+  height: 210px;
+  overflow: hidden;
+  flex: none;
+}
+
+/* Snap: a phone camera framing a card */
+.uc-snap { background: var(--peach); }
+.uc-phone-dark {
+  position: absolute;
+  left: 50%;
+  top: 26px;
+  width: 132px;
+  height: 230px;
+  margin-left: -66px;
+  border-radius: 22px;
+  background: var(--ink);
+  box-shadow: 0 10px 24px rgb(31 27 23 / 0.2);
+}
+.uc-viewfinder {
+  position: absolute;
+  inset: 8px;
+  overflow: hidden;
+  border-radius: 16px;
+  background: var(--graphite);
+}
+.uc-papercard {
+  position: absolute;
+  left: 14px;
+  top: 46px;
+  width: 88px;
+  height: 54px;
+  border-radius: 5px;
+  background: #fff;
+  rotate: -6deg;
+}
+.uc-l1 { position: absolute; left: 8px; top: 9px; width: 40px; height: 4px; border-radius: 2px; background: var(--ink); }
+.uc-l2 { position: absolute; left: 8px; top: 18px; width: 28px; height: 3px; border-radius: 2px; background: var(--line-strong); }
+.uc-corner { position: absolute; width: 14px; height: 14px; border: 0 solid #fff; }
+.uc-tl { left: 8px; top: 36px; border-left-width: 2px; border-top-width: 2px; }
+.uc-tr { right: 8px; top: 36px; border-right-width: 2px; border-top-width: 2px; }
+.uc-bl { left: 8px; top: 104px; border-left-width: 2px; border-bottom-width: 2px; }
+.uc-br { right: 8px; top: 104px; border-right-width: 2px; border-bottom-width: 2px; }
+.uc-shutter {
+  position: absolute;
+  left: 50%;
+  bottom: 46px;
+  width: 30px;
+  height: 30px;
+  margin-left: -15px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+}
+.uc-toast {
+  position: absolute;
+  padding: 7px 11px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 6px 16px rgb(31 27 23 / 0.12);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.uc-toast-a { left: calc(50% + 48px); top: 62px; }
+.uc-toast-b { right: calc(50% + 46px); bottom: 30px; font-size: 11px; font-weight: 500; color: var(--graphite); }
+
+/* Booth: a team feeding one shared list */
+.uc-booth { background: var(--parchment); }
+.uc-list {
+  position: absolute;
+  left: 50%;
+  top: 22px;
+  width: 210px;
+  margin-left: -105px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 6px 16px rgb(31 27 23 / 0.12);
+}
+.uc-bar { height: 8px; margin-top: 8px; overflow: hidden; border-radius: 4px; background: var(--parchment); }
+.uc-bar span { display: block; width: 72%; height: 8px; border-radius: 4px; background: var(--spark-action); }
+.uc-people {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 62px;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+.uc-person { display: flex; flex-direction: column; align-items: center; }
+.uc-person span:first-child { width: 30px; height: 30px; border-radius: 50%; }
+.uc-person span:last-child { width: 46px; height: 30px; margin-top: 4px; border-radius: 20px 20px 0 0; }
+.uc-counter {
+  position: absolute;
+  left: 26px;
+  right: 26px;
+  bottom: 0;
+  height: 62px;
+  border-radius: 12px 12px 0 0;
+  background: var(--ink);
+}
+.uc-counter span {
+  position: absolute;
+  left: 16px;
+  top: 14px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--canvas);
+}
+.uc-counter i {
+  position: absolute;
+  right: 16px;
+  top: 12px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--spark);
+}
+
+/* Tap: a card tapped to a phone */
+.uc-tap { background: var(--ink); }
+.uc-ring {
+  position: absolute;
+  left: calc(50% - 30px);
+  top: 120px;
+  border-radius: 50%;
+  border: 1.5px solid rgb(240 81 0 / 0.5);
+  translate: -50% -50%;
+}
+.uc-ring-1 { width: 120px; height: 120px; }
+.uc-ring-2 { width: 168px; height: 168px; border-color: rgb(240 81 0 / 0.25); }
+.uc-phone-light {
+  position: absolute;
+  left: calc(50% + 4px);
+  top: 30px;
+  width: 110px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding-top: 26px;
+  border-radius: 20px;
+  background: var(--canvas);
+  border: 2px solid var(--graphite);
+}
+.uc-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--peach); border: 1.5px solid var(--spark-action); }
+.uc-save { padding: 4px 9px; border-radius: 6px; background: var(--spark-action); color: #fff; font-size: 9px; font-weight: 600; }
+.uc-nfc {
+  position: absolute;
+  left: calc(50% - 146px);
+  top: 78px;
+  width: 150px;
+  height: 94px;
+  border-radius: 10px;
+  background: #2e2925;
+  border: 1px solid var(--graphite);
+  box-shadow: 0 10px 24px rgb(0 0 0 / 0.35);
+  rotate: -10deg;
+}
+.uc-nfc-dot { position: absolute; left: 12px; top: 12px; width: 8px; height: 8px; border-radius: 50%; background: var(--spark); }
+.uc-nfc-word { position: absolute; left: 26px; top: 9px; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; color: var(--canvas); }
+.uc-nfc-line { position: absolute; left: 12px; bottom: 16px; width: 64px; height: 5px; border-radius: 3px; background: var(--canvas); opacity: 0.8; }
+
+/* Very narrow cards (320px phones): pull the side pieces in. */
+.uc-scene { container-type: inline-size; }
+@container (max-width: 300px) {
+  .uc-toast-a { left: calc(50% + 34px); }
+  .uc-toast-b { right: calc(50% + 28px); font-size: 10px; }
+  .uc-nfc { left: calc(50% - 128px); width: 136px; height: 86px; }
+}
