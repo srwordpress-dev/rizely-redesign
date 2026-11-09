@@ -4,7 +4,6 @@ import Partners from "@/components/partners";
 import HowItWorks from "@/components/how-it-works";
 import ChatDemo from "@/components/chat-demo";
 import TheCard from "@/components/the-card";
-import CardToAgent from "@/components/card-to-agent";
 import WhyRizely from "@/components/why-rizely";
 import Proof from "@/components/proof";
 import Personas from "@/components/personas";
@@ -46,11 +45,10 @@ export default function Home() {
       <div className="bg-parchment">
         <TheCard />
       </div>
-      <CardToAgent />
+      <Pricing />
       <div className="bg-parchment">
-        <Pricing />
+        <Faq />
       </div>
-      <Faq />
       <Footer />
       <MobileCtaBar />
     </main>
