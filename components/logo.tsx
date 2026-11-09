@@ -2,10 +2,9 @@ import Image from "next/image";
 import { BRAND } from "@/lib/site";
 
 /**
- * Rizely wordmark: the supplied dark-background artwork (white "R", terracotta
- * "izely"), public/rizely-logo-dark.png, 200×58. The site is dark-only, so this
- * is the one variant; public/rizely-logo.png is the light-background version.
- * Size it by height; the width follows the artwork.
+ * Rizely wordmark for the light site: public/rizely-logo.png (black "R",
+ * terracotta "izely"), 200×58. public/rizely-logo-dark.png is the version for
+ * dark backgrounds. Size it by height; the width follows the artwork.
  */
 export function RizelyLogo({
   className = "h-7 w-auto",
@@ -16,7 +15,7 @@ export function RizelyLogo({
 }) {
   return (
     <Image
-      src="/rizely-logo-dark.png"
+      src="/rizely-logo.png"
       alt={BRAND}
       width={200}
       height={58}

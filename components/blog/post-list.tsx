@@ -25,7 +25,7 @@ export function PostCard({
   return (
     <Link
       href={`/blogs/${post.slug}`}
-      className="post-card group flex w-full flex-col overflow-hidden rounded-xl border border-border bg-card/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+      className="post-card group flex w-full flex-col overflow-hidden rounded-xl border border-border bg-card focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
     >
       {cover ? (
         <div className="overflow-hidden">

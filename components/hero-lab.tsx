@@ -139,11 +139,11 @@ export default function HeroLab() {
         {variants.map((v) => (
           <div
             key={v.id}
-            className="rounded-2xl border border-border bg-card/40 overflow-hidden"
+            className="rounded-2xl border border-border bg-card overflow-hidden"
           >
             <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border/70 px-5 py-3">
               <div className="flex items-center gap-3">
-                <span className="grid size-7 place-items-center rounded-lg bg-primary/10 border border-primary/30 text-primary text-sm font-bold">
+                <span className="grid size-7 place-items-center rounded-lg bg-peach border border-primary/30 text-primary text-sm font-bold">
                   {v.id}
                 </span>
                 <span className="font-heading font-semibold">{v.name}</span>

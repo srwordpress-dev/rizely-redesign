@@ -4,11 +4,10 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
-  Rizely — warm sunrise palette (locked in VISUAL-IDENTITY.md).
-  ink #171717 · terracotta #C2703F (primary CTA) · vivid orange #F05100
-  · amber #F99C00 / #FCBB00 · teal #009588 (verified/synced). No violet, ever.
-  The site is rendered in dark (forcedTheme="dark") — warm-on-near-black is the
-  brand hero look — but both themes are defined and kept coherent.
+  Rizely — warm paper, one orange spark. DESIGN.md at the repo root is the
+  source of truth for every value here (palette, type, radius, depth).
+  The site renders light (forcedTheme="light"). The old dark palette stays in
+  .dark below, unused, until the redesign has shipped on every page.
 */
 
 @theme {
@@ -23,29 +22,57 @@
   --color-brand-terracotta: #c2703f;
   --color-brand-terracotta-hover: #a85a2e;
   --color-brand-orange: #f05100;
-  --color-brand-amber: #f99c00;
-  --color-brand-amber-hi: #fcbb00;
-  --color-brand-teal: #009588;
-  /* Teal as small text (the "Live" badges): same hue, lighter, Lc 60 on its badge. */
-  --color-brand-teal-text: #53c7b9;
+  /* DESIGN.md has one accent. The old amber and teal roles ("live" dots, ticks,
+     step numbers, badges) now speak in the orange: graphics in --spark, small
+     text in --spark-text. */
+  --color-brand-amber: #b33c00;
+  --color-brand-amber-hi: #b33c00;
+  --color-brand-teal: #f05100;
+  --color-brand-teal-text: #b33c00;
+
+  /* DESIGN.md tokens (bg-parchment, text-spark-text, border-spark, ...) */
+  --color-canvas: var(--canvas);
+  --color-parchment: var(--parchment);
+  --color-peach: var(--peach);
+  --color-ink: var(--ink);
+  --color-graphite: var(--graphite);
+  --color-mist: var(--mist);
+  --color-hairline: var(--hairline);
+  --color-line: var(--line);
+  --color-spark: var(--spark);
+  --color-spark-action: var(--spark-action);
+  --color-spark-action-hover: var(--spark-action-hover);
+  --color-spark-text: var(--spark-text);
+  --color-night: var(--night);
 }
 
 @layer utilities {
-  /* next/font exposes --font-inter and --font-jakarta on <body>, so reference
+  /* next/font exposes --font-inter and --font-serif on <body>, so reference
      them directly here (they don't resolve when hoisted into @theme at :root). */
   body {
     @apply bg-background text-foreground border-border;
     font-family: var(--font-inter), Inter, system-ui, -apple-system, "Segoe UI",
       Roboto, sans-serif;
   }
-  /* Headings + the wordmark use Plus Jakarta Sans */
-  h1,
-  h2,
+  /* Card and small headings stay in Inter (DESIGN.md section 2). */
   h3,
+  h4,
   .font-heading {
-    font-family: var(--font-jakarta), "Plus Jakarta Sans", "Segoe UI",
-      system-ui, sans-serif;
+    font-family: var(--font-inter), Inter, system-ui, -apple-system, "Segoe UI",
+      sans-serif;
   }
+}
+
+/* Section and display headings: Source Serif 4 at its one weight, 500.
+   Unlayered on purpose, so it beats font-bold / tracking utilities left on the
+   headings: in this system hierarchy comes from size, never weight. */
+h1,
+h2,
+.font-serif-display {
+  font-family: var(--font-serif), "Source Serif 4", Georgia, "Times New Roman",
+    serif;
+  font-weight: 500;
+  letter-spacing: -0.01em;
 }
 
 :root {
@@ -53,28 +80,48 @@
   /* Strong ease-out for UI motion (hover, press, reveal). Same curve as .post-card's --card-ease. */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 
-  /* Light theme (kept correct; not the default render) */
-  --background: #ffffff;
-  --foreground: #171717;
-  --card: #f7f5f3;
-  --card-foreground: #171717;
-  --popover: #ffffff;
-  --popover-foreground: #171717;
-  --primary: #c2703f; /* terracotta */
+  /* DESIGN.md palette. Contrast for every text pair is measured there. */
+  --canvas: #fcfcfa;
+  --parchment: #f3eee4; /* deepened (Nov): white cards now stand off the band */
+  --peach: #fde3d6;
+  --ink: #1f1b17;
+  --graphite: #48443f; /* secondary + card body text, 9.40:1 on canvas */
+  --mist: #cacac8;
+  /* Ink at ~12% over canvas, kept solid so color-mix() and /alpha work. */
+  --hairline: #e4e0da; /* nav, footer and section dividers only */
+  --line: #d3ccc2; /* card and control borders, 1.59:1 on white */
+  --line-strong: #c4bcb0; /* card border on hover, 1.88:1 */
+  /* Card elevation (DESIGN.md, revised Nov): a soft two-layer ink shadow. */
+  --shadow-card: 0 1px 2px rgb(31 27 23 / 0.06), 0 4px 12px rgb(31 27 23 / 0.08);
+  --shadow-card-hover: 0 2px 4px rgb(31 27 23 / 0.07), 0 8px 20px rgb(31 27 23 / 0.1);
+  --spark: #f05100; /* the Rizely orange: icons, logo, focus, the hero full stop */
+  --spark-action: #b33c00; /* button fill, white label 5.89:1 */
+  --spark-action-hover: #9e3500; /* 7.09:1 */
+  --spark-text: #b33c00; /* orange text on cream, 5.74:1 */
+  --night: #1f1b17; /* the one dark band per page */
+
+  /* shadcn roles, pointed at the palette */
+  --background: var(--canvas);
+  --foreground: var(--ink);
+  --card: #ffffff;
+  --card-foreground: var(--ink);
+  --popover: var(--canvas);
+  --popover-foreground: var(--ink);
+  --primary: var(--spark-text); /* icons, borders, accents: 5.89:1 on white */
   --primary-foreground: #ffffff;
-  --primary-text: #a3532a; /* terracotta as text on light (not the default render) */
-  --primary-solid: #b1602f;
-  --secondary: #f5f5f5;
-  --secondary-foreground: #171717;
-  --muted: #f5f5f5;
-  --muted-foreground: #737373;
-  --accent: #f5efe9; /* warm tint */
-  --accent-foreground: #171717;
-  --destructive: #e40014;
-  --border: #e7e2dd;
-  --input: #e7e2dd;
-  --ring: #f05100;
-  --light: #f05100; /* hero glow */
+  --primary-text: var(--spark-text);
+  --primary-solid: var(--spark-action);
+  --secondary: var(--parchment);
+  --secondary-foreground: var(--ink);
+  --muted: var(--parchment);
+  --muted-foreground: var(--graphite);
+  --accent: var(--peach);
+  --accent-foreground: var(--ink);
+  --destructive: #c4161c;
+  --border: var(--line);
+  --input: var(--line);
+  --ring: var(--spark);
+  --light: var(--spark);
 
   /* Signature rising-sun gradient (0deg = bottom→top = rising) */
   --grad-sunrise: linear-gradient(
@@ -159,15 +206,13 @@
   }
 }
 
-/* The signature sunrise gradient as a reusable helper */
+/* Old sunrise helpers, flattened: DESIGN.md has no gradients. Used only on
+   large display words (WCAG large text) and graphics. */
 .bg-sunrise {
-  background-image: var(--grad-sunrise);
+  background-color: var(--spark);
 }
 .text-sunrise {
-  background-image: var(--grad-sunrise);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--spark);
 }
 
 /* Slow sunrise sheen for a static "swept" word (hero variation C). */
@@ -215,80 +260,27 @@
   }
 }
 
-/* Primary CTA carries the signature sunrise gradient — the brand asset on the
-   button people actually click. Inner top-highlight + a motion-gated hover sheen. */
+/* The page's primary CTA (class name kept from the old sunrise button so every
+   call site follows). DESIGN.md: flat --spark-action fill, white label, no
+   gradient, no glow, no shadow; hover deepens. */
 .cta-sunrise {
-  /* terracotta -> orange (kept out of amber so white label stays legible). */
-  /* Every stop keeps white labels at WCAG AA: #c2703f and #f05100 were 3.7 and 3.57:1. */
-  background-image: linear-gradient(120deg, #a85a2e 0%, #b1602f 42%, #db3c00 100%);
+  background-color: var(--spark-action);
+  background-image: none;
   color: #fff;
-  position: relative;
-  overflow: hidden;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16),
-    0 8px 24px -10px rgba(240, 81, 0, 0.5);
-  /* Unlayered, so this replaces the Button's transition utilities: it has to keep
-     `scale` for the press feedback, and gives the glow its own 200ms. */
-  transition:
-    box-shadow 200ms ease,
-    scale 150ms var(--ease-out),
-    translate 200ms var(--ease-out);
+  box-shadow: none;
 }
-.cta-sunrise:hover {
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22),
-    0 10px 30px -8px rgba(240, 81, 0, 0.6);
-}
+.cta-sunrise:hover,
 .cta-sunrise:active {
-  transition-duration: 200ms, 100ms, 100ms;
+  background-color: var(--spark-action-hover);
 }
-/* The glow above replaces the Button's box-shadow focus ring, so keyboard focus
-   gets an outline ring instead: same colour as every other button's ring. */
 .cta-sunrise:focus-visible {
-  outline: 3px solid color-mix(in oklab, var(--ring) 50%, transparent);
+  outline: 2px solid var(--spark);
   outline-offset: 2px;
 }
-/* The shine is hover-only decoration: real pointers only, since a tap on touch
-   fires a false hover. It plays once per hover: the transition lives only on the
-   :hover state, so leaving resets the band instantly instead of sweeping it back.
-   Orange (sunrise) buttons get a white band; outline buttons a warm terracotta
-   one that matches their border. */
-@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
-  [data-slot="button"][data-variant="outline"] {
-    position: relative;
-    overflow: hidden;
-  }
-  .cta-sunrise::after,
-  [data-slot="button"][data-variant="outline"]::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: linear-gradient(
-      120deg,
-      transparent 30%,
-      rgba(255, 255, 255, 0.28) 50%,
-      transparent 70%
-    );
-    transform: translateX(-130%);
-    transition: none;
-  }
-  [data-slot="button"][data-variant="outline"]::after {
-    background: linear-gradient(
-      120deg,
-      transparent 30%,
-      rgb(244 158 109 / 0.22) 50%,
-      transparent 70%
-    );
-  }
-  .cta-sunrise:hover::after,
-  [data-slot="button"][data-variant="outline"]:hover::after {
-    transform: translateX(130%);
-    transition: transform 600ms var(--ease-out);
-  }
-}
 
-/* Masked film-grain overlay — the biggest "expensive dark" tell. One fixed
-   tiled-PNG layer, radial mask fading it out over the deepest ink. */
-body::after {
+/* Masked film-grain overlay: a dark-theme effect, off in the light design
+   (DESIGN.md: no texture, no glow). Scoped to .dark for the old palette. */
+.dark body::after {
   content: "";
   position: fixed;
   inset: 0;
@@ -302,7 +294,7 @@ body::after {
   mask-image: radial-gradient(120% 120% at 50% 0%, #000 45%, transparent 100%);
 }
 @media (forced-colors: active) {
-  body::after {
+  .dark body::after {
     display: none;
   }
 }
@@ -463,59 +455,115 @@ details[open] > summary .faq-chevron {
 }
 
 /*
-  Buttons lift 2px on hover: feedback that they are clickable. Ghost (navbar menu)
-  and link-style buttons stay put, since a row of lifting nav links is noise.
-  Pressing drops it back while it scales to 0.96. Real pointers only; under
-  reduced motion only the colour changes remain.
+  CTA buttons (DESIGN.md: motion and colour, never glow or shadow).
+  - Hover, real pointers only: primary and ghost buttons rise 2px; primary
+    deepens, ghost fills peach and its border deepens; the arrow moves 4px.
+  - Press, every device: scale 0.96, and the colour goes to its pressed shade
+    at once, so a tap on a phone visibly lands.
+  - Every primary button carries a → (drawn here, so new buttons get it too),
+    which nudges twice the first time the button scrolls into view
+    (components/cta-nudge.tsx adds .cta-nudge once per button per visit).
+  - Under reduced motion only the colour changes remain.
 */
-@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  [data-slot="button"]:not([data-variant="ghost"]):not([data-variant="link"]):hover {
-    translate: 0 -2px;
-  }
-  [data-slot="button"]:not([data-variant="ghost"]):not([data-variant="link"]):active {
-    translate: 0 0;
-  }
-}
-
-/*
-  Outline buttons flip to a peach fill on hover. The colour washes in over 350ms
-  with `ease` (colour changes read better slower than motion); the lift and the
-  press keep their own quick timings so the button still answers the cursor
-  immediately. Unlayered, so this replaces the Button's transition utilities.
-*/
+[data-slot="button"][data-variant="default"],
 [data-slot="button"][data-variant="outline"] {
-  transition-property: color, background-color, border-color, box-shadow, scale, translate;
-  transition-duration: 350ms, 350ms, 350ms, 350ms, 150ms, 200ms;
-  transition-timing-function: ease, ease, ease, ease, var(--ease-out), var(--ease-out);
+  transition-property: color, background-color, border-color, scale, translate;
+  transition-duration: 200ms, 200ms, 200ms, 150ms, 200ms;
+  transition-timing-function: ease, ease, ease, var(--ease-out), var(--ease-out);
+}
+[data-slot="button"][data-variant="default"]:active {
+  background-color: var(--spark-action-hover);
 }
 [data-slot="button"][data-variant="outline"]:active {
-  transition-duration: 350ms, 350ms, 350ms, 350ms, 100ms, 100ms;
+  background-color: var(--peach);
+  border-color: var(--spark-action-hover);
+}
+[data-slot="button"][data-variant="default"]:active,
+[data-slot="button"][data-variant="outline"]:active {
+  transition-duration: 100ms, 100ms, 100ms, 100ms, 100ms;
+}
+
+/* The primary button's arrow: lucide's arrow-right as a mask, in the label colour. */
+[data-slot="button"][data-variant="default"]:not(:has(.lucide-arrow-right))::after {
+  content: "";
+  flex: none;
+  width: 1em;
+  height: 1em;
+  background-color: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14'/%3E%3Cpath d='m12 5 7 7-7 7'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14'/%3E%3Cpath d='m12 5 7 7-7 7'/%3E%3C/svg%3E") center / contain no-repeat;
+  transition: translate 200ms var(--ease-out);
+}
+[data-slot="button"] .lucide-arrow-right {
+  transition: translate 200ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  [data-slot="button"][data-variant="outline"]:hover {
+    border-color: var(--spark-action-hover);
+  }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  [data-slot="button"][data-variant="default"]:hover,
+  [data-slot="button"][data-variant="outline"]:hover {
+    translate: 0 -2px;
+  }
+  [data-slot="button"][data-variant="default"]:active,
+  [data-slot="button"][data-variant="outline"]:active {
+    translate: 0 0;
+  }
+  [data-slot="button"]:hover::after,
+  [data-slot="button"]:hover .lucide-arrow-right {
+    translate: 4px 0;
+  }
+}
+
+/* The once-per-visit nudge when a primary CTA first scrolls into view. */
+@keyframes rizely-cta-nudge {
+  0%,
+  40%,
+  80%,
+  100% {
+    translate: 0 0;
+  }
+  20%,
+  60% {
+    translate: 4px 0;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .cta-nudge::after,
+  .cta-nudge .lucide-arrow-right {
+    animation: rizely-cta-nudge 700ms ease-in-out 1;
+  }
 }
 
 /*
-  Text links with a → (Three Layers): the arrow slides 3px, like the button arrows.
+  Text links with a → (Three Layers): the underline draws in from the left and
+  the arrow slides 4px, like the button arrows.
 */
+.cta-link-text {
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0% 1px no-repeat;
+  padding-bottom: 1px;
+  transition: background-size 250ms var(--ease-out);
+}
 .cta-link-arrow {
   display: inline-block;
-  transition: transform 200ms var(--ease-out);
+  transition: translate 200ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .cta-link:hover .cta-link-text {
+    background-size: 100% 1px;
+  }
 }
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .cta-link:hover .cta-link-arrow {
-    transform: translateX(3px);
+    translate: 4px 0;
   }
 }
-
-/*
-  A button's → arrow nudges forward on hover: feedback that the button takes you
-  somewhere. Same 3px / 200ms as the blog cards. Real pointers only; off under
-  reduced motion.
-*/
-[data-slot="button"] .lucide-arrow-right {
-  transition: transform 200ms var(--ease-out);
-}
-@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  [data-slot="button"]:hover .lucide-arrow-right {
-    transform: translateX(3px);
+@media (prefers-reduced-motion: reduce) {
+  .cta-link-text {
+    transition: none;
   }
 }
 
@@ -526,19 +574,20 @@ details[open] > summary .faq-chevron {
   under reduced motion.
 */
 .hover-card {
-  /* Depth from a faint white ring, not the brown hairline (better-ui: shadows
-     for elevation, borders for structure). */
-  border-color: transparent;
-  box-shadow: 0 0 0 1px oklch(1 0 0 / 0.08);
+  /* DESIGN.md (revised Nov): a white card, a visible line and a soft shadow. */
+  border: 1px solid var(--line);
+  background-color: var(--card);
+  box-shadow: var(--shadow-card);
   transition:
-    box-shadow 200ms ease,
-    background-color 200ms ease;
+    border-color 200ms ease,
+    box-shadow 200ms ease;
 }
-/* Lift the 40–50% card fills a shade so the surface separates from the page.
-   The <Card> component already has a solid fill. */
-.hover-card:not([data-slot="card"]) {
-  background-color: color-mix(in oklab, var(--card) 60%, transparent);
+/* Every bordered white card gets the same soft lift (light theme only). */
+:root:not(.dark) .bg-card.border,
+:root:not(.dark) .bg-card.border-2 {
+  box-shadow: var(--shadow-card);
 }
+
 /*
   "Works where you already are" chips (components/partners.tsx). Not links, so no
   lift: at rest every icon is the same muted grey; hover warms the ring, brightens
@@ -546,11 +595,11 @@ details[open] > summary .faq-chevron {
   a small 1.1 scale. Touch screens have no hover, so they show brand colours at rest.
 */
 .partner-chip {
-  box-shadow: 0 0 0 1px oklch(1 0 0 / 0.08);
-  background-color: color-mix(in oklab, var(--card) 40%, transparent);
+  border: 1px solid var(--line);
+  background-color: var(--card);
+  box-shadow: var(--shadow-card);
   transition:
-    box-shadow 200ms ease,
-    background-color 200ms ease,
+    border-color 200ms ease,
     color 200ms ease;
 }
 .partner-chip .partner-icon {
@@ -566,8 +615,7 @@ details[open] > summary .faq-chevron {
 }
 @media (hover: hover) and (pointer: fine) {
   .partner-chip:hover {
-    box-shadow: 0 0 0 1px color-mix(in oklab, var(--primary) 45%, var(--border));
-    background-color: color-mix(in oklab, var(--card) 80%, transparent);
+    border-color: color-mix(in oklab, var(--spark-action) 55%, var(--line-strong));
     color: var(--foreground);
   }
   .partner-chip:hover .partner-icon {
@@ -586,8 +634,8 @@ details[open] > summary .faq-chevron {
 
 @media (hover: hover) and (pointer: fine) {
   .hover-card:hover {
-    box-shadow: 0 0 0 1px color-mix(in oklab, var(--primary) 45%, var(--border));
-    background-color: color-mix(in oklab, var(--card) 80%, transparent);
+    border-color: color-mix(in oklab, var(--spark-action) 55%, var(--line-strong));
+    box-shadow: var(--shadow-card-hover);
   }
 }
 
@@ -777,4 +825,102 @@ details[open] > summary .faq-chevron {
 :root[data-currency="usd"] [data-price="inr"],
 :root[data-currency="inr"] [data-price="usd"] {
   display: none;
+}
+
+/*
+  "Works with Claude" chat (components/claude-chat.tsx). Steps that stay in the
+  DOM cross-fade with transitions (.cc-show/.cc-hide); blocks that appear from
+  display:none use a one-off entrance (.cc-enter). Under reduced motion the
+  clock never runs, so none of this moves; the rules below keep it calm anyway.
+*/
+:root:not(.dark) .cc-window.bg-card {
+  box-shadow: 0 2px 4px rgb(31 27 23 / 0.06), 0 12px 32px rgb(31 27 23 / 0.1);
+}
+.cc-show {
+  opacity: 1;
+  translate: 0 0;
+  transition: opacity 450ms var(--ease-out), translate 450ms var(--ease-out);
+}
+.cc-hide {
+  opacity: 0;
+  translate: 0 10px;
+  transition: opacity 300ms ease, translate 0s 300ms;
+}
+.cc-enter {
+  animation: cc-in 450ms var(--ease-out) both;
+}
+@keyframes cc-in {
+  from { opacity: 0; translate: 0 10px; }
+  to { opacity: 1; translate: 0 0; }
+}
+.cc-all-on { opacity: 1; transition: opacity 400ms ease; }
+.cc-all-off { opacity: 0; transition: opacity 400ms ease; }
+.cc-caret::after {
+  content: "";
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  margin-left: 1px;
+  vertical-align: -3px;
+  background: var(--ink);
+  animation: cc-blink 1s steps(1) infinite;
+}
+@keyframes cc-blink { 50% { opacity: 0; } }
+.cc-dots { display: inline-flex; }
+.cc-dots span {
+  width: 5px;
+  height: 5px;
+  margin-left: 3px;
+  border-radius: 50%;
+  background: var(--spark-action);
+  animation: cc-dot 1s ease-in-out infinite;
+}
+.cc-dots span:nth-child(2) { animation-delay: 150ms; }
+.cc-dots span:nth-child(3) { animation-delay: 300ms; }
+@keyframes cc-dot {
+  0%, 100% { opacity: 0.25; translate: 0 0; }
+  50% { opacity: 1; translate: 0 -3px; }
+}
+.cc-send { transition: background-color 200ms ease, scale 150ms var(--ease-out); }
+.cc-send-on { background-color: var(--ink); }
+.cc-send-off { background-color: #c9c2b8; }
+.cc-send-press { background-color: var(--ink); scale: 0.9; }
+@media (prefers-reduced-motion: reduce) {
+  .cc-show, .cc-hide { translate: none; transition: opacity 200ms ease; }
+  .cc-enter { animation: none; }
+  .cc-dots span, .cc-caret::after { animation: none; }
+}
+
+/*
+  Editorial voice (Nov 2026). A numbered kicker above each section heading, and
+  one or two words of every display heading set in Source Serif italic.
+*/
+h1 em,
+h2 em {
+  font-style: italic;
+}
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  width: fit-content;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--spark-text);
+}
+.kicker-no {
+  font-family: var(--font-serif), "Source Serif 4", Georgia, serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1rem;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.kicker-rule {
+  width: 1.5rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.6;
 }

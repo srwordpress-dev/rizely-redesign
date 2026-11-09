@@ -355,8 +355,12 @@ export type Scene = {
   breathe: number;
 };
 
-/** Sunrise ramp + the teal "synced" accent. Index order matters: 0..3 warm, 4 teal. */
-export const COLORS = ["#c2703f", "#f05100", "#f99c00", "#fcbb00", "#009588"];
+/** Two depths of the one Rizely orange, for a cream page (DESIGN.md: one accent,
+    no ink specks). Index order matters: the card side draws from 0/1 (mostly the
+    deep shade), the agent side from 2/3/4 (mostly the bright one), so the two
+    halves read apart while staying one family. The motion is unchanged. */
+// Mostly --spark-action (4.80:1 on cream) so the drawing reads; --spark is the accent.
+export const COLORS = ["#c84300", "#c84300", "#c84300", "#f05100", "#b33c00"];
 
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
@@ -511,7 +515,7 @@ export function buildScene(
       role,
       lag: Math.random(),
       hold: seqHold,
-      // warm on the card side, warm+teal accents on the agent side
+      // card side mostly the deep orange, agent side mostly the bright one
       col:
         side === -1
           ? Math.random() < 0.55

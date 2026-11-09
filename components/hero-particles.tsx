@@ -12,7 +12,9 @@ import { useEffect, useRef } from "react";
 import { COLORS, buildScene, update, type Mode, type Scene } from "@/lib/hero-anim";
 
 /** Alpha is quantised into these levels so the draw pass can batch by style. */
-const LEVELS = [0.28, 0.52, 0.76, 1] as const;
+// Alpha steps. The floor is 0.5, not lower: on the cream page faint orange
+// dots turn into peach smudges and the line art stops reading.
+const LEVELS = [0.5, 0.66, 0.83, 1] as const;
 
 export default function HeroParticles({
   className = "",
@@ -80,7 +82,7 @@ export default function HeroParticles({
       // sampled point to stay legible.
       const density =
         W < 768 ? (mode === "hero" ? 0.9 : 0.45) : W < 1100 ? 0.8 : 0.95;
-      dot = W < 768 ? 1.5 : 1.9;
+      dot = W < 768 ? 1.8 : 2.2;
 
       scene = buildScene(W, H, density, mode);
       const n = scene.particles.length;
@@ -137,10 +139,16 @@ export default function HeroParticles({
         if (!c) continue;
         ctx.fillStyle = styles[b];
         const arr = buckets[b];
+        // Round dots, one path per bucket: on a light page square dots show
+        // their corners and the shapes read as a rough print.
+        const r = dot / 2;
+        ctx.beginPath();
         for (let j = 0; j < c; j++) {
           const i = arr[j];
-          ctx.fillRect(X[i], Y[i], dot, dot);
+          ctx.moveTo(X[i] + dot, Y[i] + r);
+          ctx.arc(X[i] + r, Y[i] + r, r, 0, Math.PI * 2);
         }
+        ctx.fill();
       }
     };
 

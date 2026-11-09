@@ -21,7 +21,7 @@ export default function LegalLayout({
         </Link>
         <h1 className="mt-6 text-3xl font-semibold tracking-tight">{title}</h1>
         <p className="mt-2 text-sm text-muted-foreground">Last updated: {updated}</p>
-        <div className="mt-5 rounded-lg border border-border bg-card/50 p-4 text-sm text-muted-foreground">
+        <div className="mt-5 rounded-lg border border-border bg-card p-4 text-sm text-muted-foreground">
           <strong className="text-foreground">Draft for review.</strong> This is a starting
           template written for Rizely&apos;s current product. Please have it reviewed by legal
           counsel before you rely on it.
